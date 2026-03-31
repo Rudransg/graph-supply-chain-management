@@ -1,0 +1,9 @@
+.venv3.11
+requirements.txt
+package-lock.json
+package.json
+logs/
+*.log
+mlruns/
+static/
+templates/

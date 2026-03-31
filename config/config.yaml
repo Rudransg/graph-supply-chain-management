@@ -1,0 +1,103 @@
+data_ingestion:
+  bucket_name: "supply-graph-stuff"
+  bucket_folder_name: "Homogenoeus"
+  train_ratio: 0.8
+
+  nodes:
+    - bucket_file_name: "Nodes/NodesIndex.csv"
+      id_column: "Node"
+      num_nodes: 41
+
+    - bucket_file_name: "Nodes/Nodes.csv"
+
+    - bucket_file_name: "Nodes/Nodes Type (Plant & Storage).csv"
+
+    - bucket_file_name: "Nodes/Node Types (Product Group and Subgroup).csv"
+
+  edges:
+    - bucket_file_name: "Edges/EdgesIndex/Edges (Plant).csv"
+      relation: "same_plant"
+      src_col: "node1"
+      dst_col: "node2"
+      undirected: true
+
+    - bucket_file_name: "Edges/EdgesIndex/Edges (Storage Location).csv"
+      relation: "same_storage"
+      src_col: "node1"
+      dst_col: "node2"
+      undirected: true
+
+    - bucket_file_name: "Edges/EdgesIndex/Edges (Product Group).csv"
+      relation: "same_product_group"
+      src_col: "node1"
+      dst_col: "node2"
+      undirected: true
+
+    - bucket_file_name: "Edges/EdgesIndex/Edges (Product Sub-Group).csv"
+      relation: "same_product_subgroup"
+      src_col: "node1"
+      dst_col: "node2"
+      undirected: true
+
+  temporal_data:
+    unit:
+      - bucket_file_name: "Temporal Data/Unit/Production .csv"
+        date_column: "Date"
+        signal_name: "production_unit"
+
+      - bucket_file_name: "Temporal Data/Unit/Delivery To distributor.csv"
+        date_column: "Date"
+        signal_name: "delivery_unit"
+
+      - bucket_file_name: "Temporal Data/Unit/Factory Issue.csv"
+        date_column: "Date"
+        signal_name: "factory_issue_unit"
+
+      - bucket_file_name: "Temporal Data/Unit/Sales Order.csv"
+        date_column: "Date"
+        signal_name: "sales_order_unit"
+
+    weight:
+      - bucket_file_name: "Temporal Data/Weight/Production .csv"
+        date_column: "Date"
+        signal_name: "production_weight"
+
+      - bucket_file_name: "Temporal Data/Weight/Delivery to Distributor.csv"
+        date_column: "Date"
+        signal_name: "delivery_weight"
+
+      - bucket_file_name: "Temporal Data/Weight/Factory Issue.csv"
+        date_column: "Date"
+        signal_name: "factory_issue_weight"
+
+      - bucket_file_name: "Temporal Data/Weight/Sales Order .csv"
+        date_column: "Date"
+        signal_name: "sales_order_weight"
+
+data_processing:
+  node_type: "rolled_prod"
+  num_nodes: 41
+
+  temporal:
+    rolling_window: 30
+    drop_first_n_rows: 30
+    target_signal: "production_weight"
+
+  edge_relations:
+    - same_plant
+    - same_storage
+    - same_product_group
+    - same_product_subgroup
+
+  model:
+    in_channels: 17
+    hidden_channels: 32
+    out_channels: 1
+    conv_type: "sage"
+    aggregation: "sum"
+    layers: 2
+    train_ratio: 0.8
+    learning_rate: 0.01
+    epochs: 50
+    loss_alpha: 2.0
+

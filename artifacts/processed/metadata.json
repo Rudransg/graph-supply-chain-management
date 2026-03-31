@@ -1,0 +1,19 @@
+{
+  "bucket_name": "supply-graph-stuff",
+  "bucket_folder": "Homogenoeus",
+  "node_type": "rolled_prod",
+  "num_nodes": 41,
+  "rolling_window": 30,
+  "drop_first_n_rows": 30,
+  "target_signal": "production_weight",
+  "train_ratio": 0.8,
+  "num_snapshots": 190,
+  "feature_dim": 1,
+  "edge_relations": [
+    "same_plant",
+    "same_storage",
+    "same_product_group",
+    "same_product_subgroup"
+  ],
+  "nodes_index_file": "E:\\Supply Graph\\artifacts\\data_ingestion\\nodes\\nodes_index.csv"
+}
