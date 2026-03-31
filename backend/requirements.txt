@@ -1,5 +1,5 @@
 --extra-index-url https://download.pytorch.org/whl/cpu
---find-links https://data.pyg.org/whl/torch-2.6.0+cpu.html
+--find-links https://data.pyg.org/whl/torch-2.9.0+cpu.html
 
 fastapi==0.125.0
 uvicorn==0.42.0
@@ -14,9 +14,9 @@ scikit-learn==1.8.0
 scipy==1.17.1
 
 
-torch==2.6.0+cpu
-torchaudio==2.6.0+cpu
-torchvision==0.21.0+cpu
+torch==2.9.0+cpu
+torchaudio==2.9.0+cpu
+torchvision==0.24.0+cpu
 
 
 torch_cluster==1.6.3
