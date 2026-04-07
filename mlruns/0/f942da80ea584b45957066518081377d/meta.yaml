@@ -1,0 +1,14 @@
+artifact_uri: file:///E:/Supply%20Graph/mlruns/0/f942da80ea584b45957066518081377d/artifacts
+end_time: 1775247066974
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: f942da80ea584b45957066518081377d
+run_name: burly-rat-850
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1775246612894
+status: 3
+tags: []
+user_id: HP

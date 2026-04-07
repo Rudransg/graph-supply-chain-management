@@ -19,7 +19,7 @@ with open(CONFIG_PATH, "r") as f:
 
 
 # ============================================================
-# DATA INGESTION CONFIG VALUES ONLY
+# DATA INGESTION CONFIG VALUES
 # ============================================================
 _ingestion = config["data_ingestion"]
 
@@ -95,16 +95,19 @@ TEMPORAL_DATE_COLUMN = _unit[0]["date_column"]
 
 
 # ============================================================
-# DATA PROCESSING
+# DATA PROCESSING CONFIG
 # ============================================================
 _processing = config["data_processing"]
+_model = config["model"]
 
 NODE_TYPE = _processing["node_type"]
 NUM_NODES = _processing["num_nodes"]
 
 ROLLING_WINDOW = _processing["temporal"]["rolling_window"]
 DROP_FIRST_N_ROWS = _processing["temporal"]["drop_first_n_rows"]
-TARGET_SIGNAL = _processing["temporal"]["target_signal"]
+TARGET_SIGNALS = _processing["temporal"]["target_signals"]
+PREDICTION_HORIZON = _processing["temporal"]["prediction_horizon"]
+HISTORY_STEPS = _processing["temporal"]["history_steps"]
 
 EDGE_RELATIONS = _processing["edge_relations"]
 
@@ -112,8 +115,8 @@ EDGE_RELATIONS = _processing["edge_relations"]
 # ============================================================
 # MODEL CONFIG
 # ============================================================
-_model = _processing["model"]
-
+STATIC_FEATURE_DIM = _model["static_feature_dim"]
+TEMPORAL_FEATURE_DIM = _model["temporal_feature_dim"]
 IN_CHANNELS = _model["in_channels"]
 HIDDEN_CHANNELS = _model["hidden_channels"]
 OUT_CHANNELS = _model["out_channels"]
@@ -124,28 +127,39 @@ MODEL_TRAIN_RATIO = _model["train_ratio"]
 LEARNING_RATE = _model.get("learning_rate", 0.01)
 EPOCHS = _model.get("epochs", 50)
 LOSS_ALPHA = _model.get("loss_alpha", 2.0)
+BATCH_SIZE = _model.get("batch_size", 8)
 
 
 # ============================================================
-# PROCESSED OUTPUTS
+# PROCESSED ARTIFACT PATHS  ← all missing paths were here
 # ============================================================
-PROCESSED_TRAIN_DATA_PATH = PROCESSED_DIR/"processed_train.csv"
-PROCESSED_TEST_DATA_PATH = PROCESSED_DIR/"processed_test.csv"
-ROLLED_SIGNAL_PATH = PROCESSED_DIR / "rolled_signal.csv"
-X_NUMPY_PATH = PROCESSED_DIR / "X.npy"
-Y_NUMPY_PATH = PROCESSED_DIR / "Y.npy"
+ROLLED_SIGNAL_PATH = PROCESSED_DIR / "rolled_signals.csv"
+ROLLED_SIGNAL_WITH_PREDS_PATH = PROCESSED_DIR / "rolled_signals_with_preds.csv"
+PRODUCT_TREND_LONG_PATH = PROCESSED_DIR / "product_trend_long.csv"
+
+VALUES_NUMPY_PATH = PROCESSED_DIR / "values.npy"        # [T, N, C] — replaces X/Y
 EDGE_WEIGHT_PATH = PROCESSED_DIR / "edge_weight.npy"
 EDGE_INDEX_HOMO_PATH = PROCESSED_DIR / "edge_index_homo.pt"
 HETERO_DATA_PATH = PROCESSED_DIR / "hetero_data.pt"
+
+PROCESSED_TRAIN_DATA_PATH = PROCESSED_DIR / "train_data.csv"
+PROCESSED_TEST_DATA_PATH = PROCESSED_DIR / "test_data.csv"
+
+COLUMN_MAPPING_PATH = PROCESSED_DIR / "column_mapping.json"
+REVERSE_MAPPING_PATH = PROCESSED_DIR / "reverse_mapping.json"
+PRODUCT_ORDER_PATH = PROCESSED_DIR / "product_order.json"
+PRODUCT_NAME_TO_IDX_PATH = PROCESSED_DIR / "product_name_to_idx.json"
+PRODUCT_IDX_TO_NAME_PATH = PROCESSED_DIR / "product_idx_to_name.json"
 PRODUCT_TO_IDX_PATH = PROCESSED_DIR / "product_to_idx.json"
 IDX_TO_PRODUCT_PATH = PROCESSED_DIR / "idx_to_product.json"
 METADATA_PATH = PROCESSED_DIR / "metadata.json"
-
+X_NUMPY_PATH = PROCESSED_DIR / "X.npy"
+Y_NUMPY_PATH = PROCESSED_DIR / "Y.npy"
 
 # ============================================================
-# MODEL OUTPUTS
+# MODEL OUTPUT PATHS  ← all missing paths were here
 # ============================================================
-MODEL_OUTPUT_PATH = MODELS_DIR / "hetero_sage_model.pt"
+MODEL_OUTPUT_PATH = MODELS_DIR / "model.pt"
 METRICS_OUTPUT_PATH = MODELS_DIR / "metrics.json"
 PREDICTIONS_OUTPUT_PATH = MODELS_DIR / "predictions.npy"
 TARGETS_OUTPUT_PATH = MODELS_DIR / "targets.npy"

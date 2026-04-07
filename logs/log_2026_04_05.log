@@ -1,0 +1,7 @@
+2026-04-05 16:11:28,613-INFO-Using device: cuda
+2026-04-05 16:11:29,013-INFO-Model loaded and set to eval mode
+2026-04-05 16:11:29,196-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-05 16:11:29,222-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-05 16:11:29,242-INFO-Metrics loaded
+2026-04-05 16:11:29,373-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-05 16:11:29,454-INFO-[Startup] Forecast cache built for 41 products

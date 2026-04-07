@@ -1,4 +1,3 @@
-// top of Dashboard.jsx
 import {
   LineChart,
   Line,
@@ -8,18 +7,22 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from "recharts";
-
 import { useState, useEffect } from "react";
-
 import {
   fetchDashboardStats,
   fetchAtRiskProducts,
   fetchFactoryLoad,
-  fetchProductTrend,
+  fetchLiveProductTrend,
   fetchProducts,
-  fetch_Products
-  // fetchAllPreds, // keep this only if used somewhere else
+  fetchForecastCategory,
+  runPredict,
 } from "../api";
+
+const CATEGORY_TO_SIGNAL = {
+  production: "production_unit",
+  delivery: "delivery_unit",
+  supply_order: "sales_order_unit",
+};
 
 export default function Dashboard() {
   const [stats, setStats] = useState(null);
@@ -28,58 +31,22 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [trendPoints, setTrendPoints] = useState([]);
   const [products, setProducts] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("production");
+  const [forecastSummary, setForecastSummary] = useState(null);
 
-  useEffect(() => {
-    async function load() {
-      try {
-        const [statsRes, atRiskRes, factoryRes, productsRes] = await Promise.all([
-          fetchDashboardStats(),
-          fetchAtRiskProducts(6),
-          fetchFactoryLoad(),
-          fetchProducts(),
-        ]);
-
-        setStats(statsRes.data);
-        setAtRisk(atRiskRes.data);
-        setFactoryLoad(factoryRes.data);
-
-        const productList = productsRes.data.products || [];
-        setProducts(productList);
-
-        const initialProduct =
-          atRiskRes.data[0]?.product || productList[0] || null;
-
-        if (initialProduct) {
-          setSelectedProduct(initialProduct);
-          const trendRes = await fetchProductTrend(initialProduct);
-          // const pts = trendRes.data.points || [];
-          // setTrendPoints(
-          //   pts.map((p) => ({
-          //     time: p.timestamp,
-          //     actual: p.actual,
-          //   }))
-          // );
-          // const pts = trendRes.data.points || [];
-          setTrendPoints(
-            pts.map((p) => ({
-              time: p.timestamp,
-              actual: p.actual,
-              predicted: p.predicted,
-            }))
-          );
-        }
-      } finally {
-        setLoading(false);
-      }
+  async function loadTrendAndForecast(product, category) {
+    if (!product) {
+      setTrendPoints([]);
+      setForecastSummary(null);
+      return;
     }
-    load();
-  }, []);
 
-  async function handleProductChange(e) {
-    const product = e.target.value;
-    setSelectedProduct(product);
-    const trendRes = await fetchProductTrend(product);
+    const [trendRes, predictRes] = await Promise.all([
+      fetchLiveProductTrend(product, CATEGORY_TO_SIGNAL[category], 30),
+      runPredict({ product_name: product }),
+    ]);
+
     const pts = trendRes.data.points || [];
     setTrendPoints(
       pts.map((p) => ({
@@ -88,29 +55,105 @@ export default function Dashboard() {
         predicted: p.predicted,
       }))
     );
+
+    setForecastSummary(predictRes.data?.prediction || null);
+  }
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const [statsRes, atRiskRes, factoryRes, productsRes, categoryRes] =
+          await Promise.all([
+            fetchDashboardStats(),
+            fetchAtRiskProducts(6),
+            fetchFactoryLoad(),
+            fetchProducts(),
+            fetchForecastCategory("production"),
+          ]);
+
+        setStats(statsRes.data);
+        setAtRisk(atRiskRes.data || []);
+        setFactoryLoad(factoryRes.data || []);
+
+        const productList =
+          categoryRes?.data?.products?.map((p) => p.product) ||
+          productsRes?.data?.products ||
+          [];
+
+        setProducts(productList);
+
+        const initialProduct =
+          atRiskRes.data?.[0]?.product || productList[0] || "";
+
+        if (initialProduct) {
+          setSelectedProduct(initialProduct);
+          await loadTrendAndForecast(initialProduct, "production");
+        }
+      } catch (err) {
+        console.error("Dashboard load failed:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    load();
+  }, []);
+
+  async function handleProductChange(e) {
+    const product = e.target.value;
+    setSelectedProduct(product);
+
+    try {
+      await loadTrendAndForecast(product, selectedCategory);
+    } catch (err) {
+      console.error("Trend load failed:", err);
+      setTrendPoints([]);
+      setForecastSummary(null);
+    }
+  }
+
+  async function handleCategoryChange(e) {
+    const category = e.target.value;
+    setSelectedCategory(category);
+    setSelectedProduct("");
+    setTrendPoints([]);
+
+    try {
+      const categoryRes = await fetchForecastCategory(category);
+      const categoryProducts =
+        categoryRes?.data?.products?.map((p) => p.product) || [];
+
+      setProducts(categoryProducts);
+
+      const firstProduct = categoryProducts[0] || "";
+      setSelectedProduct(firstProduct);
+
+      if (firstProduct) {
+        await loadTrendAndForecast(firstProduct, category);
+      }
+    } catch (err) {
+      console.error("Category load failed:", err);
+      setProducts([]);
+      setTrendPoints([]);
+      setForecastSummary(null);
+    }
   }
 
   if (loading) return <div style={S.loading}>Loading dashboard...</div>;
 
   return (
     <div style={S.container}>
-      {/* Header */}
       <div style={S.header}>
         <div style={S.greeting}>
           Good Morning 👋 Here's your supply chain overview
         </div>
         <div style={S.subtitle}>
-          Monday, 24 March 2026  •  Last updated: just now
+          Monday, 24 March 2026 • Last updated: just now
         </div>
       </div>
 
-      {/* Stats Cards */}
       <div style={S.stats}>
-        <StatCard
-          icon="📦"
-          label="Total Products"
-          value={stats?.total_products || 0}
-        />
+        <StatCard icon="📦" label="Total Products" value={stats?.total_products || 0} />
         <StatCard
           icon="⚠️"
           label="At Risk"
@@ -118,16 +161,8 @@ export default function Dashboard() {
           subtext={`+${stats?.new_at_risk_today || 0} today`}
           danger
         />
-        <StatCard
-          icon="✅"
-          label="On Track"
-          value={stats?.on_track || 0}
-        />
-        <StatCard
-          icon="🏭"
-          label="Active Factories"
-          value={stats?.active_factories || 0}
-        />
+        <StatCard icon="✅" label="On Track" value={stats?.on_track || 0} />
+        <StatCard icon="🏭" label="Active Factories" value={stats?.active_factories || 0} />
         <StatCard
           icon="🎯"
           label="Forecast Accuracy"
@@ -136,40 +171,55 @@ export default function Dashboard() {
         />
       </div>
 
-      {/* Production Weight Trend */}
       <div style={S.card}>
-        <div
-          style={{
-            ...S.cardTitle,
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <span>
-            📊 Production Weight Trend{" "}
-            {selectedProduct ? `— ${selectedProduct}` : ""}
-          </span>
-          <select
-            value={selectedProduct || ""}
-            onChange={handleProductChange}
-            style={{
-              background: "#020617",
-              color: "#e2e8f0",
-              borderRadius: 6,
-              padding: "4px 8px",
-              border: "1px solid #1e293b",
-            }}
-          >
-            <option value="" disabled>
-              Select product
-            </option>
-            {products.map((p) => (
-              <option key={p} value={p}>
-                {p}
+        <div style={S.filtersRow}>
+          <div>
+            <div style={S.cardTitle}>
+              📊 {selectedCategory.replace("_", " ").toUpperCase()} Trend
+              {selectedProduct ? ` — ${selectedProduct}` : ""}
+            </div>
+            <div style={S.chartMeta}>Recent actuals plus live 7-day model forecast</div>
+            {forecastSummary && (
+              <div style={S.forecastRow}>
+                <span style={S.forecastChip}>
+                  Production: {(forecastSummary.production_unit ?? 0).toFixed(2)}
+                </span>
+                <span style={S.forecastChip}>
+                  Delivery: {(forecastSummary.delivery_unit ?? 0).toFixed(2)}
+                </span>
+                <span style={S.forecastChip}>
+                  Sales Order: {(forecastSummary.sales_order_unit ?? 0).toFixed(2)}
+                </span>
+              </div>
+            )}
+          </div>
+
+          <div style={S.selectGroup}>
+            <select
+              value={selectedCategory}
+              onChange={handleCategoryChange}
+              style={S.select}
+            >
+              <option value="production">Production</option>
+              <option value="delivery">Delivery</option>
+              <option value="supply_order">Supply Order</option>
+            </select>
+
+            <select
+              value={selectedProduct || ""}
+              onChange={handleProductChange}
+              style={S.select}
+            >
+              <option value="" disabled>
+                Select product
               </option>
-            ))}
-          </select>
+              {products.map((p) => (
+                <option key={p} value={p}>
+                  {p}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <div style={S.chart}>
@@ -178,41 +228,37 @@ export default function Dashboard() {
               No trend data yet.
               <br />
               <span style={{ fontSize: 12, color: "#64748b" }}>
-                Ensure /forecast/trend/{selectedProduct || "<product>"} returns
-                points.
+                Ensure the forecast trend API returns points for this category.
               </span>
             </div>
           ) : (
             <ResponsiveContainer width="100%" height={200}>
               <LineChart data={trendPoints}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" />
-              <XAxis dataKey="time" />
-              <YAxis />
-              <Tooltip />
-              <Line
-                type="monotone"
-                dataKey="actual"
-                stroke="#38bdf8"
-                strokeWidth={2}
-                dot={false}
-              />
-              <Line
-                type="monotone"
-                dataKey="predicted"   // exactly this key
-                stroke="#a855f7"
-                strokeWidth={2}
-                dot={false}
-              />
+                <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" />
+                <XAxis dataKey="time" stroke="#94a3b8" />
+                <YAxis stroke="#94a3b8" />
+                <Tooltip />
+                <Line
+                  type="linear"
+                  dataKey="actual"
+                  stroke="#38bdf8"
+                  strokeWidth={2}
+                  dot={false}
+                />
+                <Line
+                  type="linear"
+                  dataKey="predicted"
+                  stroke="#a855f7"
+                  strokeWidth={2}
+                  dot={false}
+                />
               </LineChart>
-
             </ResponsiveContainer>
           )}
         </div>
       </div>
 
-      {/* Bottom Row */}
       <div style={S.row}>
-        {/* At Risk */}
         <div style={{ ...S.card, flex: 1 }}>
           <div style={S.cardTitle}>⚠️ Products At Risk</div>
           <div style={S.list}>
@@ -223,14 +269,13 @@ export default function Dashboard() {
               <div key={p.product} style={S.listItem}>
                 <span style={S.productName}>{p.product}</span>
                 <span style={{ ...S.trend, color: "#ef4444" }}>
-                  ↓ {Math.abs(p.trend_pct)}%
+                  ↓ {Math.abs(p.trend_pct || 0)}%
                 </span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Factory Load */}
         <div style={{ ...S.card, flex: 1 }}>
           <div style={S.cardTitle}>🏭 Factory Load</div>
           <div style={S.list}>
@@ -242,8 +287,7 @@ export default function Dashboard() {
                     style={{
                       ...S.bar,
                       width: `${f.load_pct}%`,
-                      background:
-                        f.load_pct > 85 ? "#ef4444" : "#3b82f6",
+                      background: f.load_pct > 85 ? "#ef4444" : "#3b82f6",
                     }}
                   />
                 </div>
@@ -257,9 +301,6 @@ export default function Dashboard() {
     </div>
   );
 }
-
-// StatCard and S unchanged...
-
 
 function StatCard({ icon, label, value, subtext, danger }) {
   return (
@@ -318,7 +359,46 @@ const S = {
     fontSize: 15,
     fontWeight: 600,
     color: "#e2e8f0",
+  },
+  chartMeta: {
+    color: "#64748b",
+    fontSize: 12,
+    marginTop: 6,
+  },
+  filtersRow: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 16,
     marginBottom: 16,
+    flexWrap: "wrap",
+  },
+  forecastRow: {
+    display: "flex",
+    gap: 8,
+    flexWrap: "wrap",
+    marginTop: 10,
+  },
+  forecastChip: {
+    background: "#08101f",
+    border: "1px solid #1e293b",
+    color: "#cbd5e1",
+    borderRadius: 999,
+    padding: "6px 10px",
+    fontSize: 12,
+    fontWeight: 600,
+  },
+  selectGroup: {
+    display: "flex",
+    gap: 10,
+    flexWrap: "wrap",
+  },
+  select: {
+    background: "#020617",
+    color: "#e2e8f0",
+    borderRadius: 6,
+    padding: "8px 10px",
+    border: "1px solid #1e293b",
   },
   chart: {
     height: 200,

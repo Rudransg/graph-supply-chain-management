@@ -7,3 +7,12 @@
 2026-03-31 21:24:18,596-INFO-Metrics loaded: {'test_asymmetric_loss': 7.346274153182381, 'mse': 3.6844725608825684, 'mae': 1.0096575021743774, 'rmse': 1.9194979971030364, 'r2': 0.992432177066803}
 2026-03-31 21:24:18,661-INFO-Precomputed data loaded | snapshots: 190
 2026-03-31 21:24:18,768-INFO-[Startup] Forecast cache built for 41 products
+2026-03-31 23:14:37,413-INFO-Using device: cuda
+2026-03-31 23:14:37,413-INFO-Rebuilding SupplyGraphModel architecture
+2026-03-31 23:14:37,745-INFO-Model loaded and set to eval mode
+2026-03-31 23:14:37,745-INFO-Loading hetero_data.pt
+2026-03-31 23:14:37,750-INFO-Graph loaded | nodes: 41 | edge types: 4
+2026-03-31 23:14:37,751-INFO-Loaded mappings for 41 products
+2026-03-31 23:14:37,752-INFO-Metrics loaded: {'test_asymmetric_loss': 7.346274153182381, 'mse': 3.6844725608825684, 'mae': 1.0096575021743774, 'rmse': 1.9194979971030364, 'r2': 0.992432177066803}
+2026-03-31 23:14:37,756-INFO-Precomputed data loaded | snapshots: 190
+2026-03-31 23:14:37,801-INFO-[Startup] Forecast cache built for 41 products

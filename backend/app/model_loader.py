@@ -31,6 +31,8 @@ from torch_geometric.typing import EdgeType
 
 from src.logger import get_logger
 from src.custom_exception import CustomException
+from config.path_config import *
+
 
 logger = get_logger(__name__)
 
@@ -39,7 +41,7 @@ NODE_TYPE        = "rolled_prod"
 EDGE_RELATIONS   = ["same_plant", "same_storage", "same_product_group", "same_product_subgroup"]
 IN_CHANNELS      = 17          # static_x dim
 HIDDEN_CHANNELS  = 32
-OUT_CHANNELS     = 1
+OUT_CHANNELS     = 3           # production_unit, delivery_unit, sales_order_unit
 CONV_TYPE        = "sage"
 AGGREGATION      = "sum"
 LAYERS           = 2
@@ -58,57 +60,61 @@ PROD_TO_IDX_PATH = ARTIFACTS / "processed" / "product_to_idx.json"
 
 
 # ── model architecture (mirrors src/model_training.py exactly) ────────────────
-class SupplyGraphModel(nn.Module):
-    def __init__(
-        self,
-        node_type: str,
-        relations: list,
-        in_channels: int,
-        hidden_channels: int,
-        out_channels: int,
-        conv_type: str = "sage",
-        aggregation: str = "sum",
-        layers: int = 2,
-    ) -> None:
+class DeepGCNGRUCell(nn.Module):
+    def __init__(self, in_channels, hidden_channels, dropout=0.2):
         super().__init__()
-        self.node_type = node_type
-        self.relations = relations
-        self.layers    = layers
+        self.gcn1 = GCNConv(in_channels, hidden_channels)
+        self.gcn2 = GCNConv(hidden_channels, hidden_channels)
+        self.gru1 = nn.GRUCell(hidden_channels, hidden_channels)
+        self.gru2 = nn.GRUCell(hidden_channels, hidden_channels)
+        self.gru3 = nn.GRUCell(hidden_channels, hidden_channels)
+        self.dropout = nn.Dropout(dropout)
 
-        self.convs = nn.ModuleList()
+    def forward(self, x, edge_index, h1, h2, h3):
+        x = F.relu(self.gcn1(x, edge_index))
+        x = self.dropout(x)
+        x = F.relu(self.gcn2(x, edge_index))
+        x = self.dropout(x)
+        h1 = self.gru1(x, h1)
+        h2 = self.gru2(h1, h2)
+        h3 = self.gru3(h2, h3)
+        return h1, h2, h3
 
-        first_layer: dict[EdgeType, MessagePassing] = {
-            (node_type, rel, node_type): self._make_conv(conv_type, in_channels, hidden_channels)
-            for rel in relations
-        }
-        self.convs.append(HeteroConv(first_layer, aggr=aggregation))
 
-        for _ in range(layers - 1):
-            hidden_layer: dict[EdgeType, MessagePassing] = {
-                (node_type, rel, node_type): self._make_conv(conv_type, hidden_channels, hidden_channels)
-                for rel in relations
-            }
-            self.convs.append(HeteroConv(hidden_layer, aggr=aggregation))
+class MultiStepGCNGRU(nn.Module):
+    def __init__(self, in_channels, hidden_channels, out_channels, forecast_horizon):
+        super().__init__()
+        self.cell = DeepGCNGRUCell(in_channels, hidden_channels)
+        self.proj = nn.Linear(hidden_channels, out_channels)
+        self.forecast_horizon = forecast_horizon
 
-        self.lin = nn.Linear(hidden_channels, out_channels)
+    def forward(self, x_seq, edge_index):
+        B, P, N, C = x_seq.shape
+        H = self.proj.in_features
+        device = x_seq.device
 
-    @staticmethod
-    def _make_conv(conv_type: str, in_ch: int, out_ch: int) -> MessagePassing:
-        if conv_type.lower() == "sage":
-            return cast(MessagePassing, SAGEConv(in_ch, out_ch))
-        if conv_type.lower() == "gcn":
-            return cast(MessagePassing, GCNConv(in_ch, out_ch))
-        raise ValueError(f"Unsupported conv_type: {conv_type}")
+        h1 = torch.zeros(B * N, H, device=device)
+        h2 = torch.zeros(B * N, H, device=device)
+        h3 = torch.zeros(B * N, H, device=device)
 
-    def forward(self, x_dict, edge_index_dict):
-        for conv in self.convs:
-            x_dict = conv(x_dict, edge_index_dict)
-            x_dict = {k: F.relu(v) for k, v in x_dict.items()}
-        return self.lin(x_dict[self.node_type])
+        for t in range(P):
+            xt = x_seq[:, t].reshape(B * N, C)
+            h1, h2, h3 = self.cell(xt, edge_index, h1, h2, h3)
 
+        preds = []
+        x_dec = x_seq[:, -1]
+
+        for _ in range(self.forecast_horizon):
+            xt = x_dec.reshape(B * N, C)
+            h1, h2, h3 = self.cell(xt, edge_index, h1, h2, h3)
+            y_t = self.proj(h3).reshape(B, N, -1)
+            preds.append(y_t)
+            x_dec = y_t
+
+        return torch.stack(preds, dim=1)
 
 # ── service singleton ─────────────────────────────────────────────────────────
-class SupplyGraphModelService:
+class MultiStepGCNGRUModelService:
     def __init__(self):
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         logger.info(f"Using device: {self.device}")
@@ -122,20 +128,15 @@ class SupplyGraphModelService:
     # ── loaders ───────────────────────────────────────────────────────────────
     def _load_model(self):
         try:
-            logger.info(f"Rebuilding SupplyGraphModel architecture")
-            # actual in_channels = static_x_dim(17) + temporal_dim(1) = 18
-            self.model = SupplyGraphModel(
-                node_type=NODE_TYPE,
-                relations=EDGE_RELATIONS,
-                in_channels=IN_CHANNELS + 1,   # 18
+            logger.info("Rebuilding MultiStepGCNGRU architecture")
+            self.model = MultiStepGCNGRU(
+                in_channels=TEMPORAL_FEATURE_DIM,
                 hidden_channels=HIDDEN_CHANNELS,
-                out_channels=OUT_CHANNELS,
-                conv_type=CONV_TYPE,
-                aggregation=AGGREGATION,
-                layers=LAYERS,
+                out_channels=3,
+                forecast_horizon=PREDICTION_HORIZON,
             ).to(self.device)
 
-            state_dict = torch.load(MODEL_PATH, map_location=self.device, weights_only=True)
+            state_dict = torch.load(MODEL_OUTPUT_PATH, map_location=self.device, weights_only=True)
             self.model.load_state_dict(state_dict)
             self.model.eval()
             logger.info("Model loaded and set to eval mode")
@@ -146,20 +147,21 @@ class SupplyGraphModelService:
     def _load_graph_data(self):
         try:
             logger.info("Loading hetero_data.pt")
-            self.hetero_data = torch.load(HETERO_DATA_PATH, map_location=self.device, weights_only=False)
-            # static_x: shape [41, 17] — zeros from preprocessing
-            self.static_x = self.hetero_data[NODE_TYPE].x.to(self.device)
+            self.hetero_data = torch.load(
+                HETERO_DATA_PATH,
+                map_location=self.device,
+                weights_only=False,
+            )
 
-            # build normalized edge_index_dict exactly as ModelTrainer does
-            self.edge_index_dict = {
-                (NODE_TYPE, rel, NODE_TYPE): edge_index.to(self.device)
-                for (src, rel, dst), edge_index in self.hetero_data.edge_index_dict.items()
-            }
-            logger.info(f"Graph loaded | nodes: {self.static_x.shape[0]} | edge types: {len(self.edge_index_dict)}")
+            edges = list(self.hetero_data.edge_index_dict.values())
+            self.edge_index = torch.cat(edges, dim=1).to(self.device)
+
+            logger.info(
+                f"Graph loaded | edge_index shape: {tuple(self.edge_index.shape)}"
+            )
         except Exception as e:
             logger.error(f"Failed to load graph data: {e}")
             raise CustomException("Failed to load graph data", e)
-
     def _load_mappings(self):
         try:
             with open(IDX_TO_PROD_PATH, "r") as f:
@@ -197,12 +199,38 @@ class SupplyGraphModelService:
                 device=self.device
             )
             if PREDICTIONS_PATH.exists() and TARGETS_PATH.exists():
-                self.predictions = np.load(PREDICTIONS_PATH)
-                self.targets     = np.load(TARGETS_PATH)
+                preds_raw = np.load(PREDICTIONS_PATH)  # shape (T, 41*3*7) or (T, 123)
+                targets_raw = np.load(TARGETS_PATH)    # shape (T, 41*3*7) or (T, 123)
+                
+                # Reshape predictions and targets to extract first horizon step
+                # Input: [T, 861] (multi-step 7-day forecasts) -> Output: [T, 123] (single-step)
+                T = preds_raw.shape[0]
+                n_products = 41
+                n_signals = 3
+                horizon = 7
+                
+                if preds_raw.shape[1] == n_products * n_signals * horizon:
+                    # Multi-step predictions: reshape to [T, 7, 41, 3] then take first step
+                    self.predictions = preds_raw.reshape(T, horizon, n_products, n_signals)[:, 0, :, :].reshape(T, -1)
+                elif preds_raw.shape[1] == n_products * n_signals:
+                    # Already in single-step format [T, 123]
+                    self.predictions = preds_raw.reshape(T, n_products, n_signals).reshape(T, -1)
+                else:
+                    # Fallback: assume it's [T, 41] (single target) and expand to 3 targets
+                    self.predictions = np.tile(preds_raw, (1, 3))
+                
+                # Reshape targets similarly
+                if targets_raw.shape[1] == n_products * n_signals * horizon:
+                    self.targets = targets_raw.reshape(T, horizon, n_products, n_signals)[:, 0, :, :].reshape(T, -1)
+                elif targets_raw.shape[1] == n_products * n_signals:
+                    self.targets = targets_raw.reshape(T, n_products, n_signals).reshape(T, -1)
+                else:
+                    self.targets = np.tile(targets_raw, (1, 3))
+                
             else:
                 self.predictions = np.array([])
                 self.targets     = np.array([])
-            logger.info(f"Precomputed data loaded | snapshots: {self.X.shape[0]}")
+            logger.info(f"Precomputed data loaded | snapshots: {self.X.shape[0]}, preds shape: {self.predictions.shape}")
         except Exception as e:
             logger.error(f"Failed to load precomputed data: {e}")
             raise CustomException("Failed to load precomputed data", e)
@@ -213,24 +241,28 @@ class SupplyGraphModelService:
             if product_name not in self.product_to_idx:
                 raise ValueError(f"Product '{product_name}' not found in mapping")
 
-            product_idx = self.product_to_idx[product_name]
+            product_idx = int(self.product_to_idx[product_name])
 
             with torch.no_grad():
-                # replicate exact forward logic from ModelTrainer.evaluate()
-                x_cat  = torch.cat([self.static_x, self.last_temporal_x], dim=-1)  # [41, 18]
-                x_dict = {NODE_TYPE: x_cat}
-                out    = self.model(x_dict, self.edge_index_dict)                   # [41, 1]
+                # forward: [1, Q, N, C]
+                out = self.model(self.last_input_window, self.edge_index)
 
-            prediction = float(out[product_idx].cpu().item())
+            # take first forecast step
+            pred_vec = out[0, 0, product_idx].cpu().numpy()
+
+            if np.ndim(pred_vec) == 0:
+                prediction = float(pred_vec)
+            else:
+                prediction = pred_vec.tolist()
 
             return {
-                "product_name": product_name,
-                "product_idx":  product_idx,
-                "prediction":   prediction,
-            }
+                    "product_name": product_name,
+                    "product_idx":  product_idx,
+                    "prediction":   prediction,
+                }
         except Exception as e:
             logger.error(f"Prediction failed: {e}")
-            raise CustomException("Prediction failed", e)
+            raise CustomException("Prediction failed", e)    
 
     def get_all_products(self) -> dict[str, str]:
         # returns {idx_str: product_name}
@@ -248,4 +280,4 @@ class SupplyGraphModelService:
 
 
 # singleton — loaded once on startup
-model_service = SupplyGraphModelService()
+model_service = MultiStepGCNGRUModelService()

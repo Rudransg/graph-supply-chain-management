@@ -1,0 +1,19 @@
+channels:
+- conda-forge
+dependencies:
+- python=3.11.8
+- pip<=26.0.1
+- pip:
+  - mlflow==3.5.1
+  - cloudpickle==3.1.2
+  - numpy==2.4.3
+  - pandas==2.3.3
+  - pyg-lib==0.5.0
+  - scipy==1.17.1
+  - torch-cluster==1.6.3
+  - torch-geometric==2.7.0
+  - torch-scatter==2.1.2
+  - torch-sparse==0.6.18
+  - torch-spline-conv==1.2.2
+  - torch==2.6.0
+name: mlflow-env

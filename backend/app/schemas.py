@@ -6,13 +6,16 @@ from typing import Optional
 class PredictRequest(BaseModel):
     product_name: str = Field(
         ...,
-        description="Product name exactly as stored in idx_to_product.json, e.g. '10001'"
+        description="Product id such as 'AT5X5K' or a signal-product key such as 'production_unit_AT5X5K'"
     )
 
 class PredictResponse(BaseModel):
     product_name: str
     product_idx: int
-    prediction: float
+    prediction: dict[str, float] | float
+    next_day_prediction: dict[str, float] | None = None
+    daily_forecast: dict[str, list[float]] | None = None
+    forecast_horizon_days: int | None = None
     model_version: str
     run_id: str
 

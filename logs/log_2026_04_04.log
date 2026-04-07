@@ -1,0 +1,500 @@
+2026-04-04 00:18:22,224-INFO-Using device: cuda
+2026-04-04 00:18:22,224-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-04 00:18:22,372-INFO-Model loaded and set to eval mode
+2026-04-04 00:18:22,372-INFO-Loading hetero_data.pt
+2026-04-04 00:18:22,412-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 00:18:22,413-INFO-Loaded mappings for 123 products
+2026-04-04 00:18:22,413-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-04 00:18:22,417-INFO-Precomputed data loaded | snapshots: 184, preds shape: (35, 123)
+2026-04-04 00:18:22,451-INFO-[Startup] Forecast cache built for 41 products
+2026-04-04 00:19:22,483-ERROR-/predict failed: 'MultiStepGCNGRUModelService' object has no attribute 'predict'
+2026-04-04 00:36:10,261-INFO-Using device: cuda
+2026-04-04 00:36:10,261-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-04 00:36:10,495-INFO-Model loaded and set to eval mode
+2026-04-04 00:36:10,496-INFO-Loading hetero_data.pt
+2026-04-04 00:36:10,537-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 00:36:10,538-INFO-Loaded mappings for 123 products
+2026-04-04 00:36:10,539-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-04 00:36:10,541-INFO-Precomputed data loaded | snapshots: 184, preds shape: (35, 123)
+2026-04-04 00:36:10,584-INFO-[Startup] Forecast cache built for 41 products
+2026-04-04 00:37:47,182-INFO-Using device: cuda
+2026-04-04 00:37:47,182-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-04 00:37:47,317-INFO-Model loaded and set to eval mode
+2026-04-04 00:37:47,318-INFO-Loading hetero_data.pt
+2026-04-04 00:37:47,342-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 00:37:47,342-INFO-Loaded mappings for 123 products
+2026-04-04 00:37:47,343-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-04 00:37:47,344-INFO-Precomputed data loaded | snapshots: 184, preds shape: (35, 123)
+2026-04-04 00:37:47,365-INFO-[Startup] Forecast cache built for 41 products
+2026-04-04 00:41:04,349-INFO-Using device: cuda
+2026-04-04 00:41:04,476-INFO-Model loaded and set to eval mode
+2026-04-04 00:41:04,500-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 00:41:04,502-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 00:41:04,503-INFO-Metrics loaded
+2026-04-04 00:41:04,504-WARNING-Normalization artifact missing: X_mean.npy; using fallback values
+2026-04-04 00:41:04,504-WARNING-Normalization artifact missing: X_std.npy; using fallback values
+2026-04-04 00:41:04,506-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 00:41:22,478-INFO-Using device: cuda
+2026-04-04 00:41:22,603-INFO-Model loaded and set to eval mode
+2026-04-04 00:41:22,623-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 00:41:22,624-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 00:41:22,624-INFO-Metrics loaded
+2026-04-04 00:41:22,625-WARNING-Normalization artifact missing: X_mean.npy; using fallback values
+2026-04-04 00:41:22,625-WARNING-Normalization artifact missing: X_std.npy; using fallback values
+2026-04-04 00:41:22,627-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 00:41:22,648-INFO-[Startup] Forecast cache built for 41 products
+2026-04-04 00:41:33,571-INFO-Using device: cuda
+2026-04-04 00:41:33,710-INFO-Model loaded and set to eval mode
+2026-04-04 00:41:33,735-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 00:41:33,736-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 00:41:33,736-INFO-Metrics loaded
+2026-04-04 00:41:33,736-WARNING-Normalization artifact missing: X_mean.npy; using fallback values
+2026-04-04 00:41:33,738-WARNING-Normalization artifact missing: X_std.npy; using fallback values
+2026-04-04 00:41:33,739-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 00:41:33,760-INFO-[Startup] Forecast cache built for 41 products
+2026-04-04 00:41:53,713-INFO-Using device: cuda
+2026-04-04 00:41:53,866-INFO-Model loaded and set to eval mode
+2026-04-04 00:41:53,895-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 00:41:53,896-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 00:41:53,896-INFO-Metrics loaded
+2026-04-04 00:41:53,897-WARNING-Normalization artifact missing: X_mean.npy; using fallback values
+2026-04-04 00:41:53,897-WARNING-Normalization artifact missing: X_std.npy; using fallback values
+2026-04-04 00:41:53,899-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 00:41:53,928-INFO-[Startup] Forecast cache built for 41 products
+2026-04-04 00:42:12,769-INFO-Using device: cuda
+2026-04-04 00:42:12,902-INFO-Model loaded and set to eval mode
+2026-04-04 00:42:12,924-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 00:42:12,925-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 00:42:12,925-INFO-Metrics loaded
+2026-04-04 00:42:12,926-WARNING-Normalization artifact missing: X_mean.npy; using fallback values
+2026-04-04 00:42:12,926-WARNING-Normalization artifact missing: X_std.npy; using fallback values
+2026-04-04 00:42:12,927-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 00:42:12,952-INFO-[Startup] Forecast cache built for 41 products
+2026-04-04 00:42:42,796-INFO-Using device: cuda
+2026-04-04 00:42:42,958-INFO-Model loaded and set to eval mode
+2026-04-04 00:42:42,981-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 00:42:42,982-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 00:42:42,982-INFO-Metrics loaded
+2026-04-04 00:42:42,983-WARNING-Normalization artifact missing: X_mean.npy; using fallback values
+2026-04-04 00:42:42,983-WARNING-Normalization artifact missing: X_std.npy; using fallback values
+2026-04-04 00:42:42,985-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 00:51:56,709-INFO-Using device: cuda
+2026-04-04 00:51:57,016-INFO-Model loaded and set to eval mode
+2026-04-04 00:51:57,079-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 00:51:57,081-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 00:51:57,082-INFO-Metrics loaded
+2026-04-04 00:51:57,082-WARNING-Normalization artifact missing: X_mean.npy; using fallback values
+2026-04-04 00:51:57,082-WARNING-Normalization artifact missing: X_std.npy; using fallback values
+2026-04-04 00:51:57,086-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 00:51:57,149-INFO-[Startup] Forecast cache built for 41 products
+2026-04-04 00:56:07,511-INFO-Using device: cuda
+2026-04-04 00:56:08,188-INFO-Model loaded and set to eval mode
+2026-04-04 00:56:08,331-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 00:56:08,334-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 00:56:08,335-INFO-Metrics loaded
+2026-04-04 00:56:08,336-WARNING-Normalization artifact missing: X_mean.npy; using fallback values
+2026-04-04 00:56:08,337-WARNING-Normalization artifact missing: X_std.npy; using fallback values
+2026-04-04 00:56:08,343-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:00:31,292-INFO-Using device: cuda
+2026-04-04 01:00:31,550-INFO-Model loaded and set to eval mode
+2026-04-04 01:00:31,609-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:00:31,611-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:00:31,611-INFO-Metrics loaded
+2026-04-04 01:00:31,612-WARNING-Normalization artifact missing: X_mean.npy; using fallback values
+2026-04-04 01:00:31,613-WARNING-Normalization artifact missing: X_std.npy; using fallback values
+2026-04-04 01:00:31,616-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:00:31,680-INFO-[Startup] Forecast cache built for 41 products
+2026-04-04 01:00:54,244-INFO-Using device: cuda
+2026-04-04 01:00:54,566-INFO-Model loaded and set to eval mode
+2026-04-04 01:00:54,654-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:00:54,656-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:00:54,657-INFO-Metrics loaded
+2026-04-04 01:00:54,661-WARNING-Normalization artifact missing: X_mean.npy; using fallback values
+2026-04-04 01:00:54,663-WARNING-Normalization artifact missing: X_std.npy; using fallback values
+2026-04-04 01:00:54,670-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:03:45,092-INFO-Using device: cuda
+2026-04-04 01:03:45,471-INFO-Model loaded and set to eval mode
+2026-04-04 01:03:45,578-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:03:45,581-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:03:45,583-INFO-Metrics loaded
+2026-04-04 01:03:45,585-WARNING-Normalization artifact missing: X_mean.npy; using fallback values
+2026-04-04 01:03:45,586-WARNING-Normalization artifact missing: X_std.npy; using fallback values
+2026-04-04 01:03:45,593-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:03:45,726-INFO-[Startup] Forecast cache built for 41 products
+2026-04-04 01:13:19,193-INFO-Using device: cuda
+2026-04-04 01:13:19,838-INFO-Model loaded and set to eval mode
+2026-04-04 01:13:19,981-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:13:19,984-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:13:19,989-INFO-Metrics loaded
+2026-04-04 01:13:19,993-WARNING-Normalization artifact missing: X_mean.npy; using fallback values
+2026-04-04 01:13:19,993-WARNING-Normalization artifact missing: X_std.npy; using fallback values
+2026-04-04 01:13:20,006-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:14:12,208-INFO-Using device: cuda
+2026-04-04 01:14:12,554-INFO-Model loaded and set to eval mode
+2026-04-04 01:14:12,623-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:14:12,626-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:14:12,627-INFO-Metrics loaded
+2026-04-04 01:14:12,628-WARNING-Normalization artifact missing: X_mean.npy; using fallback values
+2026-04-04 01:14:12,629-WARNING-Normalization artifact missing: X_std.npy; using fallback values
+2026-04-04 01:14:12,635-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:14:12,729-INFO-[Startup] Forecast cache built for 41 products
+2026-04-04 01:15:55,951-INFO-Using device: cuda
+2026-04-04 01:15:56,290-INFO-Model loaded and set to eval mode
+2026-04-04 01:15:56,368-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:15:56,371-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:15:56,371-INFO-Metrics loaded
+2026-04-04 01:15:56,373-WARNING-Normalization artifact missing: X_mean.npy; using fallback values
+2026-04-04 01:15:56,373-WARNING-Normalization artifact missing: X_std.npy; using fallback values
+2026-04-04 01:15:56,380-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:16:03,680-INFO-Loading processed artifacts
+2026-04-04 01:16:03,683-INFO-values shape: (191, 41, 3)
+2026-04-04 01:16:03,683-INFO-Target signals: ['production_unit', 'delivery_unit', 'sales_order_unit']
+2026-04-04 01:16:03,851-INFO-Sequences: X=(173, 12, 41, 3)  Y=(173, 7, 41, 3)
+2026-04-04 01:16:03,865-INFO-Train size: 138  Test size: 35
+2026-04-04 01:16:57,017-INFO-Loading processed artifacts
+2026-04-04 01:16:57,020-INFO-values shape: (191, 41, 3)
+2026-04-04 01:16:57,021-INFO-Target signals: ['production_unit', 'delivery_unit', 'sales_order_unit']
+2026-04-04 01:16:57,211-INFO-Sequences: X=(173, 12, 41, 3)  Y=(173, 7, 41, 3)
+2026-04-04 01:16:57,224-INFO-Train size: 138  Test size: 35
+2026-04-04 01:17:53,870-INFO-Using device: cuda
+2026-04-04 01:17:54,350-INFO-Model loaded and set to eval mode
+2026-04-04 01:17:54,460-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:17:54,464-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:17:54,466-INFO-Metrics loaded
+2026-04-04 01:17:54,473-WARNING-X_mean.npy / X_std.npy missing; reconstructing input normalization from values.npy
+2026-04-04 01:17:54,491-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:17:54,514-INFO-Using device: cuda
+2026-04-04 01:17:54,546-INFO-Model loaded and set to eval mode
+2026-04-04 01:17:54,552-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:17:54,554-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:17:54,555-INFO-Metrics loaded
+2026-04-04 01:17:54,558-WARNING-X_mean.npy / X_std.npy missing; reconstructing input normalization from values.npy
+2026-04-04 01:17:54,570-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:18:06,686-INFO-Using device: cuda
+2026-04-04 01:18:06,980-INFO-Model loaded and set to eval mode
+2026-04-04 01:18:07,039-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:18:07,040-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:18:07,041-INFO-Metrics loaded
+2026-04-04 01:18:07,044-WARNING-X_mean.npy / X_std.npy missing; reconstructing input normalization from values.npy
+2026-04-04 01:18:07,053-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:18:07,124-INFO-[Startup] Forecast cache built for 41 products
+2026-04-04 01:19:29,005-INFO-Using device: cuda
+2026-04-04 01:19:29,361-INFO-Model loaded and set to eval mode
+2026-04-04 01:19:29,442-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:19:29,444-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:19:29,445-INFO-Metrics loaded
+2026-04-04 01:19:29,449-WARNING-X_mean.npy / X_std.npy missing; reconstructing input normalization from values.npy
+2026-04-04 01:19:29,461-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:19:29,558-INFO-[Startup] Forecast cache built for 41 products
+2026-04-04 01:19:48,457-INFO-Using device: cuda
+2026-04-04 01:19:48,916-INFO-Model loaded and set to eval mode
+2026-04-04 01:19:49,039-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:19:49,040-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:19:49,041-INFO-Metrics loaded
+2026-04-04 01:19:49,045-WARNING-X_mean.npy / X_std.npy missing; reconstructing input normalization from values.npy
+2026-04-04 01:19:49,059-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:19:49,082-INFO-Using device: cuda
+2026-04-04 01:19:49,143-INFO-Model loaded and set to eval mode
+2026-04-04 01:19:49,151-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:19:49,153-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:19:49,154-INFO-Metrics loaded
+2026-04-04 01:19:49,158-WARNING-X_mean.npy / X_std.npy missing; reconstructing input normalization from values.npy
+2026-04-04 01:19:49,174-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:22:18,210-INFO-Using device: cuda
+2026-04-04 01:22:18,579-INFO-Model loaded and set to eval mode
+2026-04-04 01:22:18,652-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:22:18,654-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:22:18,655-INFO-Metrics loaded
+2026-04-04 01:22:18,658-WARNING-X_mean.npy / X_std.npy missing; reconstructing input normalization from values.npy
+2026-04-04 01:22:18,669-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:22:18,741-INFO-[Startup] Forecast cache built for 41 products
+2026-04-04 01:26:41,260-INFO-Using device: cuda
+2026-04-04 01:26:41,583-INFO-Model loaded and set to eval mode
+2026-04-04 01:26:41,655-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:26:41,657-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:26:41,658-INFO-Metrics loaded
+2026-04-04 01:26:41,662-WARNING-X_mean.npy / X_std.npy missing; reconstructing input normalization from values.npy
+2026-04-04 01:26:41,671-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:26:41,779-INFO-[Startup] Forecast cache built for 41 products
+2026-04-04 01:27:33,022-INFO-Using device: cuda
+2026-04-04 01:27:33,382-INFO-Model loaded and set to eval mode
+2026-04-04 01:27:33,468-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:27:33,470-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:27:33,471-INFO-Metrics loaded
+2026-04-04 01:27:33,474-WARNING-X_mean.npy / X_std.npy missing; reconstructing input normalization from values.npy
+2026-04-04 01:27:33,485-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:27:33,566-INFO-[Startup] Forecast cache built for 41 products
+2026-04-04 01:28:20,972-INFO-Using device: cuda
+2026-04-04 01:28:21,284-INFO-Model loaded and set to eval mode
+2026-04-04 01:28:21,369-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:28:21,371-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:28:21,372-INFO-Metrics loaded
+2026-04-04 01:28:21,376-WARNING-X_mean.npy / X_std.npy missing; reconstructing input normalization from values.npy
+2026-04-04 01:28:21,386-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:28:21,455-INFO-[Startup] Forecast cache built for 41 products
+2026-04-04 01:29:08,004-INFO-Using device: cuda
+2026-04-04 01:29:08,434-INFO-Model loaded and set to eval mode
+2026-04-04 01:29:08,514-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:29:08,516-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:29:08,517-INFO-Metrics loaded
+2026-04-04 01:29:08,522-WARNING-X_mean.npy / X_std.npy missing; reconstructing input normalization from values.npy
+2026-04-04 01:29:08,536-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:29:08,633-INFO-[Startup] Forecast cache built for 41 products
+2026-04-04 01:29:41,887-INFO-Using device: cuda
+2026-04-04 01:29:42,197-INFO-Model loaded and set to eval mode
+2026-04-04 01:29:42,257-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:29:42,259-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:29:42,260-INFO-Metrics loaded
+2026-04-04 01:29:42,263-WARNING-X_mean.npy / X_std.npy missing; reconstructing input normalization from values.npy
+2026-04-04 01:29:42,272-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:29:42,339-INFO-[Startup] Forecast cache built for 41 products
+2026-04-04 01:30:21,943-INFO-SupplyGraphDataProcessor initialized successfully
+2026-04-04 01:30:21,943-INFO-Starting preprocessing pipeline
+2026-04-04 01:30:21,944-INFO-Starting temporal preprocessing
+2026-04-04 01:30:21,988-INFO-Found 41 common products
+2026-04-04 01:30:22,076-INFO-values tensor shape: (191, 41, 3)
+2026-04-04 01:30:22,098-INFO-Building HeteroData graph
+2026-04-04 01:30:22,159-ERROR-Error while building named artifacts: "None of [Index(['AT5X5K', 'ATN01K24P', 'ATN02K12P', 'ATPA1K24P', 'ATPPCH5X5K',\n       'ATWWP001K24P', 'ATWWP002K12P', 'EEA200G24P', 'EEA500G12P', 'MAC1K25P',\n       'MAHS025K', 'MAP1K25P', 'MAPA1K24P', 'MAR01K24P', 'MAR02K12P',\n       'MASR025K', 'POP001L12P', 'POP001L12P', 'POP002L09P', 'POP005L04P',\n       'POP015K', 'POP500M24P', 'POPF01L12P', 'POV001L24P', 'POV002L09P',\n       'POV005L04P', 'POV500M24P', 'SE200G24P', 'SE500G24P', 'SO0001L12P',\n       'SO0002L09P', 'SO0005L04P', 'SO0500M24P', 'SOP001L12P', 'SOS001L12P',\n       'SOS002L09P', 'SOS003L04P', 'SOS005L04P', 'SOS008L02P', 'SOS250M48P',\n       'SOS500M24P'],\n      dtype='object')] are in the [columns]"
+2026-04-04 01:30:22,160-ERROR-Error during preprocessing pipeline: Error in E:\Supply Graph\src\datapreprocessing.py , line 179 : Error while building named artifacts: "None of [Index(['AT5X5K', 'ATN01K24P', 'ATN02K12P', 'ATPA1K24P', 'ATPPCH5X5K',\n       'ATWWP001K24P', 'ATWWP002K12P', 'EEA200G24P', 'EEA500G12P', 'MAC1K25P',\n       'MAHS025K', 'MAP1K25P', 'MAPA1K24P', 'MAR01K24P', 'MAR02K12P',\n       'MASR025K', 'POP001L12P', 'POP001L12P', 'POP002L09P', 'POP005L04P',\n       'POP015K', 'POP500M24P', 'POPF01L12P', 'POV001L24P', 'POV002L09P',\n       'POV005L04P', 'POV500M24P', 'SE200G24P', 'SE500G24P', 'SO0001L12P',\n       'SO0002L09P', 'SO0005L04P', 'SO0500M24P', 'SOP001L12P', 'SOS001L12P',\n       'SOS002L09P', 'SOS003L04P', 'SOS005L04P', 'SOS008L02P', 'SOS250M48P',\n       'SOS500M24P'],\n      dtype='object')] are in the [columns]"
+2026-04-04 01:31:53,421-INFO-Using device: cuda
+2026-04-04 01:31:53,805-INFO-Model loaded and set to eval mode
+2026-04-04 01:31:53,884-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:31:53,887-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:31:53,888-INFO-Metrics loaded
+2026-04-04 01:31:53,891-WARNING-X_mean.npy / X_std.npy missing; reconstructing input normalization from values.npy
+2026-04-04 01:31:53,902-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:31:53,980-INFO-[Startup] Forecast cache built for 41 products
+2026-04-04 01:32:10,363-INFO-SupplyGraphDataProcessor initialized successfully
+2026-04-04 01:32:10,364-INFO-Starting preprocessing pipeline
+2026-04-04 01:32:10,364-INFO-Starting temporal preprocessing
+2026-04-04 01:32:10,390-INFO-Found 41 common products
+2026-04-04 01:32:10,428-INFO-values tensor shape: (191, 41, 3)
+2026-04-04 01:32:10,439-INFO-Building HeteroData graph
+2026-04-04 01:32:10,834-INFO-Pipeline completed successfully
+2026-04-04 01:32:42,835-INFO-Using device: cuda
+2026-04-04 01:32:43,337-INFO-Model loaded and set to eval mode
+2026-04-04 01:32:43,465-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:32:43,468-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:32:43,469-INFO-Metrics loaded
+2026-04-04 01:32:43,472-WARNING-X_mean.npy / X_std.npy missing; reconstructing input normalization from values.npy
+2026-04-04 01:32:43,484-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:32:43,494-INFO-Using device: cuda
+2026-04-04 01:32:43,540-INFO-Model loaded and set to eval mode
+2026-04-04 01:32:43,548-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:32:43,550-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:32:43,551-INFO-Metrics loaded
+2026-04-04 01:32:43,554-WARNING-X_mean.npy / X_std.npy missing; reconstructing input normalization from values.npy
+2026-04-04 01:32:43,564-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:33:33,274-INFO-Starting model training pipeline
+2026-04-04 01:33:33,274-INFO-Loading processed artifacts
+2026-04-04 01:33:33,315-INFO-values shape: (191, 41, 3)
+2026-04-04 01:33:33,315-INFO-Target signals: ['production_unit', 'delivery_unit', 'sales_order_unit']
+2026-04-04 01:33:34,067-INFO-Sequences: X=(173, 12, 41, 3)  Y=(173, 7, 41, 3)
+2026-04-04 01:33:34,101-INFO-Train size: 138  Test size: 35
+2026-04-04 01:33:34,550-INFO-Starting training
+2026-04-04 01:34:13,435-INFO-Epoch 1/50 - train loss: 0.9374
+2026-04-04 01:34:40,259-INFO-Epoch 2/50 - train loss: 0.5324
+2026-04-04 01:34:47,382-INFO-Epoch 3/50 - train loss: 0.2691
+2026-04-04 01:34:52,445-INFO-Epoch 4/50 - train loss: 0.2785
+2026-04-04 01:34:57,479-INFO-Epoch 5/50 - train loss: 0.3020
+2026-04-04 01:35:02,514-INFO-Epoch 6/50 - train loss: 0.2329
+2026-04-04 01:35:07,356-INFO-Epoch 7/50 - train loss: 0.2799
+2026-04-04 01:35:13,566-INFO-Epoch 8/50 - train loss: 0.2572
+2026-04-04 01:35:22,300-INFO-Epoch 9/50 - train loss: 0.2525
+2026-04-04 01:35:29,550-INFO-Epoch 10/50 - train loss: 0.2098
+2026-04-04 01:35:36,522-INFO-Epoch 11/50 - train loss: 0.2257
+2026-04-04 01:35:47,949-INFO-Epoch 12/50 - train loss: 0.1982
+2026-04-04 01:35:54,506-INFO-Epoch 13/50 - train loss: 0.1946
+2026-04-04 01:36:11,158-INFO-Epoch 14/50 - train loss: 0.1814
+2026-04-04 01:36:16,108-INFO-Epoch 15/50 - train loss: 0.2296
+2026-04-04 01:36:20,748-INFO-Epoch 16/50 - train loss: 0.2503
+2026-04-04 01:36:30,742-INFO-Epoch 17/50 - train loss: 0.2328
+2026-04-04 01:36:50,860-INFO-Epoch 18/50 - train loss: 0.2289
+2026-04-04 01:37:16,841-INFO-Epoch 19/50 - train loss: 0.2097
+2026-04-04 01:37:45,733-INFO-Epoch 20/50 - train loss: 0.2178
+2026-04-04 01:37:54,877-INFO-Epoch 21/50 - train loss: 0.2088
+2026-04-04 01:38:00,101-INFO-Epoch 22/50 - train loss: 0.2089
+2026-04-04 01:38:05,321-INFO-Epoch 23/50 - train loss: 0.1942
+2026-04-04 01:38:10,376-INFO-Epoch 24/50 - train loss: 0.2703
+2026-04-04 01:38:15,200-INFO-Epoch 25/50 - train loss: 0.2142
+2026-04-04 01:38:20,226-INFO-Epoch 26/50 - train loss: 0.2141
+2026-04-04 01:38:24,904-INFO-Epoch 27/50 - train loss: 0.2020
+2026-04-04 01:38:29,749-INFO-Epoch 28/50 - train loss: 0.1784
+2026-04-04 01:38:34,248-INFO-Epoch 29/50 - train loss: 0.2143
+2026-04-04 01:38:38,945-INFO-Epoch 30/50 - train loss: 0.2100
+2026-04-04 01:38:43,505-INFO-Epoch 31/50 - train loss: 0.1997
+2026-04-04 01:38:48,386-INFO-Epoch 32/50 - train loss: 0.1982
+2026-04-04 01:38:53,242-INFO-Epoch 33/50 - train loss: 0.1963
+2026-04-04 01:38:57,974-INFO-Epoch 34/50 - train loss: 0.1803
+2026-04-04 01:39:02,780-INFO-Epoch 35/50 - train loss: 0.1578
+2026-04-04 01:39:07,150-INFO-Epoch 36/50 - train loss: 0.1911
+2026-04-04 01:39:12,655-INFO-Epoch 37/50 - train loss: 0.2072
+2026-04-04 01:39:17,183-INFO-Epoch 38/50 - train loss: 0.1806
+2026-04-04 01:39:22,664-INFO-Epoch 39/50 - train loss: 0.1839
+2026-04-04 01:39:28,666-INFO-Epoch 40/50 - train loss: 0.1970
+2026-04-04 01:39:33,937-INFO-Epoch 41/50 - train loss: 0.2670
+2026-04-04 01:39:40,234-INFO-Epoch 42/50 - train loss: 0.2009
+2026-04-04 01:39:47,266-INFO-Epoch 43/50 - train loss: 0.1911
+2026-04-04 01:39:51,653-INFO-Epoch 44/50 - train loss: 0.1652
+2026-04-04 01:39:56,503-INFO-Epoch 45/50 - train loss: 0.2285
+2026-04-04 01:40:02,320-INFO-Epoch 46/50 - train loss: 0.2005
+2026-04-04 01:40:06,765-INFO-Epoch 47/50 - train loss: 0.1732
+2026-04-04 01:40:11,068-INFO-Epoch 48/50 - train loss: 0.3433
+2026-04-04 01:40:15,408-INFO-Epoch 49/50 - train loss: 0.2509
+2026-04-04 01:40:19,863-INFO-Epoch 50/50 - train loss: 0.2224
+2026-04-04 01:40:19,873-INFO-Starting evaluation
+2026-04-04 01:41:06,966-INFO-Saved predictions shape: (35, 7, 41, 3)
+2026-04-04 01:41:06,966-INFO-Final metrics: {'test_asymmetric_loss': 0.1569078743457794, 'mse': 300074.0625, 'mae': 255.19386291503906, 'rmse': 547.7901628360992, 'r2': 0.8255823850631714, 'per_signal': {'production_unit': {'mse': 326236.21875, 'mae': 278.2559509277344, 'rmse': 571.1709190338738, 'r2': 0.8100066781044006}, 'delivery_unit': {'mse': 285878.71875, 'mae': 243.1741943359375, 'rmse': 534.6762747214431, 'r2': 0.8317588567733765}, 'sales_order_unit': {'mse': 288107.28125, 'mae': 244.15147399902344, 'rmse': 536.7562586966267, 'r2': 0.8348720073699951}}}
+2026-04-04 01:42:51,800-INFO-Using device: cuda
+2026-04-04 01:42:52,174-INFO-Model loaded and set to eval mode
+2026-04-04 01:42:52,249-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:42:52,252-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:42:52,252-INFO-Metrics loaded
+2026-04-04 01:42:52,448-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:42:52,459-INFO-Using device: cuda
+2026-04-04 01:42:52,495-INFO-Model loaded and set to eval mode
+2026-04-04 01:42:52,502-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:42:52,505-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:42:52,506-INFO-Metrics loaded
+2026-04-04 01:42:52,515-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:44:48,419-INFO-Using device: cuda
+2026-04-04 01:44:48,755-INFO-Model loaded and set to eval mode
+2026-04-04 01:44:48,874-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:44:48,886-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:44:48,890-INFO-Metrics loaded
+2026-04-04 01:44:48,916-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:44:49,057-INFO-[Startup] Forecast cache built for 41 products
+2026-04-04 01:50:29,199-INFO-Using device: cuda
+2026-04-04 01:50:29,637-INFO-Model loaded and set to eval mode
+2026-04-04 01:50:29,731-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:50:29,737-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:50:29,739-INFO-Metrics loaded
+2026-04-04 01:50:29,742-WARNING-Normalization artifact Y_mean.npy has shape (1, 1, 1, 3); expected (1, 1, 41, 3). Using fallback values.
+2026-04-04 01:50:29,743-WARNING-Normalization artifact missing: Y_mean.npy; using fallback values
+2026-04-04 01:50:29,743-WARNING-Normalization artifact Y_std.npy has shape (1, 1, 1, 3); expected (1, 1, 41, 3). Using fallback values.
+2026-04-04 01:50:29,743-WARNING-Normalization artifact missing: Y_std.npy; using fallback values
+2026-04-04 01:50:29,744-WARNING-Normalization artifact X_mean.npy has shape (1, 1, 1, 3); expected (1, 1, 41, 3). Using fallback values.
+2026-04-04 01:50:29,744-WARNING-Normalization artifact missing: X_mean.npy; using fallback values
+2026-04-04 01:50:29,746-WARNING-Normalization artifact X_std.npy has shape (1, 1, 1, 3); expected (1, 1, 41, 3). Using fallback values.
+2026-04-04 01:50:29,746-WARNING-Normalization artifact missing: X_std.npy; using fallback values
+2026-04-04 01:50:29,751-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:50:29,881-INFO-[Startup] Forecast cache built for 41 products
+2026-04-04 01:51:28,569-INFO-Using device: cuda
+2026-04-04 01:51:28,904-INFO-Model loaded and set to eval mode
+2026-04-04 01:51:28,973-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:51:28,976-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:51:28,977-INFO-Metrics loaded
+2026-04-04 01:51:28,980-WARNING-Normalization artifact Y_mean.npy has shape (1, 1, 1, 3); expected (1, 1, 41, 3). Using fallback values.
+2026-04-04 01:51:28,981-WARNING-Normalization artifact Y_std.npy has shape (1, 1, 1, 3); expected (1, 1, 41, 3). Using fallback values.
+2026-04-04 01:51:28,983-WARNING-Normalization artifact X_mean.npy has shape (1, 1, 1, 3); expected (1, 1, 41, 3). Using fallback values.
+2026-04-04 01:51:28,984-WARNING-Normalization artifact X_std.npy has shape (1, 1, 1, 3); expected (1, 1, 41, 3). Using fallback values.
+2026-04-04 01:51:28,988-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:51:28,988-INFO-Using device: cuda
+2026-04-04 01:51:29,014-INFO-Model loaded and set to eval mode
+2026-04-04 01:51:29,022-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:51:29,025-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:51:29,026-INFO-Metrics loaded
+2026-04-04 01:51:29,028-WARNING-Normalization artifact Y_mean.npy has shape (1, 1, 1, 3); expected (1, 1, 41, 3). Using fallback values.
+2026-04-04 01:51:29,029-WARNING-Normalization artifact Y_std.npy has shape (1, 1, 1, 3); expected (1, 1, 41, 3). Using fallback values.
+2026-04-04 01:51:29,030-WARNING-Normalization artifact X_mean.npy has shape (1, 1, 1, 3); expected (1, 1, 41, 3). Using fallback values.
+2026-04-04 01:51:29,031-WARNING-Normalization artifact X_std.npy has shape (1, 1, 1, 3); expected (1, 1, 41, 3). Using fallback values.
+2026-04-04 01:51:29,034-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:52:51,693-INFO-Starting model training pipeline
+2026-04-04 01:52:51,693-INFO-Loading processed artifacts
+2026-04-04 01:52:51,708-INFO-values shape: (191, 41, 3)
+2026-04-04 01:52:51,709-INFO-Target signals: ['production_unit', 'delivery_unit', 'sales_order_unit']
+2026-04-04 01:52:51,893-INFO-Sequences: X=(173, 12, 41, 3)  Y=(173, 7, 41, 3)
+2026-04-04 01:52:51,896-INFO-Train size: 138  Test size: 35
+2026-04-04 01:52:52,112-INFO-Starting training
+2026-04-04 01:52:59,150-INFO-Epoch 1/50 - train loss: 0.8315
+2026-04-04 01:53:04,209-INFO-Epoch 2/50 - train loss: 0.5423
+2026-04-04 01:53:09,142-INFO-Epoch 3/50 - train loss: 0.4508
+2026-04-04 01:53:14,249-INFO-Epoch 4/50 - train loss: 0.4794
+2026-04-04 01:53:19,060-INFO-Epoch 5/50 - train loss: 0.4195
+2026-04-04 01:53:27,551-INFO-Epoch 6/50 - train loss: 0.4179
+2026-04-04 01:53:33,883-INFO-Epoch 7/50 - train loss: 0.4361
+2026-04-04 01:53:36,010-INFO-Epoch 8/50 - train loss: 0.4089
+2026-04-04 01:53:37,419-INFO-Epoch 9/50 - train loss: 0.4525
+2026-04-04 01:53:38,655-INFO-Epoch 10/50 - train loss: 0.3976
+2026-04-04 01:53:39,911-INFO-Epoch 11/50 - train loss: 0.3938
+2026-04-04 01:53:41,388-INFO-Epoch 12/50 - train loss: 0.3893
+2026-04-04 01:53:42,682-INFO-Epoch 13/50 - train loss: 0.3611
+2026-04-04 01:53:44,046-INFO-Epoch 14/50 - train loss: 0.3839
+2026-04-04 01:53:45,353-INFO-Epoch 15/50 - train loss: 0.3513
+2026-04-04 01:53:46,694-INFO-Epoch 16/50 - train loss: 0.3809
+2026-04-04 01:53:47,961-INFO-Epoch 17/50 - train loss: 0.3601
+2026-04-04 01:53:49,267-INFO-Epoch 18/50 - train loss: 0.3643
+2026-04-04 01:53:50,614-INFO-Epoch 19/50 - train loss: 0.3741
+2026-04-04 01:53:51,956-INFO-Epoch 20/50 - train loss: 0.3748
+2026-04-04 01:53:53,347-INFO-Epoch 21/50 - train loss: 0.3706
+2026-04-04 01:53:54,614-INFO-Epoch 22/50 - train loss: 0.3517
+2026-04-04 01:53:55,881-INFO-Epoch 23/50 - train loss: 0.3544
+2026-04-04 01:53:57,296-INFO-Epoch 24/50 - train loss: 0.3356
+2026-04-04 01:53:58,600-INFO-Epoch 25/50 - train loss: 0.3501
+2026-04-04 01:53:59,848-INFO-Epoch 26/50 - train loss: 0.3395
+2026-04-04 01:54:01,088-INFO-Epoch 27/50 - train loss: 0.3659
+2026-04-04 01:54:02,391-INFO-Epoch 28/50 - train loss: 0.3363
+2026-04-04 01:54:03,767-INFO-Epoch 29/50 - train loss: 0.3525
+2026-04-04 01:54:05,071-INFO-Epoch 30/50 - train loss: 0.3333
+2026-04-04 01:54:06,473-INFO-Epoch 31/50 - train loss: 0.3447
+2026-04-04 01:54:07,819-INFO-Epoch 32/50 - train loss: 0.3378
+2026-04-04 01:54:09,201-INFO-Epoch 33/50 - train loss: 0.3364
+2026-04-04 01:54:10,431-INFO-Epoch 34/50 - train loss: 0.3143
+2026-04-04 01:54:11,746-INFO-Epoch 35/50 - train loss: 0.3218
+2026-04-04 01:54:13,016-INFO-Epoch 36/50 - train loss: 0.3353
+2026-04-04 01:54:14,390-INFO-Epoch 37/50 - train loss: 0.3368
+2026-04-04 01:54:15,649-INFO-Epoch 38/50 - train loss: 0.3308
+2026-04-04 01:54:16,927-INFO-Epoch 39/50 - train loss: 0.3136
+2026-04-04 01:54:18,245-INFO-Epoch 40/50 - train loss: 0.3253
+2026-04-04 01:54:19,532-INFO-Epoch 41/50 - train loss: 0.3390
+2026-04-04 01:54:20,868-INFO-Epoch 42/50 - train loss: 0.3136
+2026-04-04 01:54:22,111-INFO-Epoch 43/50 - train loss: 0.3244
+2026-04-04 01:54:23,488-INFO-Epoch 44/50 - train loss: 0.3006
+2026-04-04 01:54:24,802-INFO-Epoch 45/50 - train loss: 0.3052
+2026-04-04 01:54:26,166-INFO-Epoch 46/50 - train loss: 0.3101
+2026-04-04 01:54:27,510-INFO-Epoch 47/50 - train loss: 0.3242
+2026-04-04 01:54:28,840-INFO-Epoch 48/50 - train loss: 0.3190
+2026-04-04 01:54:30,232-INFO-Epoch 49/50 - train loss: 0.2914
+2026-04-04 01:54:31,544-INFO-Epoch 50/50 - train loss: 0.3325
+2026-04-04 01:54:31,547-INFO-Starting evaluation
+2026-04-04 01:54:42,695-INFO-Saved predictions shape: (35, 7, 41, 3)
+2026-04-04 01:54:42,696-INFO-Final metrics: {'test_asymmetric_loss': 33.82378415465355, 'mse': 99707.75, 'mae': 110.68582916259766, 'rmse': 315.76534008659024, 'r2': 0.9420450329780579, 'per_signal': {'production_unit': {'mse': 119995.046875, 'mae': 125.37107849121094, 'rmse': 346.40301221987085, 'r2': 0.9301173090934753}, 'delivery_unit': {'mse': 75095.375, 'mae': 94.18795776367188, 'rmse': 274.0353535586239, 'r2': 0.9558059573173523}, 'sales_order_unit': {'mse': 104032.8125, 'mae': 112.49848175048828, 'rmse': 322.5411795414657, 'r2': 0.9403738379478455}}}
+2026-04-04 01:55:00,670-INFO-Using device: cuda
+2026-04-04 01:55:00,824-INFO-Model loaded and set to eval mode
+2026-04-04 01:55:00,849-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:55:00,850-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:55:00,857-INFO-Metrics loaded
+2026-04-04 01:55:00,872-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:55:00,872-INFO-Using device: cuda
+2026-04-04 01:55:00,888-INFO-Model loaded and set to eval mode
+2026-04-04 01:55:00,891-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:55:00,893-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:55:00,894-INFO-Metrics loaded
+2026-04-04 01:55:00,896-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:58:24,733-INFO-Using device: cuda
+2026-04-04 01:58:24,918-INFO-Model loaded and set to eval mode
+2026-04-04 01:58:24,947-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:58:24,948-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:58:24,948-INFO-Metrics loaded
+2026-04-04 01:58:24,951-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:58:40,315-INFO-Using device: cuda
+2026-04-04 01:58:40,510-INFO-Model loaded and set to eval mode
+2026-04-04 01:58:40,546-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 01:58:40,549-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 01:58:40,549-INFO-Metrics loaded
+2026-04-04 01:58:40,555-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 01:58:40,600-INFO-[Startup] Forecast cache built for 41 products
+2026-04-04 02:34:38,962-INFO-Using device: cuda
+2026-04-04 02:34:39,120-INFO-Model loaded and set to eval mode
+2026-04-04 02:34:39,151-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 02:34:39,159-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 02:34:39,164-INFO-Metrics loaded
+2026-04-04 02:34:39,204-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 02:34:39,230-INFO-[Startup] Forecast cache built for 41 products
+2026-04-04 20:05:16,784-INFO-Using device: cuda
+2026-04-04 20:05:17,015-INFO-Model loaded and set to eval mode
+2026-04-04 20:05:17,144-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-04 20:05:17,154-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-04 20:05:17,170-INFO-Metrics loaded
+2026-04-04 20:05:17,240-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-04 20:05:17,286-INFO-[Startup] Forecast cache built for 41 products

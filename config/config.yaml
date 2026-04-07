@@ -75,13 +75,15 @@ data_ingestion:
         signal_name: "sales_order_weight"
 
 data_processing:
-  node_type: "rolled_prod"
+  node_type: "product"
   num_nodes: 41
 
   temporal:
     rolling_window: 30
     drop_first_n_rows: 30
-    target_signal: "production_weight"
+    target_signals: ["production_unit", "delivery_unit", "sales_order_unit"]
+    prediction_horizon: 7
+    history_steps: 12
 
   edge_relations:
     - same_plant
@@ -89,15 +91,17 @@ data_processing:
     - same_product_group
     - same_product_subgroup
 
-  model:
-    in_channels: 17
-    hidden_channels: 32
-    out_channels: 1
-    conv_type: "sage"
-    aggregation: "sum"
-    layers: 2
-    train_ratio: 0.8
-    learning_rate: 0.01
-    epochs: 50
-    loss_alpha: 2.0
-
+model:
+  static_feature_dim: 8
+  temporal_feature_dim: 3
+  in_channels: 11
+  hidden_channels: 32
+  out_channels: 3
+  conv_type: "sage"
+  aggregation: "sum"
+  layers: 2
+  train_ratio: 0.8
+  learning_rate: 0.01
+  epochs: 50
+  loss_alpha: 2.0
+  batch_size: 8

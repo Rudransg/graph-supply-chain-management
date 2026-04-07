@@ -1,14 +1,16 @@
 import sys
 import os
 from pathlib import Path
-from .forecast_data import get_trend_for_product, list_forecast_products
-
-ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT))
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 
+from .forecast_data import (
+    get_trend_for_product,
+    list_forecast_products,
+    get_products_by_category,
+    get_category_forecast_summary,
+)
 from .schemas import (
     PredictRequest, PredictResponse,
     MetricsResponse, HealthResponse,
@@ -17,12 +19,30 @@ from .schemas import (
     FactoryLoad, TrendResponse, RelatedProduct,
     DashboardStats, GraphNode, GraphEdge, GraphResponse,
 )
-from .model_loader import model_service, NODE_TYPE, CONV_TYPE, LAYERS, NUM_NODES
-from .data_service import (
+from .model_runtime import (
+    model_service,
+    NODE_TYPE,
+    CONV_TYPE,
+    LAYERS,
+    NUM_NODES,
+    TARGET_SIGNALS,
+    TEMPORAL_FEATURE_DIM,
+    HIDDEN_CHANNELS,
+    OUT_CHANNELS,
+    AGGREGATION,
+    ROLLING_WINDOW,
+    EPOCHS,
+    LEARNING_RATE,
+    LOSS_ALPHA,
+)
+from .data_service import (  # was .data_service
     get_factory_map, get_group_subgroup_map,
     build_forecast_cache, build_trend_series, get_edge_data
 )
 from src.logger import get_logger
+
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
 
 logger = get_logger(__name__)
 
@@ -53,6 +73,7 @@ app.add_middleware(
 
 _forecast_cache: list[dict] = []
 
+
 @app.on_event("startup")
 def _warm_up():
     global _forecast_cache
@@ -60,9 +81,10 @@ def _warm_up():
         idx_to_product=model_service.idx_to_product,
         predictions=model_service.predictions,
         targets=model_service.targets,
-        X=model_service.X,
+        values=model_service.values,
     )
     logger.info(f"[Startup] Forecast cache built for {len(_forecast_cache)} products")
+
 
 def _cache() -> list[dict]:
     if not _forecast_cache:
@@ -70,34 +92,33 @@ def _cache() -> list[dict]:
             idx_to_product=model_service.idx_to_product,
             predictions=model_service.predictions,
             targets=model_service.targets,
-            X=model_service.X,
+            values=model_service.values,
         )
     return _forecast_cache
 
-
-# ══════════════════════════════════════════════════════════════════════════════
-#  EXISTING ROUTES (unchanged)
-# ══════════════════════════════════════════════════════════════════════════════
+# ═════════ EXISTING ROUTES (unchanged) ═════════
 
 @app.get("/")
 def root():
     return {
         "message": "Supply Graph Inference API",
-        "docs":    "/docs",
-        "health":  "/health",
+        "docs": "/docs",
+        "health": "/health",
     }
+
 
 @app.get("/health", response_model=HealthResponse)
 def health():
     return {
-        "status":       "ok",
+        "status": "ok",
         "model_loaded": model_service.model is not None,
-        "device":       str(model_service.device),
-        "num_nodes":    NUM_NODES,
-        "node_type":    NODE_TYPE,
-        "conv_type":    CONV_TYPE,
-        "layers":       LAYERS,
+        "device": str(model_service.device),
+        "num_nodes": NUM_NODES,
+        "node_type": NODE_TYPE,
+        "conv_type": CONV_TYPE,
+        "layers": LAYERS,
     }
+
 
 @app.get("/products", response_model=ProductsResponse)
 def get_products():
@@ -107,6 +128,7 @@ def get_products():
         logger.error(f"/products failed: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+
 @app.post("/predict", response_model=PredictResponse)
 def predict(req: PredictRequest):
     try:
@@ -114,13 +136,14 @@ def predict(req: PredictRequest):
         return {
             **result,
             "model_version": "hetero_sage_v1",
-            "run_id":        "a4a2ee5b17584655a4a01b60eea5a9d9",
+            "run_id": "a4a2ee5b17584655a4a01b60eea5a9d9",
         }
     except ValueError as ve:
         raise HTTPException(status_code=404, detail=str(ve))
     except Exception as e:
         logger.error(f"/predict failed: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.get("/metrics", response_model=MetricsResponse)
 def get_metrics():
@@ -129,10 +152,10 @@ def get_metrics():
         if not m:
             raise HTTPException(status_code=404, detail="metrics.json not found")
         return {
-            "mae":                  float(m.get("mae",                  0.0)),
-            "mse":                  float(m.get("mse",                  0.0)),
-            "rmse":                 float(m.get("rmse",                 0.0)),
-            "r2":                   float(m.get("r2",                   0.0)),
+            "mae": float(m.get("mae", 0.0)),
+            "mse": float(m.get("mse", 0.0)),
+            "rmse": float(m.get("rmse", 0.0)),
+            "r2": float(m.get("r2", 0.0)),
             "test_asymmetric_loss": float(m.get("test_asymmetric_loss", 0.0)),
         }
     except HTTPException:
@@ -141,12 +164,16 @@ def get_metrics():
         logger.error(f"/metrics failed: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+
 @app.get("/predictions/all", response_model=AllPredsResponse)
 def all_predictions():
     try:
         points = model_service.get_scatter_data(limit=300)
         if not points:
-            raise HTTPException(status_code=404, detail="predictions.npy / targets.npy not found")
+            raise HTTPException(
+                status_code=404,
+                detail="predictions.npy / targets.npy not found"
+            )
         return {"points": [ScatterPoint(**p) for p in points], "total": len(points)}
     except HTTPException:
         raise
@@ -154,29 +181,32 @@ def all_predictions():
         logger.error(f"/predictions/all failed: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+
 @app.get("/model/info")
 def model_info():
     return {
-        "node_type":       NODE_TYPE,
-        "num_nodes":       NUM_NODES,
-        "conv_type":       CONV_TYPE,
-        "layers":          LAYERS,
-        "in_channels":     18,
-        "hidden_channels": 32,
-        "out_channels":    1,
-        "aggregation":     "sum",
-        "edge_relations":  ["same_plant", "same_storage", "same_product_group", "same_product_subgroup"],
-        "target_signal":   "production_weight",
-        "rolling_window":  30,
-        "epochs":          50,
-        "learning_rate":   0.01,
-        "loss_alpha":      2.0,
+        "node_type": NODE_TYPE,
+        "num_nodes": NUM_NODES,
+        "conv_type": CONV_TYPE,
+        "layers": LAYERS,
+        "in_channels": TEMPORAL_FEATURE_DIM,
+        "hidden_channels": HIDDEN_CHANNELS,
+        "out_channels": OUT_CHANNELS,
+        "aggregation": AGGREGATION,
+        "edge_relations": [
+            "same_plant",
+            "same_storage",
+            "same_product_group",
+            "same_product_subgroup",
+        ],
+        "target_signals": TARGET_SIGNALS,
+        "rolling_window": ROLLING_WINDOW,
+        "epochs": EPOCHS,
+        "learning_rate": LEARNING_RATE,
+        "loss_alpha": LOSS_ALPHA,
     }
 
-
-# ══════════════════════════════════════════════════════════════════════════════
-#  NEW ROUTES (dashboard API)
-# ══════════════════════════════════════════════════════════════════════════════
+# ═════════ NEW ROUTES (dashboard API) ═════════
 
 @app.get("/dashboard/stats", response_model=DashboardStats)
 def dashboard_stats():
@@ -187,10 +217,10 @@ def dashboard_stats():
     r2 = float(m.get("r2", 0.9923)) if m else 0.9923
 
     return {
-        "total_products":    len(cache),
-        "at_risk":           len(at_risk),
-        "on_track":          len(cache) - len(at_risk),
-        "active_factories":  len(factories),
+        "total_products": len(cache),
+        "at_risk": len(at_risk),
+        "on_track": len(cache) - len(at_risk),
+        "active_factories": len(factories),
         "forecast_accuracy": round(r2 * 100, 1),
         "new_at_risk_today": max(0, len(at_risk) - 4),
     }
@@ -198,17 +228,16 @@ def dashboard_stats():
 
 @app.get("/products/list", response_model=ProductsListResponse)
 def list_products(
-    search:    str = Query(""),
-    factory:   str = Query(""),
-    group:     str = Query(""),
-    status:    str = Query(""),
-    page:      int = Query(1, ge=1),
+    search: str = Query(""),
+    factory: str = Query(""),
+    group: str = Query(""),
+    status: str = Query(""),
+    page: int = Query(1, ge=1),
     page_size: int = Query(10, ge=1, le=100),
 ):
     cache = _cache()
     rows = cache.copy()
 
-    # filters
     if search:
         rows = [r for r in rows if search.lower() in r["product"].lower()]
     if factory:
@@ -220,15 +249,15 @@ def list_products(
 
     total = len(rows)
     start = (page - 1) * page_size
-    end   = start + page_size
-    data  = rows[start:end]
+    end = start + page_size
+    data = rows[start:end]
 
     return {
-        "total":     total,
-        "page":      page,
+        "total": total,
+        "page": page,
         "page_size": page_size,
-        "pages":     (total + page_size - 1) // page_size,
-        "data":      [ProductDetail(**d) for d in data],
+        "pages": (total + page_size - 1) // page_size,
+        "data": [ProductDetail(**d) for d in data],
     }
 
 
@@ -236,11 +265,11 @@ def list_products(
 def get_filter_options():
     cache = _cache()
     factories = sorted(set(p["factory"] for p in cache))
-    groups    = sorted(set(p["group"] for p in cache))
+    groups = sorted(set(p["group"] for p in cache))
     subgroups = sorted(set(p["subgroup"] for p in cache))
     return {
         "factories": factories,
-        "groups":    groups,
+        "groups": groups,
         "subgroups": subgroups,
     }
 
@@ -249,7 +278,11 @@ def get_filter_options():
 def at_risk_products(top_n: int = Query(6)):
     cache = _cache()
     at_risk = [p for p in cache if p["status"] == "at_risk"]
-    at_risk.sort(key=lambda x: x["trend_pct"])
+    # Sort by worst trend across all signals
+    def get_worst_trend(p):
+        trends = [v for k, v in p.items() if k.endswith("_trend_pct")]
+        return min(trends) if trends else 0
+    at_risk.sort(key=get_worst_trend)
     return at_risk[:top_n]
 
 
@@ -261,35 +294,22 @@ def related_products(name: str):
         raise HTTPException(status_code=404, detail=f"Product '{name}' not found")
 
     factory = target["factory"]
-    related = [
-        RelatedProduct(
-            product=p["product"],
-            forecast_kg=p["forecast_kg"],
-            trend_pct=p["trend_pct"],
-            factory=p["factory"],
-        )
-        for p in cache
-        if p["factory"] == factory and p["product"] != name
-    ]
+    related = []
+    for p in cache:
+        if p["factory"] == factory and p["product"] != name:
+            # Sum all signal forecasts and use worst trend
+            total_forecast = sum(v for k, v in p.items() if k.endswith("_forecast"))
+            trends = [v for k, v in p.items() if k.endswith("_trend_pct")]
+            worst_trend = min(trends) if trends else 0
+            related.append(
+                RelatedProduct(
+                    product=p["product"],
+                    forecast_kg=round(total_forecast, 2),
+                    trend_pct=round(worst_trend, 1),
+                    factory=p["factory"],
+                )
+            )
     return related[:5]
-
-
-# @app.get("/forecast/trend/{product}", response_model=TrendResponse)
-# def product_trend(product: str, days: int = Query(30)):
-#     if product not in model_service.product_to_idx:
-#         raise HTTPException(status_code=404, detail=f"Product '{product}' not found")
-#     idx = model_service.product_to_idx[product]
-#     data = build_trend_series(
-#     product_idx=idx,
-#     X=model_service.X,
-#     predictions=model_service.predictions,
-#     days=days)
-
-
-#     return {
-#         "product": product,
-#         **data,
-#     }
 
 
 @app.get("/factory/load")
@@ -300,12 +320,13 @@ def factory_load():
 
     for p in cache:
         fac = p["factory"]
-        totals[fac] = totals.get(fac, 0.0) + p["forecast_kg"]
+        # Sum all signal forecasts
+        product_total = sum(v for k, v in p.items() if k.endswith("_forecast"))
+        totals[fac] = totals.get(fac, 0.0) + product_total
         counts[fac] = counts.get(fac, 0) + 1
 
     max_load = max(totals.values()) if totals else 0.0
 
-    # avoid division by zero
     if max_load <= 0:
         return [
             FactoryLoad(
@@ -328,36 +349,37 @@ def factory_load():
     ]
 
 
-
 @app.get("/factory/graph", response_model=GraphResponse)
 def factory_graph(
-    same_plant:    bool = Query(True),
-    same_storage:  bool = Query(True),
-    same_group:    bool = Query(False),
+    same_plant: bool = Query(True),
+    same_storage: bool = Query(True),
+    same_group: bool = Query(False),
     same_subgroup: bool = Query(False),
 ):
-    cache     = _cache()
+    cache = _cache()
     edges_raw = get_edge_data()
 
-    # build node list
     nodes_list = [
         GraphNode(
             id=p["product"],
             label=p["product"],
             factory=p["factory"],
             group=p["group"],
-            forecast_kg=p["forecast_kg"],
+            forecast_kg=sum(v for k, v in p.items() if k.endswith("_forecast")),
             status=p["status"],
         )
         for p in cache
     ]
 
-    # build edges based on selected relations
     selected_relations: list[str] = []
-    if same_plant:    selected_relations.append("same_plant")
-    if same_storage:  selected_relations.append("same_storage")
-    if same_group:    selected_relations.append("same_product_group")
-    if same_subgroup: selected_relations.append("same_product_subgroup")
+    if same_plant:
+        selected_relations.append("same_plant")
+    if same_storage:
+        selected_relations.append("same_storage")
+    if same_group:
+        selected_relations.append("same_product_group")
+    if same_subgroup:
+        selected_relations.append("same_product_subgroup")
 
     edges_list: list[GraphEdge] = []
     for rel in selected_relations:
@@ -373,15 +395,70 @@ def factory_graph(
         "nodes": nodes_list,
         "edges": edges_list,
     }
+
+# ── forecast endpoints ────────────────────────────────────────────────────────
+
 @app.get("/forecast/products")
 def get_forecast_products():
     return {"products": list_forecast_products()}
 
-@app.get("/forecast/trend/{product_id}")
-def forecast_trend(product_id: str, limit: int = 30):
-    points = get_trend_for_product(product_id, limit=limit)
-    if not points:
-        raise HTTPException(status_code=404, detail="No data for this product")
-    return {"product": product_id, "points": points}
 
-    
+@app.get("/forecast/trend/{product_id}")
+def forecast_trend(
+    product_id: str,
+    signal_type: str = "production_unit",
+    limit: int = 30,
+):
+    points = get_trend_for_product(product_id, signal_type=signal_type, limit=limit)
+    if not points:
+        raise HTTPException(
+            status_code=404,
+            detail="No data for this product and signal type",
+        )
+    return {
+        "product": product_id,
+        "signal_type": signal_type,
+        "points": points,
+    }
+
+
+@app.get("/forecast/live/{product_id}")
+def forecast_live_trend(
+    product_id: str,
+    signal_type: str = "production_unit",
+    history_points: int = Query(30, ge=1, le=120),
+):
+    try:
+        return model_service.get_live_forecast_series(
+            product_name=product_id,
+            signal_type=signal_type,
+            history_points=history_points,
+        )
+    except ValueError as ve:
+        raise HTTPException(status_code=404, detail=str(ve))
+    except Exception as e:
+        logger.error(f"/forecast/live failed: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/forecast/category/{category}")
+def forecast_by_category(category: str):
+    """
+    Category can be: 'production', 'delivery', or 'supply_order'.
+    """
+    valid = {"production", "delivery", "supply_order"}
+    if category not in valid:
+        raise HTTPException(
+            status_code=400,
+            detail=f"category must be one of {sorted(valid)}",
+        )
+
+    products = get_products_by_category(category)
+    summary = get_category_forecast_summary(category)
+
+    return {
+        "category": category,
+        "total": len(products),
+        "products": [{"product": p} for p in products],
+        "summary": summary,
+    }

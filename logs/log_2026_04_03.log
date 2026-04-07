@@ -1,0 +1,642 @@
+2026-04-03 18:49:04,470-INFO-Importing torch and torch-geometric libraries
+2026-04-03 18:49:20,300-INFO-Successfully read the YAML file
+2026-04-03 18:49:20,300-INFO-SupplyGraphDataProcessor initialized successfully
+2026-04-03 18:49:20,300-INFO-Starting full preprocessing pipeline
+2026-04-03 18:49:20,300-INFO-Starting temporal preprocessing for multiple signals
+2026-04-03 18:49:20,300-INFO-Processing signal: production_unit
+2026-04-03 18:49:20,300-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\temporal\unit\production_unit.csv
+2026-04-03 18:49:20,346-INFO-Applying rolling mean with window=30
+2026-04-03 18:49:20,348-INFO-Dropping first 30 rows
+2026-04-03 18:49:20,350-INFO-Processing signal: delivery_unit
+2026-04-03 18:49:20,351-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\temporal\unit\delivery_unit.csv
+2026-04-03 18:49:20,376-INFO-Applying rolling mean with window=30
+2026-04-03 18:49:20,377-INFO-Dropping first 30 rows
+2026-04-03 18:49:20,377-INFO-Processing signal: sales_order_unit
+2026-04-03 18:49:20,377-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\temporal\unit\sales_order_unit.csv
+2026-04-03 18:49:20,396-INFO-Applying rolling mean with window=30
+2026-04-03 18:49:20,397-INFO-Dropping first 30 rows
+2026-04-03 18:49:20,399-INFO-Creating 7-step-ahead forecasting pairs
+2026-04-03 18:49:20,399-INFO-Building HeteroData graph
+2026-04-03 18:49:20,399-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\nodes\nodes_index.csv
+2026-04-03 18:49:20,401-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_plant.csv
+2026-04-03 18:49:20,424-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_storage.csv
+2026-04-03 18:49:20,443-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_product_group.csv
+2026-04-03 18:49:20,445-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_product_subgroup.csv
+2026-04-03 18:49:20,448-ERROR-Error during preprocessing pipeline: Mismatch between temporal nodes (41) and graph nodes (123)
+2026-04-03 18:49:20,448-ERROR-Pipeline failed: Error in E:\Supply Graph\src\datapreprocessing.py , line 400 : Error during preprocessing pipeline: - Mismatch between temporal nodes (41) and graph nodes (123)
+2026-04-03 18:55:35,209-INFO-Importing torch and torch-geometric libraries
+2026-04-03 18:55:39,775-INFO-Successfully read the YAML file
+2026-04-03 18:55:39,775-INFO-SupplyGraphDataProcessor initialized successfully
+2026-04-03 18:55:39,775-INFO-Starting full preprocessing pipeline
+2026-04-03 18:55:39,775-INFO-Starting temporal preprocessing for multiple signals
+2026-04-03 18:55:39,775-INFO-Processing signal: production_unit
+2026-04-03 18:55:39,775-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\temporal\unit\production_unit.csv
+2026-04-03 18:55:39,779-INFO-Applying rolling mean with window=30
+2026-04-03 18:55:39,780-INFO-Dropping first 30 rows
+2026-04-03 18:55:39,781-INFO-Processing signal: delivery_unit
+2026-04-03 18:55:39,781-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\temporal\unit\delivery_unit.csv
+2026-04-03 18:55:39,784-INFO-Applying rolling mean with window=30
+2026-04-03 18:55:39,785-INFO-Dropping first 30 rows
+2026-04-03 18:55:39,786-INFO-Processing signal: sales_order_unit
+2026-04-03 18:55:39,786-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\temporal\unit\sales_order_unit.csv
+2026-04-03 18:55:39,789-INFO-Applying rolling mean with window=30
+2026-04-03 18:55:39,790-INFO-Dropping first 30 rows
+2026-04-03 18:55:39,791-INFO-Creating 7-step-ahead forecasting pairs
+2026-04-03 18:55:39,791-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\nodes\nodes_index.csv
+2026-04-03 18:55:39,796-INFO-Building HeteroData graph
+2026-04-03 18:55:39,797-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_plant.csv
+2026-04-03 18:55:39,801-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_storage.csv
+2026-04-03 18:55:39,803-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_product_group.csv
+2026-04-03 18:55:39,806-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_product_subgroup.csv
+2026-04-03 18:55:39,808-ERROR-Error during preprocessing pipeline: Mismatch between temporal nodes (41) and graph nodes (0)
+2026-04-03 18:55:39,808-ERROR-Pipeline failed: Error in E:\Supply Graph\src\datapreprocessing.py , line 419 : Error during preprocessing pipeline: - Mismatch between temporal nodes (41) and graph nodes (0)
+2026-04-03 19:00:43,458-INFO-Importing torch and torch-geometric libraries
+2026-04-03 19:00:47,502-INFO-Successfully read the YAML file
+2026-04-03 19:00:47,502-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\nodes\nodes_index.csv
+2026-04-03 19:00:47,504-INFO-SupplyGraphDataProcessor initialized successfully
+2026-04-03 19:00:47,504-INFO-Starting full preprocessing pipeline
+2026-04-03 19:00:47,504-INFO-Starting temporal preprocessing for multiple signals
+2026-04-03 19:00:47,505-INFO-Processing signal: production_unit
+2026-04-03 19:00:47,505-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\temporal\unit\production_unit.csv
+2026-04-03 19:00:47,509-INFO-Applying rolling mean with window=30
+2026-04-03 19:00:47,510-INFO-Dropping first 30 rows
+2026-04-03 19:00:47,511-INFO-Processing signal: delivery_unit
+2026-04-03 19:00:47,511-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\temporal\unit\delivery_unit.csv
+2026-04-03 19:00:47,513-INFO-Applying rolling mean with window=30
+2026-04-03 19:00:47,514-INFO-Dropping first 30 rows
+2026-04-03 19:00:47,515-INFO-Processing signal: sales_order_unit
+2026-04-03 19:00:47,515-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\temporal\unit\sales_order_unit.csv
+2026-04-03 19:00:47,517-INFO-Applying rolling mean with window=30
+2026-04-03 19:00:47,518-INFO-Dropping first 30 rows
+2026-04-03 19:00:47,519-INFO-Creating 7-step-ahead forecasting pairs
+2026-04-03 19:00:47,520-INFO-Building HeteroData graph
+2026-04-03 19:00:47,520-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_plant.csv
+2026-04-03 19:00:47,527-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_storage.csv
+2026-04-03 19:00:47,530-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_product_group.csv
+2026-04-03 19:00:47,531-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_product_subgroup.csv
+2026-04-03 19:00:47,533-ERROR-Error during preprocessing pipeline: Mismatch between temporal nodes (40) and graph nodes (41)
+2026-04-03 19:00:47,533-ERROR-Pipeline failed: Error in E:\Supply Graph\src\datapreprocessing.py , line 420 : Error during preprocessing pipeline: - Mismatch between temporal nodes (40) and graph nodes (41)
+2026-04-03 19:03:48,471-INFO-Importing torch and torch-geometric libraries
+2026-04-03 19:03:52,680-INFO-Successfully read the YAML file
+2026-04-03 19:03:52,681-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\nodes\nodes_index.csv
+2026-04-03 19:03:52,683-INFO-SupplyGraphDataProcessor initialized successfully
+2026-04-03 19:03:52,683-INFO-Starting full preprocessing pipeline
+2026-04-03 19:03:52,683-INFO-Starting temporal preprocessing for multiple signals
+2026-04-03 19:03:52,683-INFO-Processing signal: production_unit
+2026-04-03 19:03:52,683-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\temporal\unit\production_unit.csv
+2026-04-03 19:03:52,686-INFO-Applying rolling mean with window=30
+2026-04-03 19:03:52,687-INFO-Dropping first 30 rows
+2026-04-03 19:03:52,688-INFO-Processing signal: delivery_unit
+2026-04-03 19:03:52,688-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\temporal\unit\delivery_unit.csv
+2026-04-03 19:03:52,691-INFO-Applying rolling mean with window=30
+2026-04-03 19:03:52,692-INFO-Dropping first 30 rows
+2026-04-03 19:03:52,692-INFO-Processing signal: sales_order_unit
+2026-04-03 19:03:52,692-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\temporal\unit\sales_order_unit.csv
+2026-04-03 19:03:52,695-INFO-Applying rolling mean with window=30
+2026-04-03 19:03:52,696-INFO-Dropping first 30 rows
+2026-04-03 19:03:52,697-INFO-Creating 7-step-ahead forecasting pairs
+2026-04-03 19:03:52,697-INFO-Building HeteroData graph
+2026-04-03 19:03:52,697-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_plant.csv
+2026-04-03 19:03:52,699-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_storage.csv
+2026-04-03 19:03:52,703-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_product_group.csv
+2026-04-03 19:03:52,704-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_product_subgroup.csv
+2026-04-03 19:03:52,706-ERROR-Error during preprocessing pipeline: Mismatch between temporal nodes (40) and graph nodes (0)
+2026-04-03 19:03:52,706-ERROR-Pipeline failed: Error in E:\Supply Graph\src\datapreprocessing.py , line 425 : Error during preprocessing pipeline: - Mismatch between temporal nodes (40) and graph nodes (0)
+2026-04-03 19:04:10,047-INFO-Importing torch and torch-geometric libraries
+2026-04-03 19:04:14,357-INFO-Successfully read the YAML file
+2026-04-03 19:04:14,358-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\nodes\nodes_index.csv
+2026-04-03 19:04:14,360-INFO-SupplyGraphDataProcessor initialized successfully
+2026-04-03 19:04:14,360-INFO-Starting full preprocessing pipeline
+2026-04-03 19:04:14,360-INFO-Starting temporal preprocessing for multiple signals
+2026-04-03 19:04:14,360-INFO-Processing signal: production_unit
+2026-04-03 19:04:14,360-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\temporal\unit\production_unit.csv
+2026-04-03 19:04:14,363-INFO-Applying rolling mean with window=30
+2026-04-03 19:04:14,364-INFO-Dropping first 30 rows
+2026-04-03 19:04:14,365-INFO-Processing signal: delivery_unit
+2026-04-03 19:04:14,365-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\temporal\unit\delivery_unit.csv
+2026-04-03 19:04:14,368-INFO-Applying rolling mean with window=30
+2026-04-03 19:04:14,369-INFO-Dropping first 30 rows
+2026-04-03 19:04:14,369-INFO-Processing signal: sales_order_unit
+2026-04-03 19:04:14,369-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\temporal\unit\sales_order_unit.csv
+2026-04-03 19:04:14,373-INFO-Applying rolling mean with window=30
+2026-04-03 19:04:14,373-INFO-Dropping first 30 rows
+2026-04-03 19:04:14,375-INFO-Creating 7-step-ahead forecasting pairs
+2026-04-03 19:04:14,375-INFO-Building HeteroData graph
+2026-04-03 19:04:14,375-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_plant.csv
+2026-04-03 19:04:14,378-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_storage.csv
+2026-04-03 19:04:14,380-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_product_group.csv
+2026-04-03 19:04:14,382-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_product_subgroup.csv
+2026-04-03 19:04:14,384-ERROR-Error during preprocessing pipeline: Mismatch between temporal nodes (40) and graph nodes (0)
+2026-04-03 19:04:14,385-ERROR-Pipeline failed: Error in E:\Supply Graph\src\datapreprocessing.py , line 425 : Error during preprocessing pipeline: - Mismatch between temporal nodes (40) and graph nodes (0)
+2026-04-03 19:04:32,417-INFO-Importing torch and torch-geometric libraries
+2026-04-03 19:04:36,493-INFO-Successfully read the YAML file
+2026-04-03 19:04:36,494-INFO-SupplyGraphDataProcessor initialized successfully
+2026-04-03 19:04:36,494-INFO-Starting full preprocessing pipeline
+2026-04-03 19:04:36,494-INFO-Starting temporal preprocessing for multiple signals
+2026-04-03 19:04:36,494-INFO-Processing signal: production_unit
+2026-04-03 19:04:36,494-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\temporal\unit\production_unit.csv
+2026-04-03 19:04:36,498-INFO-Applying rolling mean with window=30
+2026-04-03 19:04:36,499-INFO-Dropping first 30 rows
+2026-04-03 19:04:36,499-INFO-Processing signal: delivery_unit
+2026-04-03 19:04:36,499-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\temporal\unit\delivery_unit.csv
+2026-04-03 19:04:36,502-INFO-Applying rolling mean with window=30
+2026-04-03 19:04:36,503-INFO-Dropping first 30 rows
+2026-04-03 19:04:36,504-INFO-Processing signal: sales_order_unit
+2026-04-03 19:04:36,504-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\temporal\unit\sales_order_unit.csv
+2026-04-03 19:04:36,507-INFO-Applying rolling mean with window=30
+2026-04-03 19:04:36,508-INFO-Dropping first 30 rows
+2026-04-03 19:04:36,509-INFO-Creating 7-step-ahead forecasting pairs
+2026-04-03 19:04:36,509-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\nodes\nodes_index.csv
+2026-04-03 19:04:36,512-INFO-Building HeteroData graph
+2026-04-03 19:04:36,513-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_plant.csv
+2026-04-03 19:04:36,515-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_storage.csv
+2026-04-03 19:04:36,518-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_product_group.csv
+2026-04-03 19:04:36,519-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_product_subgroup.csv
+2026-04-03 19:04:36,522-INFO-Merging relation edge indices into one temporal graph
+2026-04-03 19:04:36,540-INFO-Building product trend file for dashboard
+2026-04-03 19:04:36,558-INFO-Saved product trend file to E:\Supply Graph\artifacts\processed\product_trend_long.csv
+2026-04-03 19:04:36,558-INFO-Saving processed artifacts
+2026-04-03 19:04:36,582-INFO-Pipeline completed successfully
+2026-04-03 19:04:36,582-INFO-Processing completed. Target file used: {'production_unit': WindowsPath('E:/Supply Graph/artifacts/data_ingestion/temporal/unit/production_unit.csv'), 'delivery_unit': WindowsPath('E:/Supply Graph/artifacts/data_ingestion/temporal/unit/delivery_unit.csv'), 'sales_order_unit': WindowsPath('E:/Supply Graph/artifacts/data_ingestion/temporal/unit/sales_order_unit.csv')}
+2026-04-03 19:07:28,137-INFO-Starting the model saving pipline
+2026-04-03 19:07:28,138-INFO-Starting our MLFLOW experimentation
+2026-04-03 19:07:28,138-INFO-Logging the training and testing dataset to MLFLOW
+2026-04-03 19:07:28,138-INFO-Loading processed artifacts
+2026-04-03 19:07:28,296-INFO-Building temporal dataset
+2026-04-03 19:07:28,375-WARNING-Config in_channels=17 does not match static_x_dim + 1 = 18. Using computed value 18.
+2026-04-03 19:07:28,448-INFO-Starting training
+2026-04-03 19:07:28,588-ERROR-Error in forward pass
+2026-04-03 19:07:28,589-ERROR-Error during training epoch
+2026-04-03 19:07:28,591-ERROR-Error in trainer.run()
+2026-04-03 19:07:28,591-ERROR-Fatal error in main execution
+2026-04-03 19:10:31,627-INFO-Starting the model saving pipline
+2026-04-03 19:10:31,627-INFO-Starting our MLFLOW experimentation
+2026-04-03 19:10:31,627-INFO-Logging the training and testing dataset to MLFLOW
+2026-04-03 19:10:31,627-INFO-Loading processed artifacts
+2026-04-03 19:10:31,735-INFO-Building temporal dataset
+2026-04-03 19:10:31,755-WARNING-Config in_channels=17 does not match static_x_dim + 1 = 18. Using computed value 18.
+2026-04-03 19:10:31,794-INFO-Starting training
+2026-04-03 19:10:31,869-ERROR-Error in forward pass
+2026-04-03 19:10:31,869-ERROR-Error during training epoch
+2026-04-03 19:10:31,872-ERROR-Error in trainer.run()
+2026-04-03 19:10:31,872-ERROR-Fatal error in main execution
+2026-04-03 19:10:36,229-INFO-Importing torch and torch-geometric libraries
+2026-04-03 19:10:40,210-INFO-Successfully read the YAML file
+2026-04-03 19:10:40,210-INFO-SupplyGraphDataProcessor initialized successfully
+2026-04-03 19:10:40,210-INFO-Starting full preprocessing pipeline
+2026-04-03 19:10:40,210-INFO-Starting temporal preprocessing for multiple signals
+2026-04-03 19:10:40,210-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\temporal\unit\production_unit.csv
+2026-04-03 19:10:40,213-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\temporal\unit\delivery_unit.csv
+2026-04-03 19:10:40,216-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\temporal\unit\sales_order_unit.csv
+2026-04-03 19:10:40,218-INFO-Found 41 products common to all signals
+2026-04-03 19:10:40,218-INFO-Processing signal: production_unit
+2026-04-03 19:10:40,218-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\temporal\unit\production_unit.csv
+2026-04-03 19:10:40,220-INFO-Applying rolling mean with window=30
+2026-04-03 19:10:40,221-INFO-Dropping first 30 rows
+2026-04-03 19:10:40,222-INFO-Processing signal: delivery_unit
+2026-04-03 19:10:40,222-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\temporal\unit\delivery_unit.csv
+2026-04-03 19:10:40,224-INFO-Applying rolling mean with window=30
+2026-04-03 19:10:40,225-INFO-Dropping first 30 rows
+2026-04-03 19:10:40,226-INFO-Processing signal: sales_order_unit
+2026-04-03 19:10:40,226-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\temporal\unit\sales_order_unit.csv
+2026-04-03 19:10:40,228-INFO-Applying rolling mean with window=30
+2026-04-03 19:10:40,229-INFO-Dropping first 30 rows
+2026-04-03 19:10:40,230-INFO-Creating 7-step-ahead forecasting pairs
+2026-04-03 19:10:40,230-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\nodes\nodes_index.csv
+2026-04-03 19:10:40,232-INFO-Building HeteroData graph
+2026-04-03 19:10:40,232-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_plant.csv
+2026-04-03 19:10:40,235-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_storage.csv
+2026-04-03 19:10:40,237-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_product_group.csv
+2026-04-03 19:10:40,239-INFO-Loading CSV: E:\Supply Graph\artifacts\data_ingestion\edges\same_product_subgroup.csv
+2026-04-03 19:10:40,241-INFO-Merging relation edge indices into one temporal graph
+2026-04-03 19:10:40,251-INFO-Building product trend file for dashboard
+2026-04-03 19:10:40,267-INFO-Saved product trend file to E:\Supply Graph\artifacts\processed\product_trend_long.csv
+2026-04-03 19:10:40,267-INFO-Saving processed artifacts
+2026-04-03 19:10:40,284-INFO-Pipeline completed successfully
+2026-04-03 19:10:40,284-INFO-Processing completed. Target file used: {'production_unit': WindowsPath('E:/Supply Graph/artifacts/data_ingestion/temporal/unit/production_unit.csv'), 'delivery_unit': WindowsPath('E:/Supply Graph/artifacts/data_ingestion/temporal/unit/delivery_unit.csv'), 'sales_order_unit': WindowsPath('E:/Supply Graph/artifacts/data_ingestion/temporal/unit/sales_order_unit.csv')}
+2026-04-03 19:14:23,271-INFO-Starting the model saving pipline
+2026-04-03 19:14:23,272-INFO-Starting our MLFLOW experimentation
+2026-04-03 19:14:23,272-INFO-Logging the training and testing dataset to MLFLOW
+2026-04-03 19:14:23,272-INFO-Loading processed artifacts
+2026-04-03 19:14:23,297-INFO-X shape: (184, 41, 3) (T, num_nodes, temporal_features)
+2026-04-03 19:14:23,297-INFO-Y shape: (184, 41, 3) (T, num_nodes, out_channels=3)
+2026-04-03 19:14:23,297-INFO-Target signals: ['production_unit', 'delivery_unit', 'sales_order_unit']
+2026-04-03 19:14:23,368-INFO-Building temporal dataset
+2026-04-03 19:14:23,390-WARNING-Config in_channels=17 does not match static_x_dim + 1 = 18. Using computed value 18.
+2026-04-03 19:14:23,428-INFO-Starting training
+2026-04-03 19:14:23,499-ERROR-Error in forward pass
+2026-04-03 19:14:23,499-ERROR-Error during training epoch
+2026-04-03 19:14:23,503-ERROR-Error in trainer.run()
+2026-04-03 19:14:23,503-ERROR-Fatal error in main execution
+2026-04-03 19:56:04,086-INFO-SupplyGraphDataProcessor initialized successfully
+2026-04-03 19:56:04,086-INFO-Starting preprocessing pipeline
+2026-04-03 19:56:04,086-INFO-Starting temporal preprocessing
+2026-04-03 19:56:04,112-INFO-Found 41 common products
+2026-04-03 19:56:04,145-INFO-values tensor shape: (191, 41, 3)
+2026-04-03 19:56:04,155-INFO-Building HeteroData graph
+2026-04-03 19:56:04,413-INFO-Pipeline completed successfully
+2026-04-03 19:56:04,413-INFO-Processing completed. Target file used: {'production_unit': WindowsPath('E:/Supply Graph/artifacts/data_ingestion/temporal/unit/production_unit.csv'), 'delivery_unit': WindowsPath('E:/Supply Graph/artifacts/data_ingestion/temporal/unit/delivery_unit.csv'), 'sales_order_unit': WindowsPath('E:/Supply Graph/artifacts/data_ingestion/temporal/unit/sales_order_unit.csv')}
+2026-04-03 19:57:15,689-INFO-Starting model training pipeline
+2026-04-03 19:57:15,689-INFO-Loading processed artifacts
+2026-04-03 19:57:15,708-INFO-values shape: (191, 41, 3)
+2026-04-03 19:57:15,708-INFO-Target signals: ['production_unit', 'delivery_unit', 'sales_order_unit']
+2026-04-03 19:57:15,828-INFO-Sequences: X=(173, 12, 41, 3)  Y=(173, 7, 41, 3)
+2026-04-03 19:57:15,835-INFO-Train size: 138  Test size: 35
+2026-04-03 19:57:15,906-INFO-Starting training
+2026-04-03 19:57:18,940-INFO-Epoch 1/50 - train loss: 1.2257
+2026-04-03 19:57:20,732-INFO-Epoch 2/50 - train loss: 0.4623
+2026-04-03 19:57:22,126-INFO-Epoch 3/50 - train loss: 0.3394
+2026-04-03 19:57:24,102-INFO-Epoch 4/50 - train loss: 0.3291
+2026-04-03 19:57:25,931-INFO-Epoch 5/50 - train loss: 0.2969
+2026-04-03 19:57:27,844-INFO-Epoch 6/50 - train loss: 0.2792
+2026-04-03 19:57:30,242-INFO-Epoch 7/50 - train loss: 0.2602
+2026-04-03 19:57:32,123-INFO-Epoch 8/50 - train loss: 0.2942
+2026-04-03 19:57:34,073-INFO-Epoch 9/50 - train loss: 0.2635
+2026-04-03 19:57:36,219-INFO-Epoch 10/50 - train loss: 0.2714
+2026-04-03 19:57:37,917-INFO-Epoch 11/50 - train loss: 0.3244
+2026-04-03 19:57:39,652-INFO-Epoch 12/50 - train loss: 0.2012
+2026-04-03 19:57:41,865-INFO-Epoch 13/50 - train loss: 0.2171
+2026-04-03 19:57:43,598-INFO-Epoch 14/50 - train loss: 0.2744
+2026-04-03 19:57:45,426-INFO-Epoch 15/50 - train loss: 0.2412
+2026-04-03 19:57:47,490-INFO-Epoch 16/50 - train loss: 0.2567
+2026-04-03 19:57:49,364-INFO-Epoch 17/50 - train loss: 0.2431
+2026-04-03 19:57:51,753-INFO-Epoch 18/50 - train loss: 0.2888
+2026-04-03 19:57:53,647-INFO-Epoch 19/50 - train loss: 0.2071
+2026-04-03 19:57:55,227-INFO-Epoch 20/50 - train loss: 0.2575
+2026-04-03 19:57:57,202-INFO-Epoch 21/50 - train loss: 0.2235
+2026-04-03 19:57:58,955-INFO-Epoch 22/50 - train loss: 0.2393
+2026-04-03 19:58:00,540-INFO-Epoch 23/50 - train loss: 0.2617
+2026-04-03 19:58:02,474-INFO-Epoch 24/50 - train loss: 0.3608
+2026-04-03 19:58:04,344-INFO-Epoch 25/50 - train loss: 0.3023
+2026-04-03 19:58:05,909-INFO-Epoch 26/50 - train loss: 0.2108
+2026-04-03 19:58:07,740-INFO-Epoch 27/50 - train loss: 0.2666
+2026-04-03 19:58:09,621-INFO-Epoch 28/50 - train loss: 0.2271
+2026-04-03 19:58:11,231-INFO-Epoch 29/50 - train loss: 0.2043
+2026-04-03 19:58:13,058-INFO-Epoch 30/50 - train loss: 0.2085
+2026-04-03 19:58:15,111-INFO-Epoch 31/50 - train loss: 0.2468
+2026-04-03 19:58:17,342-INFO-Epoch 32/50 - train loss: 0.2396
+2026-04-03 19:58:19,564-INFO-Epoch 33/50 - train loss: 0.1884
+2026-04-03 19:58:21,247-INFO-Epoch 34/50 - train loss: 0.2521
+2026-04-03 19:58:22,919-INFO-Epoch 35/50 - train loss: 0.2987
+2026-04-03 19:58:25,398-INFO-Epoch 36/50 - train loss: 0.2076
+2026-04-03 19:58:27,587-INFO-Epoch 37/50 - train loss: 0.1854
+2026-04-03 19:58:30,904-INFO-Epoch 38/50 - train loss: 0.1903
+2026-04-03 19:58:33,477-INFO-Epoch 39/50 - train loss: 0.1958
+2026-04-03 19:58:36,684-INFO-Epoch 40/50 - train loss: 0.2254
+2026-04-03 19:58:39,481-INFO-Epoch 41/50 - train loss: 0.2052
+2026-04-03 19:58:42,188-INFO-Epoch 42/50 - train loss: 0.2043
+2026-04-03 19:58:44,097-INFO-Epoch 43/50 - train loss: 0.2108
+2026-04-03 19:58:46,575-INFO-Epoch 44/50 - train loss: 0.2108
+2026-04-03 19:58:49,161-INFO-Epoch 45/50 - train loss: 0.2016
+2026-04-03 19:58:51,015-INFO-Epoch 46/50 - train loss: 0.2223
+2026-04-03 19:58:53,074-INFO-Epoch 47/50 - train loss: 0.1907
+2026-04-03 19:58:55,381-INFO-Epoch 48/50 - train loss: 0.1815
+2026-04-03 19:58:58,473-INFO-Epoch 49/50 - train loss: 0.2130
+2026-04-03 19:59:01,507-INFO-Epoch 50/50 - train loss: 0.1860
+2026-04-03 19:59:01,513-INFO-Starting evaluation
+2026-04-03 19:59:17,581-INFO-Saved predictions shape: (35, 7, 41, 3)
+2026-04-03 19:59:17,581-INFO-Final metrics: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 20:40:53,140-INFO-Using device: cuda
+2026-04-03 20:40:53,140-INFO-Rebuilding SupplyGraphModel architecture
+2026-04-03 20:40:53,574-INFO-Model loaded and set to eval mode
+2026-04-03 20:40:53,574-INFO-Loading hetero_data.pt
+2026-04-03 20:40:53,579-ERROR-Failed to load graph data: 'NodeStorage' object has no attribute 'x'
+2026-04-03 20:42:11,288-INFO-Using device: cuda
+2026-04-03 20:42:11,288-INFO-Rebuilding SupplyGraphModel architecture
+2026-04-03 20:42:11,569-INFO-Model loaded and set to eval mode
+2026-04-03 20:42:11,570-INFO-Loading hetero_data.pt
+2026-04-03 20:42:11,573-ERROR-Failed to load graph data: 'NodeStorage' object has no attribute 'x'
+2026-04-03 20:46:03,184-INFO-Using device: cuda
+2026-04-03 20:46:03,185-INFO-Rebuilding SupplyGraphModel architecture
+2026-04-03 20:46:03,567-INFO-Model loaded and set to eval mode
+2026-04-03 20:46:03,568-INFO-Loading hetero_data.pt
+2026-04-03 20:46:03,574-ERROR-Failed to load graph data: 'NodeStorage' object has no attribute 'x'
+2026-04-03 20:52:35,432-INFO-Using device: cuda
+2026-04-03 20:52:35,433-INFO-Rebuilding SupplyGraphModel architecture
+2026-04-03 20:52:35,735-INFO-Model loaded and set to eval mode
+2026-04-03 20:52:35,735-INFO-Loading hetero_data.pt
+2026-04-03 20:52:35,742-ERROR-Failed to load graph data: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+2026-04-03 20:53:14,817-INFO-Using device: cuda
+2026-04-03 20:53:14,818-INFO-Rebuilding SupplyGraphModel architecture
+2026-04-03 20:53:15,133-INFO-Model loaded and set to eval mode
+2026-04-03 20:53:15,134-INFO-Loading hetero_data.pt
+2026-04-03 20:53:15,140-ERROR-Failed to load graph data: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+2026-04-03 20:55:43,122-INFO-Using device: cuda
+2026-04-03 20:55:43,122-INFO-Rebuilding SupplyGraphModel architecture
+2026-04-03 20:55:43,538-INFO-Model loaded and set to eval mode
+2026-04-03 20:55:43,539-INFO-Loading hetero_data.pt
+2026-04-03 20:55:43,545-WARNING-No static x found for node type 'rolled_prod', using zeros of shape [41, 1]
+2026-04-03 20:55:43,616-INFO-Graph loaded | nodes: 41 | edge types: 4
+2026-04-03 20:55:43,618-INFO-Loaded mappings for 123 products
+2026-04-03 20:55:43,639-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 20:55:43,665-INFO-Precomputed data loaded | snapshots: 184
+2026-04-03 20:55:43,763-INFO-[Startup] Forecast cache built for 82 products
+2026-04-03 21:30:08,991-INFO-Using device: cuda
+2026-04-03 21:30:08,991-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 21:30:09,182-ERROR-Failed to load model: Error(s) in loading state_dict for MultiStepGCNGRU:
+	size mismatch for proj.weight: copying a param with shape torch.Size([3, 32]) from checkpoint, the shape in current model is torch.Size([1, 32]).
+	size mismatch for proj.bias: copying a param with shape torch.Size([3]) from checkpoint, the shape in current model is torch.Size([1]).
+2026-04-03 21:36:52,483-INFO-Using device: cuda
+2026-04-03 21:36:52,484-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 21:36:52,651-ERROR-Failed to load model: Error(s) in loading state_dict for MultiStepGCNGRU:
+	size mismatch for proj.weight: copying a param with shape torch.Size([3, 32]) from checkpoint, the shape in current model is torch.Size([1, 32]).
+	size mismatch for proj.bias: copying a param with shape torch.Size([3]) from checkpoint, the shape in current model is torch.Size([1]).
+2026-04-03 21:43:15,103-INFO-Using device: cuda
+2026-04-03 21:43:15,103-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 21:43:15,288-INFO-Model loaded and set to eval mode
+2026-04-03 21:43:15,288-INFO-Loading hetero_data.pt
+2026-04-03 21:43:15,291-WARNING-No static x found for node type 'rolled_prod', using zeros of shape [41, 1]
+2026-04-03 21:43:15,323-INFO-Graph loaded | nodes: 41 | edge types: 4
+2026-04-03 21:43:15,323-INFO-Loaded mappings for 123 products
+2026-04-03 21:43:15,324-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 21:43:15,325-INFO-Precomputed data loaded | snapshots: 184
+2026-04-03 21:43:15,346-INFO-[Startup] Forecast cache built for 82 products
+2026-04-03 21:45:34,491-INFO-Using device: cuda
+2026-04-03 21:45:34,492-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 21:45:34,633-INFO-Model loaded and set to eval mode
+2026-04-03 21:45:34,633-INFO-Loading hetero_data.pt
+2026-04-03 21:45:34,672-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 21:45:34,673-INFO-Loaded mappings for 123 products
+2026-04-03 21:45:34,673-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 21:45:34,675-INFO-Precomputed data loaded | snapshots: 184
+2026-04-03 21:45:34,699-INFO-[Startup] Forecast cache built for 82 products
+2026-04-03 21:46:04,823-ERROR-/predict failed: 'MultiStepGCNGRUModelService' object has no attribute 'predict'
+2026-04-03 21:54:18,951-INFO-Using device: cuda
+2026-04-03 21:54:18,951-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 21:54:19,094-INFO-Model loaded and set to eval mode
+2026-04-03 21:54:19,094-INFO-Loading hetero_data.pt
+2026-04-03 21:54:19,114-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 21:54:19,115-INFO-Loaded mappings for 123 products
+2026-04-03 21:54:19,115-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 21:54:19,116-INFO-Precomputed data loaded | snapshots: 184
+2026-04-03 21:54:19,136-INFO-[Startup] Forecast cache built for 82 products
+2026-04-03 21:56:09,364-INFO-Using device: cuda
+2026-04-03 21:56:09,364-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 21:56:09,507-INFO-Model loaded and set to eval mode
+2026-04-03 21:56:09,507-INFO-Loading hetero_data.pt
+2026-04-03 21:56:09,534-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 21:56:09,535-INFO-Loaded mappings for 123 products
+2026-04-03 21:56:09,536-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 21:56:09,537-INFO-Precomputed data loaded | snapshots: 184
+2026-04-03 21:56:09,561-INFO-[Startup] Forecast cache built for 82 products
+2026-04-03 21:56:21,291-INFO-Using device: cuda
+2026-04-03 21:56:21,291-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 21:56:21,425-INFO-Model loaded and set to eval mode
+2026-04-03 21:56:21,425-INFO-Loading hetero_data.pt
+2026-04-03 21:56:21,448-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 21:56:21,448-INFO-Loaded mappings for 123 products
+2026-04-03 21:56:21,449-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 21:56:21,450-INFO-Precomputed data loaded | snapshots: 184
+2026-04-03 21:56:21,473-INFO-[Startup] Forecast cache built for 82 products
+2026-04-03 21:56:33,219-INFO-Using device: cuda
+2026-04-03 21:56:33,219-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 21:56:33,361-INFO-Model loaded and set to eval mode
+2026-04-03 21:56:33,362-INFO-Loading hetero_data.pt
+2026-04-03 21:56:33,390-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 21:56:33,390-INFO-Loaded mappings for 123 products
+2026-04-03 21:56:33,392-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 21:56:33,394-INFO-Precomputed data loaded | snapshots: 184
+2026-04-03 21:56:33,420-INFO-[Startup] Forecast cache built for 82 products
+2026-04-03 21:57:23,273-ERROR-/predict failed: 'MultiStepGCNGRUModelService' object has no attribute 'predict'
+2026-04-03 22:00:56,256-INFO-Using device: cuda
+2026-04-03 22:00:56,256-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:00:56,393-INFO-Model loaded and set to eval mode
+2026-04-03 22:00:56,393-INFO-Loading hetero_data.pt
+2026-04-03 22:00:56,415-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:00:56,416-INFO-Loaded mappings for 123 products
+2026-04-03 22:00:56,416-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:00:56,418-INFO-Precomputed data loaded | snapshots: 184
+2026-04-03 22:00:56,438-INFO-[Startup] Forecast cache built for 82 products
+2026-04-03 22:01:09,551-INFO-Using device: cuda
+2026-04-03 22:01:09,551-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:01:09,737-INFO-Model loaded and set to eval mode
+2026-04-03 22:01:09,737-INFO-Loading hetero_data.pt
+2026-04-03 22:01:09,778-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:01:09,779-INFO-Loaded mappings for 123 products
+2026-04-03 22:01:09,780-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:01:09,782-INFO-Precomputed data loaded | snapshots: 184
+2026-04-03 22:01:09,820-INFO-[Startup] Forecast cache built for 82 products
+2026-04-03 22:02:34,049-INFO-Using device: cuda
+2026-04-03 22:02:34,049-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:02:34,182-INFO-Model loaded and set to eval mode
+2026-04-03 22:02:34,182-INFO-Loading hetero_data.pt
+2026-04-03 22:02:34,203-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:02:34,204-INFO-Loaded mappings for 123 products
+2026-04-03 22:02:34,204-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:02:34,205-INFO-Precomputed data loaded | snapshots: 184
+2026-04-03 22:02:34,225-INFO-[Startup] Forecast cache built for 82 products
+2026-04-03 22:03:44,219-INFO-Using device: cuda
+2026-04-03 22:03:44,219-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:03:44,383-INFO-Model loaded and set to eval mode
+2026-04-03 22:03:44,383-INFO-Loading hetero_data.pt
+2026-04-03 22:03:44,421-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:03:44,422-INFO-Loaded mappings for 123 products
+2026-04-03 22:03:44,423-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:03:44,425-ERROR-Failed to load precomputed data: cannot reshape array of size 30135 into shape (35,41,3)
+2026-04-03 22:04:01,341-INFO-Using device: cuda
+2026-04-03 22:04:01,341-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:04:01,500-INFO-Model loaded and set to eval mode
+2026-04-03 22:04:01,501-INFO-Loading hetero_data.pt
+2026-04-03 22:04:01,539-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:04:01,541-INFO-Loaded mappings for 123 products
+2026-04-03 22:04:01,541-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:04:01,544-ERROR-Failed to load precomputed data: cannot reshape array of size 30135 into shape (35,41,3)
+2026-04-03 22:04:26,828-INFO-Using device: cuda
+2026-04-03 22:04:26,828-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:04:26,964-INFO-Model loaded and set to eval mode
+2026-04-03 22:04:26,964-INFO-Loading hetero_data.pt
+2026-04-03 22:04:26,990-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:04:26,990-INFO-Loaded mappings for 123 products
+2026-04-03 22:04:26,991-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:04:26,992-ERROR-Failed to load precomputed data: cannot reshape array of size 30135 into shape (35,41,3)
+2026-04-03 22:04:37,352-INFO-Using device: cuda
+2026-04-03 22:04:37,352-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:04:37,469-INFO-Model loaded and set to eval mode
+2026-04-03 22:04:37,469-INFO-Loading hetero_data.pt
+2026-04-03 22:04:37,500-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:04:37,500-INFO-Loaded mappings for 123 products
+2026-04-03 22:04:37,501-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:04:37,502-ERROR-Failed to load precomputed data: cannot reshape array of size 30135 into shape (35,41,3)
+2026-04-03 22:06:14,257-INFO-Using device: cuda
+2026-04-03 22:06:14,258-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:06:14,378-INFO-Model loaded and set to eval mode
+2026-04-03 22:06:14,378-INFO-Loading hetero_data.pt
+2026-04-03 22:06:14,400-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:06:14,401-INFO-Loaded mappings for 123 products
+2026-04-03 22:06:14,401-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:06:14,403-ERROR-Failed to load precomputed data: cannot reshape array of size 30135 into shape (35,41,3)
+2026-04-03 22:06:41,423-INFO-Using device: cuda
+2026-04-03 22:06:41,423-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:06:41,585-INFO-Model loaded and set to eval mode
+2026-04-03 22:06:41,585-INFO-Loading hetero_data.pt
+2026-04-03 22:06:41,608-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:06:41,608-INFO-Loaded mappings for 123 products
+2026-04-03 22:06:41,609-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:06:41,610-ERROR-Failed to load precomputed data: cannot reshape array of size 30135 into shape (35,41,3)
+2026-04-03 22:07:53,266-INFO-Using device: cuda
+2026-04-03 22:07:53,266-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:07:53,461-INFO-Model loaded and set to eval mode
+2026-04-03 22:07:53,461-INFO-Loading hetero_data.pt
+2026-04-03 22:07:53,492-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:07:53,493-INFO-Loaded mappings for 123 products
+2026-04-03 22:07:53,493-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:07:53,495-INFO-Precomputed data loaded | snapshots: 184, preds shape: (35, 123)
+2026-04-03 22:07:54,843-INFO-Using device: cuda
+2026-04-03 22:07:54,843-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:07:55,035-INFO-Model loaded and set to eval mode
+2026-04-03 22:07:55,036-INFO-Loading hetero_data.pt
+2026-04-03 22:07:55,084-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:07:55,085-INFO-Loaded mappings for 123 products
+2026-04-03 22:07:55,086-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:07:55,089-INFO-Precomputed data loaded | snapshots: 184, preds shape: (35, 123)
+2026-04-03 22:10:13,832-INFO-Using device: cuda
+2026-04-03 22:10:13,832-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:10:13,959-INFO-Model loaded and set to eval mode
+2026-04-03 22:10:13,959-INFO-Loading hetero_data.pt
+2026-04-03 22:10:13,980-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:10:13,981-INFO-Loaded mappings for 123 products
+2026-04-03 22:10:13,981-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:10:13,983-INFO-Precomputed data loaded | snapshots: 184, preds shape: (35, 123)
+2026-04-03 22:10:37,926-INFO-Using device: cuda
+2026-04-03 22:10:37,926-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:10:38,051-INFO-Model loaded and set to eval mode
+2026-04-03 22:10:38,052-INFO-Loading hetero_data.pt
+2026-04-03 22:10:38,074-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:10:38,075-INFO-Loaded mappings for 123 products
+2026-04-03 22:10:38,075-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:10:38,076-INFO-Precomputed data loaded | snapshots: 184, preds shape: (35, 123)
+2026-04-03 22:10:53,646-INFO-Using device: cuda
+2026-04-03 22:10:53,646-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:10:53,822-INFO-Model loaded and set to eval mode
+2026-04-03 22:10:53,822-INFO-Loading hetero_data.pt
+2026-04-03 22:10:53,857-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:10:53,858-INFO-Loaded mappings for 123 products
+2026-04-03 22:10:53,859-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:10:53,862-INFO-Precomputed data loaded | snapshots: 184, preds shape: (35, 123)
+2026-04-03 22:10:59,365-INFO-Using device: cuda
+2026-04-03 22:10:59,365-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:10:59,496-INFO-Model loaded and set to eval mode
+2026-04-03 22:10:59,496-INFO-Loading hetero_data.pt
+2026-04-03 22:10:59,519-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:10:59,520-INFO-Loaded mappings for 123 products
+2026-04-03 22:10:59,520-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:10:59,521-INFO-Precomputed data loaded | snapshots: 184, preds shape: (35, 123)
+2026-04-03 22:11:20,735-INFO-Using device: cuda
+2026-04-03 22:11:20,735-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:11:20,861-INFO-Model loaded and set to eval mode
+2026-04-03 22:11:20,861-INFO-Loading hetero_data.pt
+2026-04-03 22:11:20,881-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:11:20,882-INFO-Loaded mappings for 123 products
+2026-04-03 22:11:20,882-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:11:20,884-INFO-Precomputed data loaded | snapshots: 184, preds shape: (35, 123)
+2026-04-03 22:11:34,731-INFO-Using device: cuda
+2026-04-03 22:11:34,731-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:11:34,731-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:11:34,928-INFO-Model loaded and set to eval mode
+2026-04-03 22:11:34,929-INFO-Loading hetero_data.pt
+2026-04-03 22:11:34,940-INFO-Model loaded and set to eval mode
+2026-04-03 22:11:34,940-INFO-Loading hetero_data.pt
+2026-04-03 22:11:34,953-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:11:34,954-INFO-Loaded mappings for 123 products
+2026-04-03 22:11:34,954-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:11:34,956-INFO-Precomputed data loaded | snapshots: 184, preds shape: (35, 123)
+2026-04-03 22:11:34,964-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:11:34,964-INFO-Loaded mappings for 123 products
+2026-04-03 22:11:34,965-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:11:34,966-INFO-Precomputed data loaded | snapshots: 184, preds shape: (35, 123)
+2026-04-03 22:11:54,499-INFO-Using device: cuda
+2026-04-03 22:11:54,500-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:11:54,502-INFO-Using device: cuda
+2026-04-03 22:11:54,502-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:11:54,671-INFO-Model loaded and set to eval mode
+2026-04-03 22:11:54,671-INFO-Loading hetero_data.pt
+2026-04-03 22:11:54,681-INFO-Model loaded and set to eval mode
+2026-04-03 22:11:54,681-INFO-Loading hetero_data.pt
+2026-04-03 22:11:54,700-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:11:54,701-INFO-Loaded mappings for 123 products
+2026-04-03 22:11:54,701-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:11:54,703-INFO-Precomputed data loaded | snapshots: 184, preds shape: (35, 123)
+2026-04-03 22:11:54,709-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:11:54,710-INFO-Loaded mappings for 123 products
+2026-04-03 22:11:54,710-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:11:54,712-INFO-Precomputed data loaded | snapshots: 184, preds shape: (35, 123)
+2026-04-03 22:11:54,741-INFO-[Startup] Forecast cache built for 41 products
+2026-04-03 22:11:54,741-INFO-[Startup] Forecast cache built for 41 products
+2026-04-03 22:12:01,002-INFO-Using device: cuda
+2026-04-03 22:12:01,002-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:12:01,169-INFO-Model loaded and set to eval mode
+2026-04-03 22:12:01,169-INFO-Loading hetero_data.pt
+2026-04-03 22:12:01,195-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:12:01,196-INFO-Loaded mappings for 123 products
+2026-04-03 22:12:01,196-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:12:01,198-INFO-Precomputed data loaded | snapshots: 184, preds shape: (35, 123)
+2026-04-03 22:12:11,312-INFO-Using device: cuda
+2026-04-03 22:12:11,312-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:12:11,316-INFO-Using device: cuda
+2026-04-03 22:12:11,316-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:12:11,511-INFO-Model loaded and set to eval mode
+2026-04-03 22:12:11,511-INFO-Loading hetero_data.pt
+2026-04-03 22:12:11,523-INFO-Model loaded and set to eval mode
+2026-04-03 22:12:11,524-INFO-Loading hetero_data.pt
+2026-04-03 22:12:11,560-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:12:11,561-INFO-Loaded mappings for 123 products
+2026-04-03 22:12:11,562-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:12:11,565-INFO-Precomputed data loaded | snapshots: 184, preds shape: (35, 123)
+2026-04-03 22:12:11,569-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:12:11,570-INFO-Loaded mappings for 123 products
+2026-04-03 22:12:11,571-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:12:11,574-INFO-Precomputed data loaded | snapshots: 184, preds shape: (35, 123)
+2026-04-03 22:12:11,618-INFO-[Startup] Forecast cache built for 41 products
+2026-04-03 22:12:11,628-INFO-[Startup] Forecast cache built for 41 products
+2026-04-03 22:13:05,962-INFO-Using device: cuda
+2026-04-03 22:13:05,962-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:13:06,168-INFO-Model loaded and set to eval mode
+2026-04-03 22:13:06,168-INFO-Loading hetero_data.pt
+2026-04-03 22:13:06,208-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:13:06,209-INFO-Loaded mappings for 123 products
+2026-04-03 22:13:06,210-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:13:06,212-INFO-Precomputed data loaded | snapshots: 184, preds shape: (35, 123)
+2026-04-03 22:13:16,226-INFO-Using device: cuda
+2026-04-03 22:13:16,227-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:13:16,249-INFO-Using device: cuda
+2026-04-03 22:13:16,249-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:13:16,396-INFO-Model loaded and set to eval mode
+2026-04-03 22:13:16,397-INFO-Loading hetero_data.pt
+2026-04-03 22:13:16,409-INFO-Model loaded and set to eval mode
+2026-04-03 22:13:16,410-INFO-Loading hetero_data.pt
+2026-04-03 22:13:16,423-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:13:16,423-INFO-Loaded mappings for 123 products
+2026-04-03 22:13:16,424-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:13:16,426-INFO-Precomputed data loaded | snapshots: 184, preds shape: (35, 123)
+2026-04-03 22:13:16,438-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:13:16,439-INFO-Loaded mappings for 123 products
+2026-04-03 22:13:16,439-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:13:16,441-INFO-Precomputed data loaded | snapshots: 184, preds shape: (35, 123)
+2026-04-03 22:13:16,464-INFO-[Startup] Forecast cache built for 41 products
+2026-04-03 22:13:16,477-INFO-[Startup] Forecast cache built for 41 products
+2026-04-03 22:13:31,359-INFO-Using device: cuda
+2026-04-03 22:13:31,359-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:13:31,493-INFO-Model loaded and set to eval mode
+2026-04-03 22:13:31,493-INFO-Loading hetero_data.pt
+2026-04-03 22:13:31,514-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:13:31,515-INFO-Loaded mappings for 123 products
+2026-04-03 22:13:31,515-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:13:31,516-INFO-Precomputed data loaded | snapshots: 184, preds shape: (35, 123)
+2026-04-03 22:13:57,442-INFO-Using device: cuda
+2026-04-03 22:13:57,442-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 22:13:57,561-INFO-Model loaded and set to eval mode
+2026-04-03 22:13:57,561-INFO-Loading hetero_data.pt
+2026-04-03 22:13:57,582-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 22:13:57,582-INFO-Loaded mappings for 123 products
+2026-04-03 22:13:57,583-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 22:13:57,584-INFO-Precomputed data loaded | snapshots: 184, preds shape: (35, 123)
+2026-04-03 22:13:57,604-INFO-[Startup] Forecast cache built for 41 products
+2026-04-03 23:31:02,479-INFO-Using device: cuda
+2026-04-03 23:31:02,479-INFO-Rebuilding MultiStepGCNGRU architecture
+2026-04-03 23:31:02,737-INFO-Model loaded and set to eval mode
+2026-04-03 23:31:02,737-INFO-Loading hetero_data.pt
+2026-04-03 23:31:02,775-INFO-Graph loaded | edge_index shape: (2, 9866)
+2026-04-03 23:31:02,776-INFO-Loaded mappings for 123 products
+2026-04-03 23:31:02,777-INFO-Metrics loaded: {'test_asymmetric_loss': 0.17531369924545287, 'mse': 336113.1875, 'mae': 309.1912536621094, 'rmse': 579.7526951209455, 'r2': 0.804634690284729, 'per_signal': {'production_unit': {'mse': 321747.875, 'mae': 330.5355529785156, 'rmse': 567.2282388950678, 'r2': 0.814885675907135}, 'delivery_unit': {'mse': 352670.40625, 'mae': 289.7582702636719, 'rmse': 593.8605949631614, 'r2': 0.7924685478210449}, 'sales_order_unit': {'mse': 333921.15625, 'mae': 307.27984619140625, 'rmse': 577.859114533984, 'r2': 0.8062902688980103}}}
+2026-04-03 23:31:02,779-INFO-Precomputed data loaded | snapshots: 184, preds shape: (35, 123)
+2026-04-03 23:31:02,813-INFO-[Startup] Forecast cache built for 41 products

@@ -1,7 +1,7 @@
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./components/Dashboard";
-import PredictionPanel from "./components/PredictionPanel";
+import PredictionPanel from "./components/PredictionPanelV2";
 import ExperimentsPanel from "./components/ExperimentsPanel";
 import ModelInfoPanel from "./components/ModelInfoPanel";
 import PipelinePanel from "./components/PipelinePanel";
