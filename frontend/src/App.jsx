@@ -76,7 +76,7 @@ export default function App() {
       <main style={S.main}>
         <div style={S.topBar}>
           <span style={S.topBarTitle}>{title}</span>
-          <span style={S.topBarBadge}>Supply Graph — HeteroSAGE v2</span>
+          <span style={S.topBarBadge}>Supply Graph — DeepGCNGRU v2</span>
         </div>
         <div style={S.content}>
           <Routes>
