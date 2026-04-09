@@ -60,21 +60,25 @@ PROD_TO_IDX_PATH = ARTIFACTS / "processed" / "product_to_idx.json"
 
 
 # ── model architecture (mirrors src/model_training.py exactly) ────────────────
+# ✅ REPLACE both old classes with these in model_service.py
+
 class DeepGCNGRUCell(nn.Module):
-    def __init__(self, in_channels, hidden_channels, dropout=0.2):
+    def __init__(self, in_channels, hidden_channels, edge_relations, node_type, dropout=0.2):
         super().__init__()
-        self.gcn1 = GCNConv(in_channels, hidden_channels)
-        self.gcn2 = GCNConv(hidden_channels, hidden_channels)
+        self.node_type = node_type
+        self.hetero_conv = HeteroConv({
+            (node_type, rel, node_type): SAGEConv((-1, -1), hidden_channels)
+            for rel in edge_relations
+        }, aggr='sum')
         self.gru1 = nn.GRUCell(hidden_channels, hidden_channels)
         self.gru2 = nn.GRUCell(hidden_channels, hidden_channels)
         self.gru3 = nn.GRUCell(hidden_channels, hidden_channels)
         self.dropout = nn.Dropout(dropout)
 
-    def forward(self, x, edge_index, h1, h2, h3):
-        x = F.relu(self.gcn1(x, edge_index))
-        x = self.dropout(x)
-        x = F.relu(self.gcn2(x, edge_index))
-        x = self.dropout(x)
+    def forward(self, x, edge_index_dict, h1, h2, h3):
+        x_dict = {self.node_type: x}
+        x_dict = self.hetero_conv(x_dict, edge_index_dict)
+        x = self.dropout(x_dict[self.node_type].relu())
         h1 = self.gru1(x, h1)
         h2 = self.gru2(h1, h2)
         h3 = self.gru3(h2, h3)
@@ -82,13 +86,22 @@ class DeepGCNGRUCell(nn.Module):
 
 
 class MultiStepGCNGRU(nn.Module):
-    def __init__(self, in_channels, hidden_channels, out_channels, forecast_horizon):
+    def __init__(self, in_channels, hidden_channels, out_channels,
+                 forecast_horizon, edge_relations, node_type):
         super().__init__()
-        self.cell = DeepGCNGRUCell(in_channels, hidden_channels)
+        self.node_type = node_type
+        self.cell = DeepGCNGRUCell(in_channels, hidden_channels, edge_relations, node_type)
         self.proj = nn.Linear(hidden_channels, out_channels)
         self.forecast_horizon = forecast_horizon
 
-    def forward(self, x_seq, edge_index):
+    def batch_edge_index_dict(self, edge_index_dict, B, N):
+        batched = {}
+        for key, ei in edge_index_dict.items():
+            offsets = torch.arange(B, device=ei.device) * N
+            batched[key] = torch.cat([ei + off for off in offsets], dim=1)
+        return batched
+
+    def forward(self, x_seq, edge_index_dict):
         B, P, N, C = x_seq.shape
         H = self.proj.in_features
         device = x_seq.device
@@ -97,16 +110,17 @@ class MultiStepGCNGRU(nn.Module):
         h2 = torch.zeros(B * N, H, device=device)
         h3 = torch.zeros(B * N, H, device=device)
 
+        edge_index_dict_batched = self.batch_edge_index_dict(edge_index_dict, B, N)
+
         for t in range(P):
             xt = x_seq[:, t].reshape(B * N, C)
-            h1, h2, h3 = self.cell(xt, edge_index, h1, h2, h3)
+            h1, h2, h3 = self.cell(xt, edge_index_dict_batched, h1, h2, h3)
 
         preds = []
         x_dec = x_seq[:, -1]
-
         for _ in range(self.forecast_horizon):
             xt = x_dec.reshape(B * N, C)
-            h1, h2, h3 = self.cell(xt, edge_index, h1, h2, h3)
+            h1, h2, h3 = self.cell(xt, edge_index_dict_batched, h1, h2, h3)
             y_t = self.proj(h3).reshape(B, N, -1)
             preds.append(y_t)
             x_dec = y_t
@@ -134,6 +148,8 @@ class MultiStepGCNGRUModelService:
                 hidden_channels=HIDDEN_CHANNELS,
                 out_channels=3,
                 forecast_horizon=PREDICTION_HORIZON,
+                edge_relations=EDGE_RELATIONS,
+                node_type=NODE_TYPE
             ).to(self.device)
 
             state_dict = torch.load(MODEL_OUTPUT_PATH, map_location=self.device, weights_only=True)
@@ -153,11 +169,13 @@ class MultiStepGCNGRUModelService:
                 weights_only=False,
             )
 
-            edges = list(self.hetero_data.edge_index_dict.values())
-            self.edge_index = torch.cat(edges, dim=1).to(self.device)
+            self.edge_index_dict = {
+            key: ei.to(self.device)
+            for key, ei in self.hetero_data.edge_index_dict.items()
+                }
 
             logger.info(
-                f"Graph loaded | edge_index shape: {tuple(self.edge_index.shape)}"
+                f"Graph loaded | edge_index shape: {tuple(self.edge_index_dict['relation_type'].shape)}"
             )
         except Exception as e:
             logger.error(f"Failed to load graph data: {e}")
@@ -190,49 +208,25 @@ class MultiStepGCNGRUModelService:
 
     def _load_precomputed(self):
         try:
-            # X shape: [num_snapshots, num_nodes, 1]
-            self.X = np.load(X_PATH)
-            # last snapshot used as temporal_x for live inference
-            self.last_temporal_x = torch.tensor(
-                self.X[-1],                        # shape [41, 1]
+            values = np.load(VALUES_NUMPY_PATH)        # [T, N, C]
+            P = HISTORY_STEPS
+            self.last_input_window = torch.tensor(
+                values[-P:][np.newaxis],               # [1, P, N, C]
                 dtype=torch.float32,
-                device=self.device
+                device=self.device,
             )
-            if PREDICTIONS_PATH.exists() and TARGETS_PATH.exists():
-                preds_raw = np.load(PREDICTIONS_PATH)  # shape (T, 41*3*7) or (T, 123)
-                targets_raw = np.load(TARGETS_PATH)    # shape (T, 41*3*7) or (T, 123)
-                
-                # Reshape predictions and targets to extract first horizon step
-                # Input: [T, 861] (multi-step 7-day forecasts) -> Output: [T, 123] (single-step)
-                T = preds_raw.shape[0]
-                n_products = 41
-                n_signals = 3
-                horizon = 7
-                
-                if preds_raw.shape[1] == n_products * n_signals * horizon:
-                    # Multi-step predictions: reshape to [T, 7, 41, 3] then take first step
-                    self.predictions = preds_raw.reshape(T, horizon, n_products, n_signals)[:, 0, :, :].reshape(T, -1)
-                elif preds_raw.shape[1] == n_products * n_signals:
-                    # Already in single-step format [T, 123]
-                    self.predictions = preds_raw.reshape(T, n_products, n_signals).reshape(T, -1)
-                else:
-                    # Fallback: assume it's [T, 41] (single target) and expand to 3 targets
-                    self.predictions = np.tile(preds_raw, (1, 3))
-                
-                # Reshape targets similarly
-                if targets_raw.shape[1] == n_products * n_signals * horizon:
-                    self.targets = targets_raw.reshape(T, horizon, n_products, n_signals)[:, 0, :, :].reshape(T, -1)
-                elif targets_raw.shape[1] == n_products * n_signals:
-                    self.targets = targets_raw.reshape(T, n_products, n_signals).reshape(T, -1)
-                else:
-                    self.targets = np.tile(targets_raw, (1, 3))
-                
+            self.Y_mean = np.load(MODELS_DIR / "Y_mean.npy")
+            self.Y_std  = np.load(MODELS_DIR / "Y_std.npy")
+
+            if PREDICTIONS_OUTPUT_PATH.exists() and TARGETS_OUTPUT_PATH.exists():
+                self.predictions = np.load(PREDICTIONS_OUTPUT_PATH)
+                self.targets     = np.load(TARGETS_OUTPUT_PATH)
             else:
                 self.predictions = np.array([])
                 self.targets     = np.array([])
-            logger.info(f"Precomputed data loaded | snapshots: {self.X.shape[0]}, preds shape: {self.predictions.shape}")
+
+            logger.info(f"Window shape: {self.last_input_window.shape}")
         except Exception as e:
-            logger.error(f"Failed to load precomputed data: {e}")
             raise CustomException("Failed to load precomputed data", e)
 
     # ── inference ─────────────────────────────────────────────────────────────
@@ -244,25 +238,27 @@ class MultiStepGCNGRUModelService:
             product_idx = int(self.product_to_idx[product_name])
 
             with torch.no_grad():
-                # forward: [1, Q, N, C]
-                out = self.model(self.last_input_window, self.edge_index)
+                # ✅ edge_index_dict not flat edge_index
+                out = self.model(self.last_input_window, self.edge_index_dict)
+                # out: [1, Q, N, C]
 
-            # take first forecast step
+            # first forecast step, this product, all signals → [C]
             pred_vec = out[0, 0, product_idx].cpu().numpy()
 
-            if np.ndim(pred_vec) == 0:
-                prediction = float(pred_vec)
-            else:
-                prediction = pred_vec.tolist()
+            # denormalize using saved norm stats
+            y_mean = self.Y_mean[0, product_idx]   # [C]
+            y_std  = self.Y_std[0,  product_idx]   # [C]
+            pred_denorm = (pred_vec * y_std + y_mean).tolist()
 
             return {
-                    "product_name": product_name,
-                    "product_idx":  product_idx,
-                    "prediction":   prediction,
-                }
+                "product_name": product_name,
+                "product_idx":  product_idx,
+                "signals":      TARGET_SIGNALS,    # e.g. ["production_unit", "delivery_unit", ...]
+                "prediction":   pred_denorm,       # one value per signal
+            }
         except Exception as e:
             logger.error(f"Prediction failed: {e}")
-            raise CustomException("Prediction failed", e)    
+            raise CustomException("Prediction failed", e)   
 
     def get_all_products(self) -> dict[str, str]:
         # returns {idx_str: product_name}

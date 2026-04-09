@@ -1,0 +1,14 @@
+artifact_uri: file:///E:/Supply%20Graph/mlruns/0/79e2966c233d422285a0d4a27690e379/artifacts
+end_time: 1775728088303
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 79e2966c233d422285a0d4a27690e379
+run_name: omniscient-koi-929
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1775727956140
+status: 3
+tags: []
+user_id: HP

@@ -18,6 +18,8 @@ class PredictResponse(BaseModel):
     forecast_horizon_days: int | None = None
     model_version: str
     run_id: str
+    lower_bound : Optional[dict] = None
+    upper_bound : Optional[dict] = None
 
 class MetricsResponse(BaseModel):
     mae: float
@@ -113,3 +115,17 @@ class GraphEdge(BaseModel):
 class GraphResponse(BaseModel):
     nodes: list[GraphNode]
     edges: list[GraphEdge]
+
+class WhatIfRequest(BaseModel):
+    product_name:        str
+    zeroed_products:     list[str]         = []
+    zeroed_factories:    list[str]         = []
+    capacity_overrides:  dict[str, float]  = {}
+    dropped_relations:   list[str]         = []
+
+class WhatIfResponse(BaseModel):
+    product_name: str
+    baseline:     dict
+    scenario:     dict
+    delta:        dict   # absolute difference
+    delta_pct:    dict   # % difference

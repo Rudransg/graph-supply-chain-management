@@ -18,6 +18,7 @@ from .schemas import (
     ProductsListResponse, ProductDetail, FilterOptions,
     FactoryLoad, TrendResponse, RelatedProduct,
     DashboardStats, GraphNode, GraphEdge, GraphResponse,
+     WhatIfRequest, WhatIfResponse,   # ← add these two
 )
 from .model_runtime import (
     model_service,
@@ -135,7 +136,7 @@ def predict(req: PredictRequest):
         result = model_service.predict(req.product_name)
         return {
             **result,
-            "model_version": "hetero_sage_v1",
+            "model_version": "hetero_sage_v2",
             "run_id": "a4a2ee5b17584655a4a01b60eea5a9d9",
         }
     except ValueError as ve:
@@ -311,43 +312,75 @@ def related_products(name: str):
             )
     return related[:5]
 
+@app.post("/predict/whatif", response_model=WhatIfResponse)
+def predict_whatif(req: WhatIfRequest):
+    try:
+        baseline = model_service.predict(req.product_name)
+        scenario = model_service.predict_whatif(
+            product_name=req.product_name,
+            zeroed_products=req.zeroed_products,
+            zeroed_factories=req.zeroed_factories,
+            capacity_overrides=req.capacity_overrides,
+            dropped_relations=req.dropped_relations,
+        )
+
+        delta = {
+            signal: round(scenario["prediction"][signal] - baseline["prediction"][signal], 0)
+            for signal in TARGET_SIGNALS
+        }
+        delta_pct = {
+            signal: round(
+                ((scenario["prediction"][signal] - baseline["prediction"][signal])
+                 / max(baseline["prediction"][signal], 1)) * 100, 1
+            )
+            for signal in TARGET_SIGNALS
+        }
+
+        return {
+            "product_name": req.product_name,
+            "baseline":     baseline["prediction"],
+            "scenario":     scenario["prediction"],
+            "delta":        delta,
+            "delta_pct":    delta_pct,
+        }
+    except ValueError as ve:
+        raise HTTPException(status_code=404, detail=str(ve))
+    except Exception as e:
+        logger.error(f"/predict/whatif failed: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/factory/load")
 def factory_load():
-    cache = _cache()
     totals: dict[str, float] = {}
     counts: dict[str, int] = {}
 
-    for p in cache:
-        fac = p["factory"]
-        # Sum all signal forecasts
-        product_total = sum(v for k, v in p.items() if k.endswith("_forecast"))
-        totals[fac] = totals.get(fac, 0.0) + product_total
-        counts[fac] = counts.get(fac, 0) + 1
+    cache        = _cache()                                     # once
+    product_map  = {p["product"]: p["factory"] for p in cache} # O(1) lookup
+
+    for product_id in model_service.product_ids:
+        try:
+            result        = model_service.predict(product_id)
+            product_total = sum(result["prediction"].values())
+            factory       = product_map.get(product_id, "Unknown")
+
+            totals[factory] = totals.get(factory, 0.0) + product_total
+            counts[factory] = counts.get(factory, 0) + 1
+
+        except Exception as e:
+            logger.warning(f"Skipping {product_id} in factory load: {e}")
+            continue
 
     max_load = max(totals.values()) if totals else 0.0
 
     if max_load <= 0:
-        return [
-            FactoryLoad(
-                factory=fac,
-                total_forecast_kg=round(totals[fac], 2),
-                product_count=counts[fac],
-                load_pct=0.0,
-            )
-            for fac in sorted(totals.keys())
-        ]
+        return [FactoryLoad(factory=fac, total_forecast_kg=round(totals[fac], 2),
+                            product_count=counts[fac], load_pct=0.0)
+                for fac in sorted(totals.keys())]
 
-    return [
-        FactoryLoad(
-            factory=fac,
-            total_forecast_kg=round(totals[fac], 2),
-            product_count=counts[fac],
-            load_pct=round((totals[fac] / max_load) * 100.0, 1),
-        )
-        for fac in sorted(totals.keys())
-    ]
-
+    return [FactoryLoad(factory=fac, total_forecast_kg=round(totals[fac], 2),
+                        product_count=counts[fac],
+                        load_pct=round((totals[fac] / max_load) * 100.0, 1))
+            for fac in sorted(totals.keys())]
 
 @app.get("/factory/graph", response_model=GraphResponse)
 def factory_graph(

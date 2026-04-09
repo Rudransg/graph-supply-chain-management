@@ -1,0 +1,10 @@
+artifact_location: file:///E:/Supply%20Graph/mlruns/0/models/m-6ef09e92596f4e3ba2efa1c335431bc8/artifacts
+creation_timestamp: 1775728075937
+experiment_id: '0'
+last_updated_timestamp: 1775728088266
+model_id: m-6ef09e92596f4e3ba2efa1c335431bc8
+model_type: null
+name: model
+source_run_id: 79e2966c233d422285a0d4a27690e379
+status: 2
+status_message: null

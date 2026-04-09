@@ -5,6 +5,7 @@ const API = axios.create({
   timeout: 15000,
 });
 
+export const runWhatIf = (payload) => API.post("/api/predict/whatif", payload);
 export const fetchHealth = () => API.get("/api/health");
 export const fetchMetrics = () => API.get("/api/metrics");
 export const fetchProductsApi = () => API.get("/api/products");

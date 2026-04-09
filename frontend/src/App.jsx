@@ -1,4 +1,6 @@
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";                          // ← add
+import { fetchProducts, fetchFactoryLoad } from "./api";             // ← add
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./components/Dashboard";
 import PredictionPanel from "./components/PredictionPanelV2";
@@ -6,12 +8,14 @@ import ExperimentsPanel from "./components/ExperimentsPanel";
 import ModelInfoPanel from "./components/ModelInfoPanel";
 import PipelinePanel from "./components/PipelinePanel";
 import AnalyticsView from "./components/AnalyticsView";
+import WhatIfPanel from "./components/WhatIfPanel";
 
 const ROUTES = {
   "/": "dashboard",
   "/analytics": "analytics",
   "/prediction": "prediction",
   "/experiments": "experiments",
+  "/whatif": "whatif",
   "/model": "model",
   "/pipeline": "pipeline",
 };
@@ -60,7 +64,18 @@ const S = {
 export default function App() {
   const location = useLocation();
   const navigate = useNavigate();
+  const [products,  setProducts]  = useState([]);
+  const [factories, setFactories] = useState([]);
 
+  useEffect(() => {
+    fetchProducts()
+      .then(res => setProducts(res?.data?.products || []))
+      .catch(() => {});
+
+    fetchFactoryLoad()
+      .then(res => setFactories((res?.data || []).map(f => f.factory)))
+      .catch(() => {});
+  }, []);
   const activeKey = ROUTES[location.pathname] || "dashboard";
   const title = activeKey.charAt(0).toUpperCase() + activeKey.slice(1);
 
@@ -84,8 +99,12 @@ export default function App() {
             <Route path="/analytics" element={<AnalyticsView />} />
             <Route path="/prediction" element={<PredictionPanel />} />
             <Route path="/experiments" element={<ExperimentsPanel />} />
+            <Route path="/whatif"      element={
+              <WhatIfPanel products={products} factories={factories} />  // ← pass here
+            } />
             <Route path="/model" element={<ModelInfoPanel />} />
             <Route path="/pipeline" element={<PipelinePanel />} />
+            
           </Routes>
         </div>
       </main>

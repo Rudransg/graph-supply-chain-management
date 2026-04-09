@@ -2,6 +2,7 @@ const NAV = [
   { id: "dashboard",   label: "Dashboard",   icon: "◈" },
   { id: "analytics",   label: "Analytics",   icon: "📈" },
   { id: "prediction",  label: "Prediction",  icon: "⬡" },
+  { id: "whatif",      label: "What-If",     icon: "❓" },
   { id: "experiments", label: "Experiments", icon: "⌬" },
   { id: "model",       label: "Model Info",  icon: "⬢" },
   { id: "pipeline",    label: "Pipeline",    icon: "⟳" },

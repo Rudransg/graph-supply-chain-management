@@ -1,0 +1,14 @@
+artifact_uri: file:///E:/Supply%20Graph/mlruns/0/49a0625f072148b5a5c5e917b308cb5a/artifacts
+end_time: 1775724228796
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 49a0625f072148b5a5c5e917b308cb5a
+run_name: popular-mink-918
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1775724061677
+status: 3
+tags: []
+user_id: HP

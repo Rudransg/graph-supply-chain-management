@@ -6,7 +6,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch_geometric.nn import GCNConv
+from torch_geometric.nn import GCNConv,HeteroConv, SAGEConv
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
@@ -28,20 +28,22 @@ def split_signal_product(signal_product: str) -> tuple[str | None, str]:
 
 
 class DeepGCNGRUCell(nn.Module):
-    def __init__(self, in_channels, hidden_channels, dropout=0.2):
+    def __init__(self, in_channels, hidden_channels, edge_relations, node_type, dropout=0.2):
         super().__init__()
-        self.gcn1 = GCNConv(in_channels, hidden_channels)
-        self.gcn2 = GCNConv(hidden_channels, hidden_channels)
+        self.node_type = node_type
+        self.hetero_conv = HeteroConv({
+            (node_type, rel, node_type): SAGEConv((-1, -1), hidden_channels)
+            for rel in edge_relations
+        }, aggr='sum')
         self.gru1 = nn.GRUCell(hidden_channels, hidden_channels)
         self.gru2 = nn.GRUCell(hidden_channels, hidden_channels)
         self.gru3 = nn.GRUCell(hidden_channels, hidden_channels)
         self.dropout = nn.Dropout(dropout)
 
-    def forward(self, x, edge_index, h1, h2, h3):
-        x = F.relu(self.gcn1(x, edge_index))
-        x = self.dropout(x)
-        x = F.relu(self.gcn2(x, edge_index))
-        x = self.dropout(x)
+    def forward(self, x, edge_index_dict, h1, h2, h3):
+        x_dict = {self.node_type: x}
+        x_dict = self.hetero_conv(x_dict, edge_index_dict)
+        x = self.dropout(x_dict[self.node_type].relu())
         h1 = self.gru1(x, h1)
         h2 = self.gru2(h1, h2)
         h3 = self.gru3(h2, h3)
@@ -49,42 +51,63 @@ class DeepGCNGRUCell(nn.Module):
 
 
 class MultiStepGCNGRU(nn.Module):
-    def __init__(self, in_channels, hidden_channels, out_channels, forecast_horizon):
+    def __init__(self, in_channels, hidden_channels, out_channels,
+                 forecast_horizon, edge_relations, node_type):
         super().__init__()
-        self.cell = DeepGCNGRUCell(in_channels, hidden_channels)
+        self.node_type = node_type
+        self.cell = DeepGCNGRUCell(in_channels, hidden_channels, edge_relations, node_type)
         self.proj = nn.Linear(hidden_channels, out_channels)
         self.forecast_horizon = forecast_horizon
 
-    def forward(self, x_seq, edge_index):
-        batch_size, history_steps, num_nodes, num_channels = x_seq.shape
-        hidden_dim = self.proj.in_features
+    def batch_edge_index_dict(self, edge_index_dict, B, N):
+        batched = {}
+        for key, ei in edge_index_dict.items():
+            offsets = torch.arange(B, device=ei.device) * N
+            batched[key] = torch.cat([ei + off for off in offsets], dim=1)
+        return batched
+
+    def forward(self, x_seq, edge_index_dict):
+        B, P, N, C = x_seq.shape
+        H = self.proj.in_features
         device = x_seq.device
 
-        h1 = torch.zeros(batch_size * num_nodes, hidden_dim, device=device)
-        h2 = torch.zeros(batch_size * num_nodes, hidden_dim, device=device)
-        h3 = torch.zeros(batch_size * num_nodes, hidden_dim, device=device)
+        h1 = torch.zeros(B * N, H, device=device)
+        h2 = torch.zeros(B * N, H, device=device)
+        h3 = torch.zeros(B * N, H, device=device)
 
-        for t in range(history_steps):
-            xt = x_seq[:, t].reshape(batch_size * num_nodes, num_channels)
-            h1, h2, h3 = self.cell(xt, edge_index, h1, h2, h3)
+        edge_index_dict_batched = self.batch_edge_index_dict(edge_index_dict, B, N)
+
+        for t in range(P):
+            xt = x_seq[:, t].reshape(B * N, C)
+            h1, h2, h3 = self.cell(xt, edge_index_dict_batched, h1, h2, h3)
 
         preds = []
         x_dec = x_seq[:, -1]
-
         for _ in range(self.forecast_horizon):
-            xt = x_dec.reshape(batch_size * num_nodes, num_channels)
-            h1, h2, h3 = self.cell(xt, edge_index, h1, h2, h3)
-            y_t = self.proj(h3).reshape(batch_size, num_nodes, -1)
+            xt = x_dec.reshape(B * N, C)
+            h1, h2, h3 = self.cell(xt, edge_index_dict_batched, h1, h2, h3)
+            y_t = self.proj(h3).reshape(B, N, -1)
             preds.append(y_t)
             x_dec = y_t
 
         return torch.stack(preds, dim=1)
 
-
+# ── service singleton ─────────────────────────────────────────────────────────
 class MultiStepGCNGRUModelService:
     def __init__(self):
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         logger.info(f"Using device: {self.device}")
+        self.model:              MultiStepGCNGRU
+        self.edge_index_dict:    dict        # ← fixes the Pylance erro
+        self.product_positions:  dict
+        self.metrics:            dict
+        self.last_input_window:  torch.Tensor
+        self.y_mean:             np.ndarray
+        self.y_std:              np.ndarray
+        self.Y_mean:             np.ndarray
+        self.Y_std:              np.ndarray
+        self.predictions:        np.ndarray
+        self.targets:            np.ndarray
 
         self._load_model()
         self._load_graph_data()
@@ -99,6 +122,8 @@ class MultiStepGCNGRUModelService:
                 hidden_channels=HIDDEN_CHANNELS,
                 out_channels=OUT_CHANNELS,
                 forecast_horizon=PREDICTION_HORIZON,
+                edge_relations=EDGE_RELATIONS,
+                node_type=NODE_TYPE,
             ).to(self.device)
 
             state_dict = torch.load(MODEL_OUTPUT_PATH, map_location=self.device, weights_only=True)
@@ -116,9 +141,11 @@ class MultiStepGCNGRUModelService:
                 map_location=self.device,
                 weights_only=False,
             )
-            edges = list(self.hetero_data.edge_index_dict.values())
-            self.edge_index = torch.cat(edges, dim=1).to(self.device)
-            logger.info(f"Graph loaded | edge_index shape: {tuple(self.edge_index.shape)}")
+            self.edge_index_dict = {
+            key: ei.to(self.device)
+            for key, ei in self.hetero_data.edge_index_dict.items()
+        }
+            logger.info(f"Graph loaded | relations: {list(self.edge_index_dict.keys())}")
         except Exception as e:
             logger.error(f"Failed to load graph data: {e}")
             raise CustomException("Failed to load graph data", e)
@@ -282,6 +309,7 @@ class MultiStepGCNGRUModelService:
         except Exception as e:
             logger.error(f"Failed to load precomputed data: {e}")
             raise CustomException("Failed to load precomputed data", e)
+    
 
     def predict(self, product_name: str) -> dict:
         try:
@@ -297,32 +325,44 @@ class MultiStepGCNGRUModelService:
             product_idx = self.product_positions[product_id]
 
             with torch.no_grad():
-                out = self.model(self.last_input_window, self.edge_index)
+                out = self.model(self.last_input_window, self.edge_index_dict)
 
             y_mean = torch.tensor(self.y_mean, dtype=torch.float32, device=self.device)
             y_std = torch.tensor(self.y_std, dtype=torch.float32, device=self.device)
             out = out * y_std + y_mean
 
             product_forecast = out[0, :, product_idx, :].detach().cpu().numpy()
+            pred_mean = product_forecast.mean(axis=0)   # [C] — mean across Q days
+            pred_std  = product_forecast.std(axis=0)    # [C] — spread across Q days
+            
             weekly_totals = product_forecast.sum(axis=0)
             next_day = product_forecast[0]
 
+            ### lower bound 
+            lower_bound = {
+            signal: round(float(max(0, weekly_totals[i] - 7*pred_std[i])), 0)
+            for i, signal in enumerate(TARGET_SIGNALS)}
+            ## upper bound
+            upper_bound = {
+            signal: round(float(weekly_totals[i] + 7*pred_std[i]), 0)
+            for i, signal in enumerate(TARGET_SIGNALS)}
+
             prediction_by_signal = {
-                signal: round(float(weekly_totals[i]), 4)
+                signal: round(float(weekly_totals[i]), 0)
                 for i, signal in enumerate(TARGET_SIGNALS)
             }
             next_day_prediction = {
-                signal: round(float(next_day[i]), 4)
+                signal: round(float(next_day[i]), 0)
                 for i, signal in enumerate(TARGET_SIGNALS)
             }
             daily_forecast = {
-                signal: [round(float(day[i]), 4) for day in product_forecast]
+                signal: [round(float(day[i]), 0) for day in product_forecast]
                 for i, signal in enumerate(TARGET_SIGNALS)
             }
 
             prediction = prediction_by_signal
             if requested_signal is not None:
-                prediction = round(float(prediction_by_signal[requested_signal]), 4)
+                prediction = round(float(prediction_by_signal[requested_signal]), 0)
 
             return {
                 "product_name": product_id,
@@ -331,10 +371,115 @@ class MultiStepGCNGRUModelService:
                 "next_day_prediction": next_day_prediction,
                 "daily_forecast": daily_forecast,
                 "forecast_horizon_days": int(product_forecast.shape[0]),
+                "lower_bound": lower_bound,
+                "upper_bound": upper_bound,
             }
         except Exception as e:
             logger.error(f"Prediction failed: {e}")
             raise CustomException("Prediction failed", e)
+
+    def predict_whatif(
+        self,
+        product_name: str,
+        zeroed_products: list[str] = [],
+        zeroed_factories: list[str] = [],
+        capacity_overrides: dict[str, float] = {},
+        dropped_relations: list[str] = [],
+    ) -> dict:
+        try:
+            # ── 1. resolve product ──────────────────────────────────────────
+            product_id = product_name
+            requested_signal = None
+            if product_name in self.product_to_idx:
+                requested_signal, product_id = split_signal_product(product_name)
+            if product_id not in self.product_positions:
+                raise ValueError(f"Product '{product_name}' not found")
+
+            # ── 2. clone input — never mutate the original ──────────────────
+            input_window = self.last_input_window.clone()  # [1, HISTORY, N, C]
+
+            # ── 3. build product→factory map from cache ─────────────────────
+            from .data_service import build_forecast_cache
+            cache = build_forecast_cache(
+                idx_to_product=self.idx_to_product,
+                predictions=self.predictions,
+                targets=self.targets,
+                values=self.values,
+            )
+            product_factory_map = {p["product"]: p["factory"] for p in cache}
+
+            # ── 4. collect indices to zero out ──────────────────────────────
+            indices_to_zero = set()
+
+            for p in zeroed_products:
+                if p in self.product_positions:
+                    indices_to_zero.add(self.product_positions[p])
+
+            for p in self.product_ids:
+                if product_factory_map.get(p) in zeroed_factories:
+                    if p in self.product_positions:
+                        indices_to_zero.add(self.product_positions[p])
+
+            # ── 5. apply zeroing ────────────────────────────────────────────
+            for idx in indices_to_zero:
+                input_window[:, :, idx, :] = 0.0
+
+            # ── 6. apply capacity scaling ───────────────────────────────────
+            for p, scale in capacity_overrides.items():
+                if p in self.product_positions:
+                    idx = self.product_positions[p]
+                    input_window[:, :, idx, :] *= float(scale)
+
+            # ── 7. optionally drop edge relations ───────────────────────────
+            edge_dict = {
+                k: v for k, v in self.edge_index_dict.items()
+                if k[1] not in dropped_relations
+            }
+
+            # ── 8. run inference ────────────────────────────────────────────
+            with torch.no_grad():
+                out = self.model(input_window, edge_dict)
+
+            y_mean = torch.tensor(self.y_mean, dtype=torch.float32, device=self.device)
+            y_std  = torch.tensor(self.y_std,  dtype=torch.float32, device=self.device)
+            while y_mean.dim() < 4: y_mean = y_mean.unsqueeze(0)
+            while y_std.dim()  < 4: y_std  = y_std.unsqueeze(0)
+            out = out * y_std + y_mean
+
+            product_idx      = self.product_positions[product_id]
+            product_forecast = out[0, :, product_idx, :].detach().cpu().numpy()
+            weekly_totals    = product_forecast.sum(axis=0)
+            next_day         = product_forecast[0]
+
+            prediction_by_signal = {
+                signal: round(float(weekly_totals[i]), 0)
+                for i, signal in enumerate(TARGET_SIGNALS)
+            }
+            next_day_prediction = {
+                signal: round(float(next_day[i]), 0)
+                for i, signal in enumerate(TARGET_SIGNALS)
+            }
+            daily_forecast = {
+                signal: [round(float(day[i]), 0) for day in product_forecast]
+                for i, signal in enumerate(TARGET_SIGNALS)
+            }
+
+            return {
+                "product_name":         product_id,
+                "prediction":           prediction_by_signal,
+                "next_day_prediction":  next_day_prediction,
+                "daily_forecast":       daily_forecast,
+                "forecast_horizon_days": int(product_forecast.shape[0]),
+                "scenario": {
+                    "zeroed_products":    zeroed_products,
+                    "zeroed_factories":   zeroed_factories,
+                    "capacity_overrides": capacity_overrides,
+                    "dropped_relations":  dropped_relations,
+                }
+            }
+        except Exception as e:
+            logger.error(f"What-if prediction failed: {e}")
+            raise CustomException("What-if prediction failed", e)
 
     def get_live_forecast_series(
         self,

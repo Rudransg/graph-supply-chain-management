@@ -9,7 +9,7 @@ import torch.nn.functional as F
 
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from torch.utils.data import Dataset, DataLoader
-from torch_geometric.nn import GCNConv
+from torch_geometric.nn import GCNConv,HeteroConv, SAGEConv
 
 from src.logger import get_logger
 from src.custom_exception import CustomException
@@ -34,35 +34,56 @@ class SupplySequenceDataset(Dataset):
 
 
 class DeepGCNGRUCell(nn.Module):
-    def __init__(self, in_channels, hidden_channels, dropout=0.2):
+    def __init__(self, in_channels, hidden_channels,edge_relations, node_type, dropout=0.2):
         super().__init__()
-        self.gcn1 = GCNConv(in_channels, hidden_channels)
-        self.gcn2 = GCNConv(hidden_channels, hidden_channels)
+        self.edge_relations = edge_relations
+        self.node_type = node_type
+        self.hetero_conv = HeteroConv({
+            (self.node_type, rel, self.node_type): SAGEConv((-1, -1), hidden_channels)
+            for rel in self.edge_relations
+        }, aggr='sum')
         self.gru1 = nn.GRUCell(hidden_channels, hidden_channels)
         self.gru2 = nn.GRUCell(hidden_channels, hidden_channels)
         self.gru3 = nn.GRUCell(hidden_channels, hidden_channels)
         self.dropout = nn.Dropout(dropout)
 
-    def forward(self, x, edge_index, h1, h2, h3):
-        # x: [B*N, C]
-        x = F.relu(self.gcn1(x, edge_index))
-        x = self.dropout(x)
-        x = F.relu(self.gcn2(x, edge_index))
-        x = self.dropout(x)
+    
+        # x: [B*N, C] → wrap as dict for HeteroConv
+    def forward(self, x, edge_index_dict, h1, h2, h3):
+        x_dict = {self.node_type: x}
+        x_dict = self.hetero_conv(x_dict, edge_index_dict)
+        x = self.dropout(x_dict[self.node_type].relu())
         h1 = self.gru1(x, h1)
         h2 = self.gru2(h1, h2)
         h3 = self.gru3(h2, h3)
         return h1, h2, h3
+    # def forward(self, x, edge_index, h1, h2, h3):
+    #     # x: [B*N, C]
+    #     x = F.relu(self.gcn1(x, edge_index))
+    #     x = self.dropout(x)
+    #     x = F.relu(self.gcn2(x, edge_index))
+    #     x = self.dropout(x)
+    #     h1 = self.gru1(x, h1)
+    #     h2 = self.gru2(h1, h2)
+    #     h3 = self.gru3(h2, h3)
+    #     return h1, h2, h3
 
 
 class MultiStepGCNGRU(nn.Module):
-    def __init__(self, in_channels, hidden_channels, out_channels, forecast_horizon):
+    def __init__(self, in_channels, hidden_channels, out_channels, forecast_horizon, edge_relations, node_type):
         super().__init__()
-        self.cell = DeepGCNGRUCell(in_channels, hidden_channels)
+        self.cell = DeepGCNGRUCell(in_channels, hidden_channels, edge_relations, node_type)
         self.proj = nn.Linear(hidden_channels, out_channels)
         self.forecast_horizon = forecast_horizon
-
-    def forward(self, x_seq, edge_index):
+    def batch_edge_index_dict(self, edge_index_dict, B, N):
+        """Tile edge_index_dict across B batches with correct node offsets."""
+        batched = {}
+        for key, ei in edge_index_dict.items():         # ei: [2, E]
+            offsets = torch.arange(B, device=ei.device) * N  # [B]
+            ei_batched = torch.cat([ei + off for off in offsets], dim=1)  # [2, B*E]
+            batched[key] = ei_batched
+        return batched
+    def forward(self, x_seq, edge_index_dict):
         """
         x_seq      : [B, P, N, C]
         edge_index : [2, E]
@@ -75,22 +96,24 @@ class MultiStepGCNGRU(nn.Module):
         h1 = torch.zeros(B * N, H, device=device)
         h2 = torch.zeros(B * N, H, device=device)
         h3 = torch.zeros(B * N, H, device=device)
-
+        edge_index_dict_batched = self.batch_edge_index_dict(edge_index_dict, B, N)
         # encode history
         for t in range(P):
             xt = x_seq[:, t].reshape(B * N, C)
-            h1, h2, h3 = self.cell(xt, edge_index, h1, h2, h3)
+            h1, h2, h3 = self.cell(xt, edge_index_dict_batched, h1, h2, h3)
 
         # autoregressive decode
         preds = []
         x_dec = x_seq[:, -1]  # [B, N, C]
 
+        preds = []
+        x_dec = x_seq[:, -1]
         for _ in range(self.forecast_horizon):
             xt = x_dec.reshape(B * N, C)
-            h1, h2, h3 = self.cell(xt, edge_index, h1, h2, h3)
+            h1, h2, h3 = self.cell(xt, edge_index_dict_batched, h1, h2, h3)
             y_t = self.proj(h3).reshape(B, N, -1)
             preds.append(y_t)
-            x_dec = y_t  # feed prediction as next input
+            x_dec = y_t
 
         return torch.stack(preds, dim=1)  # [B, Q, N, C]
 
@@ -202,6 +225,8 @@ class ModelTrainer:
                 hidden_channels=HIDDEN_CHANNELS,
                 out_channels=OUT_CHANNELS,
                 forecast_horizon=PREDICTION_HORIZON,
+                edge_relations=EDGE_RELATIONS,
+                node_type=NODE_TYPE,
             ).to(self.device)
             return model
         except Exception as e:
@@ -320,7 +345,10 @@ class ModelTrainer:
                 if NODE_TYPE not in hetero_data.node_types:
                     raise ValueError(f"Node type '{NODE_TYPE}' not found in hetero_data")
 
-                edge_index = self.build_edge_index(hetero_data)
+                edge_index_dict = {
+                key: ei.to(self.device)
+                for key, ei in hetero_data.edge_index_dict.items()
+            }
                 X_seq, Y_seq = self.build_sequences(values)
                 X_train, Y_train, X_test, Y_test, norm_stats = self.normalize(X_seq, Y_seq)
 
@@ -352,13 +380,13 @@ class ModelTrainer:
 
                 logger.info("Starting training")
                 for epoch in range(EPOCHS):
-                    train_loss = self.train_one_epoch(model, optimizer, train_loader, edge_index)
+                    train_loss = self.train_one_epoch(model, optimizer, train_loader, edge_index_dict)
                     logger.info(f"Epoch {epoch + 1}/{EPOCHS} - train loss: {train_loss:.4f}")
                     mlflow.log_metric("train_loss", train_loss, step=epoch)
 
                 logger.info("Starting evaluation")
                 metrics, preds_all, targets_all = self.evaluate(
-                    model, test_loader, edge_index, norm_stats
+                    model, test_loader, edge_index_dict, norm_stats
                 )
 
                 mlflow.log_metrics({
