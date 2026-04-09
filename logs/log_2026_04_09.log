@@ -376,3 +376,10 @@
 2026-04-09 17:17:23,895-ERROR-/predict/whatif failed: 'MultiStepGCNGRUModelService' object has no attribute 'predict_whatif'
 2026-04-09 17:17:24,051-ERROR-/predict/whatif failed: 'MultiStepGCNGRUModelService' object has no attribute 'predict_whatif'
 2026-04-09 17:17:24,276-ERROR-/predict/whatif failed: 'MultiStepGCNGRUModelService' object has no attribute 'predict_whatif'
+2026-04-09 17:18:59,168-INFO-Using device: cpu
+2026-04-09 17:18:59,233-INFO-Model loaded and set to eval mode
+2026-04-09 17:18:59,235-INFO-Graph loaded | relations: [('product', 'same_plant', 'product'), ('product', 'same_storage', 'product'), ('product', 'same_product_group', 'product'), ('product', 'same_product_subgroup', 'product')]
+2026-04-09 17:18:59,236-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-09 17:18:59,236-INFO-Metrics loaded
+2026-04-09 17:18:59,238-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-09 17:18:59,263-INFO-[Startup] Forecast cache built for 41 products
