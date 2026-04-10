@@ -5,21 +5,21 @@ const API = axios.create({
   timeout: 15000,
 });
 
-export const runWhatIf = (payload) => API.post("/api/predict/whatif", payload);
-export const fetchHealth = () => API.get("/api/health");
-export const fetchMetrics = () => API.get("/api/metrics");
-export const fetchProductsApi = () => API.get("/api/products");
-export const fetchAllPreds = () => API.get("/api/predictions/all");
-export const fetchModelInfo = () => API.get("/api/model/info");
-export const runPredict = (payload) => API.post("/api/predict", payload);
+export const runWhatIf = (payload) => API.post("/predict/whatif", payload);
+export const fetchHealth = () => API.get("/health");
+export const fetchMetrics = () => API.get("/metrics");
+export const fetchProductsApi = () => API.get("/products");
+export const fetchAllPreds = () => API.get("/predictions/all");
+export const fetchModelInfo = () => API.get("/model/info");
+export const runPredict = (payload) => API.post("/predict", payload);
 
 // dashboard routes
-export const fetchDashboardStats = () => API.get("/api/dashboard/stats");
+export const fetchDashboardStats = () => API.get("/dashboard/stats");
 
 export const fetchAtRiskProducts = (topN = 6) =>
-  API.get("/api/products/at-risk", { params: { top_n: topN } });
+  API.get("/products/at-risk", { params: { top_n: topN } });
 
-export const fetchFactoryLoad = () => API.get("/api/factory/load");
+export const fetchFactoryLoad = () => API.get("/factory/load");
 
 // forecast routes
 export const fetchProductTrend = async (
@@ -28,7 +28,7 @@ export const fetchProductTrend = async (
   limit = 30
 ) => {
   try {
-    return await API.get(`/api/forecast/trend/${encodeURIComponent(product)}`, {
+    return await API.get(`/forecast/trend/${encodeURIComponent(product)}`, {
       params: {
         signal_type: signalType,
         limit,
@@ -54,7 +54,7 @@ export const fetchLiveProductTrend = async (
   historyPoints = 30
 ) => {
   try {
-    return await API.get(`/api/forecast/live/${encodeURIComponent(product)}`, {
+    return await API.get(`/forecast/live/${encodeURIComponent(product)}`, {
       params: {
         signal_type: signalType,
         history_points: historyPoints,
@@ -74,7 +74,7 @@ export const fetchLiveProductTrend = async (
   }
 };
 
-export const fetchProducts = () => API.get("/api/forecast/products");
+export const fetchProducts = () => API.get("/forecast/products");
 
 export const fetchForecastCategory = (category) =>
-  API.get(`/api/forecast/category/${encodeURIComponent(category)}`);
+  API.get(`/forecast/category/${encodeURIComponent(category)}`);
