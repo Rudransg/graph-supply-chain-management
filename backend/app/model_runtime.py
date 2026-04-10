@@ -463,19 +463,40 @@ class MultiStepGCNGRUModelService:
                 for i, signal in enumerate(TARGET_SIGNALS)
             }
 
-            return {
-                "product_name":         product_id,
-                "prediction":           prediction_by_signal,
-                "next_day_prediction":  next_day_prediction,
-                "daily_forecast":       daily_forecast,
-                "forecast_horizon_days": int(product_forecast.shape[0]),
-                "scenario": {
-                    "zeroed_products":    zeroed_products,
-                    "zeroed_factories":   zeroed_factories,
-                    "capacity_overrides": capacity_overrides,
-                    "dropped_relations":  dropped_relations,
-                }
+            # ── 9. baseline run (no disruptions) ───────────────────────
+            with torch.no_grad():
+                baseline_out = self.model(self.last_input_window, self.edge_index_dict)
+
+            baseline_out = baseline_out * y_std + y_mean
+            baseline_forecast = baseline_out[0, :, product_idx, :].detach().cpu().numpy()
+            baseline_totals = baseline_forecast.sum(axis=0)
+
+            baseline_by_signal = {
+                signal: round(float(baseline_totals[i]), 0)
+                for i, signal in enumerate(TARGET_SIGNALS)
             }
+            delta = {
+                signal: round(float(weekly_totals[i] - baseline_totals[i]), 0)
+                for i, signal in enumerate(TARGET_SIGNALS)
+            }
+            delta_pct = {
+                signal: round(float(
+                    ((weekly_totals[i] - baseline_totals[i]) / (baseline_totals[i] + 1e-8)) * 100
+                ), 1)
+                for i, signal in enumerate(TARGET_SIGNALS)
+            }
+
+            return {
+                "product_name":          product_id,
+                "baseline":              baseline_by_signal,
+                "scenario":              prediction_by_signal,
+                "delta":                 delta,
+                "delta_pct":             delta_pct,
+                "next_day_prediction":   next_day_prediction,
+                "daily_forecast":        daily_forecast,
+                "forecast_horizon_days": int(product_forecast.shape[0]),
+            }
+            
         except Exception as e:
             logger.error(f"What-if prediction failed: {e}")
             raise CustomException("What-if prediction failed", e)

@@ -6,7 +6,6 @@ import string
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-import re
 
 from .forecast_data import (
     get_trend_for_product,
@@ -64,20 +63,21 @@ app = FastAPI(
     description="FastAPI backend for SupplyGraphModel demand prediction with dashboard UI",
 )
 
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
+        "https://graph-supply-chain-management-5ggk.vercel.app",
         "http://localhost:3000",
         "http://localhost:5173",
         "http://127.0.0.1:5173",
         "http://127.0.0.1:3000",
+        os.getenv("FRONTEND_URL", ""),
     ],
-    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 # ── cache ─────────────────────────────────────────────────────────────────────
 
 _forecast_cache: list[dict] = []

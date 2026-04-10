@@ -2,9 +2,9 @@ import axios from "axios";
 
 const API = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:8000",
-  timeout: 15000,
+  timeout: 30000,
 });
-
+export const fetchGraphEdges = () => API.get("/graph-edges");
 export const runWhatIf = (payload) => API.post("/predict/whatif", payload);
 export const fetchHealth = () => API.get("/health");
 export const fetchMetrics = () => API.get("/metrics");
