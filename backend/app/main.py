@@ -1,6 +1,8 @@
+from linecache import cache
 import sys
 import os
 from pathlib import Path
+import string
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
@@ -37,7 +39,7 @@ from .model_runtime import (
     LOSS_ALPHA,
 )
 from .data_service import (  # was .data_service
-    get_factory_map, get_group_subgroup_map,
+    get_factory_map_multi, get_group_subgroup_map,
     build_forecast_cache, build_trend_series, get_edge_data
 )
 from src.logger import get_logger
@@ -46,6 +48,12 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 logger = get_logger(__name__)
+# ── AFTER IMPORTS, BEFORE app = FastAPI() ─────
+def get_plant_label(i: int) -> str:   # ← ADD THIS FUNCTION HERE
+    letters = string.ascii_uppercase
+    if i < 26:
+        return f"Plant {letters[i]}"
+    return f"Plant {letters[i // 26 - 1]}{letters[i % 26]}"
 
 # ── app ───────────────────────────────────────────────────────────────────────
 
@@ -213,7 +221,7 @@ def model_info():
 def dashboard_stats():
     cache = _cache()
     at_risk = [p for p in cache if p["status"] == "at_risk"]
-    factories = set(p["factory"] for p in cache)
+    factories = factories = set(f for p in cache for f in p.get("factories", []))
     m = model_service.metrics
     r2 = float(m.get("r2", 0.9923)) if m else 0.9923
 
@@ -242,7 +250,7 @@ def list_products(
     if search:
         rows = [r for r in rows if search.lower() in r["product"].lower()]
     if factory:
-        rows = [r for r in rows if r["factory"] == factory]
+        rows = [r for r in rows if factory in r.get("factories", [])]
     if group:
         rows = [r for r in rows if r["group"] == group]
     if status:
@@ -265,7 +273,7 @@ def list_products(
 @app.get("/products/filters", response_model=FilterOptions)
 def get_filter_options():
     cache = _cache()
-    factories = sorted(set(p["factory"] for p in cache))
+    factories = sorted(set(f for p in cache for f in p.get("factories", [])))
     groups = sorted(set(p["group"] for p in cache))
     subgroups = sorted(set(p["subgroup"] for p in cache))
     return {
@@ -294,11 +302,10 @@ def related_products(name: str):
     if not target:
         raise HTTPException(status_code=404, detail=f"Product '{name}' not found")
 
-    factory = target["factory"]
+    target_factories = set(target.get("factories", []))
     related = []
     for p in cache:
-        if p["factory"] == factory and p["product"] != name:
-            # Sum all signal forecasts and use worst trend
+        if set(p.get("factories", [])) & target_factories and p["product"] != name:
             total_forecast = sum(v for k, v in p.items() if k.endswith("_forecast"))
             trends = [v for k, v in p.items() if k.endswith("_trend_pct")]
             worst_trend = min(trends) if trends else 0
@@ -307,7 +314,7 @@ def related_products(name: str):
                     product=p["product"],
                     forecast_kg=round(total_forecast, 2),
                     trend_pct=round(worst_trend, 1),
-                    factory=p["factory"],
+                    factory=", ".join(p.get("factories", [])),  # ← fixed
                 )
             )
     return related[:5]
@@ -354,33 +361,103 @@ def factory_load():
     totals: dict[str, float] = {}
     counts: dict[str, int] = {}
 
-    cache        = _cache()                                     # once
-    product_map  = {p["product"]: p["factory"] for p in cache} # O(1) lookup
+    cache = _cache()
+    # product → list of factories
+    product_map = {p["product"]: p.get("factories", []) for p in cache}
 
     for product_id in model_service.product_ids:
         try:
             result        = model_service.predict(product_id)
             product_total = sum(result["prediction"].values())
-            factory       = product_map.get(product_id, "Unknown")
+            factories     = product_map.get(product_id, [])
 
-            totals[factory] = totals.get(factory, 0.0) + product_total
-            counts[factory] = counts.get(factory, 0) + 1
+            if not factories:
+                continue
+
+            # split load equally across all factories this product belongs to
+            share = product_total / len(factories)
+            for factory in factories:
+                totals[factory] = totals.get(factory, 0.0) + share
+                counts[factory] = counts.get(factory, 0) + 1
 
         except Exception as e:
             logger.warning(f"Skipping {product_id} in factory load: {e}")
             continue
 
     max_load = max(totals.values()) if totals else 0.0
-
     if max_load <= 0:
-        return [FactoryLoad(factory=fac, total_forecast_kg=round(totals[fac], 2),
-                            product_count=counts[fac], load_pct=0.0)
-                for fac in sorted(totals.keys())]
+        return [FactoryLoad(factory=f, total_forecast_kg=round(totals[f], 2),
+                            product_count=counts[f], load_pct=0.0)
+                for f in sorted(totals)]
 
-    return [FactoryLoad(factory=fac, total_forecast_kg=round(totals[fac], 2),
-                        product_count=counts[fac],
-                        load_pct=round((totals[fac] / max_load) * 100.0, 1))
-            for fac in sorted(totals.keys())]
+    return [FactoryLoad(factory=f, total_forecast_kg=round(totals[f], 2),
+                        product_count=counts[f],
+                        load_pct=round((totals[f] / max_load) * 100.0, 1))
+            for f in sorted(totals)]
+
+@app.get("/factories")
+def get_factories():
+    import pandas as pd
+    from config.path_config import EDGES_PLANT_FILE
+
+    df = pd.read_csv(EDGES_PLANT_FILE)
+    unique_plants = sorted(df["Plant"].unique())
+    factories = [get_plant_label(i) for i in range(len(unique_plants))]
+    return {"factories": factories}
+
+@app.get("/graph-edges")
+def get_graph_edges():
+    import json
+    import pandas as pd
+    from config.path_config import (
+        PRODUCT_IDX_TO_NAME_PATH,
+        EDGES_PLANT_FILE,
+        EDGES_STORAGE_FILE,
+        EDGES_GROUP_FILE,
+        EDGES_SUBGROUP_FILE,
+    )
+
+    with open(PRODUCT_IDX_TO_NAME_PATH, "r") as f:
+        idx_to_product = json.load(f)
+    print("idx_to_product sample:", list(idx_to_product.items())[:5])
+    df_plant = pd.read_csv(EDGES_PLANT_FILE)
+    print("idx_to_product count:", len(idx_to_product))
+    print("df_plant shape:", df_plant.shape)
+    print("df_plant columns:", df_plant.columns.tolist())
+    print("df_plant sample:", df_plant.head(2).to_dict())
+    
+    # idx_to_product has 3 entries per product (one per signal)
+    # edge files use product-level indices → divide by NUM_SIGNALS
+    product_idx_to_name = {int(k): v for k, v in idx_to_product.items()}
+
+    print("product_idx_to_name keys:", sorted(product_idx_to_name.keys()))
+    print("sample:", list(product_idx_to_name.items())[:5])
+    df_plant = pd.read_csv(EDGES_PLANT_FILE)
+    unique_plants = sorted(df_plant["Plant"].unique())
+    plant_rename = {str(int(p)): get_plant_label(i) for i, p in enumerate(unique_plants)}
+
+    def load_edges(filepath, edge_type):          # ← INDENTED inside function
+        edges = []
+        df = pd.read_csv(filepath)
+        for _, row in df.iterrows():
+            src = product_idx_to_name.get(int(row["node1"]))
+            tgt = product_idx_to_name.get(int(row["node2"]))
+            if src and tgt:
+                edge = {"source": src, "target": tgt, "type": edge_type}
+                if edge_type == "same_storage":
+                    edge["storage"] = str(row["Storage Location"])
+                if edge_type == "same_plant":
+                    edge["plant"] = plant_rename.get(str(int(row["Plant"])), str(int(row["Plant"])))
+                edges.append(edge)
+        return edges
+
+    edges = []
+    edges += load_edges(EDGES_PLANT_FILE,    "same_plant")
+    edges += load_edges(EDGES_STORAGE_FILE,  "same_storage")
+    edges += load_edges(EDGES_GROUP_FILE,    "same_product_group")
+    edges += load_edges(EDGES_SUBGROUP_FILE, "same_product_subgroup")
+
+    return {"edges": edges}
 
 @app.get("/factory/graph", response_model=GraphResponse)
 def factory_graph(
@@ -396,7 +473,7 @@ def factory_graph(
         GraphNode(
             id=p["product"],
             label=p["product"],
-            factory=p["factory"],
+            factory=", ".join(p.get("factories", [])),  # join list to string for display
             group=p["group"],
             forecast_kg=sum(v for k, v in p.items() if k.endswith("_forecast")),
             status=p["status"],

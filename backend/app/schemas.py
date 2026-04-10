@@ -52,13 +52,20 @@ class AllPredsResponse(BaseModel):
 # ── NEW schemas ───────────────────────────────────────────────────────────────
 
 class ProductDetail(BaseModel):
-    product: str
-    group: str
-    subgroup: str
-    factory: str
+    product:    str
+    group:      str
+    subgroup:   str
+    factory:    str
+    status:     str
     forecast_kg: float
-    trend_pct: float
-    status: str
+    trend_pct:   float
+    # per-signal fields (optional so old data doesn't break)
+    production_unit_forecast:   float = 0.0
+    production_unit_trend_pct:  float = 0.0
+    delivery_unit_forecast:     float = 0.0
+    delivery_unit_trend_pct:    float = 0.0
+    sales_order_unit_forecast:  float = 0.0
+    sales_order_unit_trend_pct: float = 0.0
 
 class ProductsListResponse(BaseModel):
     total: int

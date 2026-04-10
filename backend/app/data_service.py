@@ -1,6 +1,12 @@
 import numpy as np
 import pandas as pd
 from pathlib import Path
+import string
+import pandas as pd
+from config.path_config import EDGES_PLANT_FILE
+from src.logger import get_logger
+logger = get_logger(__name__)
+
 
 ROOT = Path(__file__).resolve().parents[2]
 ARTIFACTS = ROOT / "artifacts"
@@ -15,7 +21,11 @@ KNOWN_SIGNALS = [
 ]
 
 _cache = {}
-
+def get_plant_label(i: int) -> str:
+    letters = string.ascii_uppercase
+    if i < 26:
+        return f"Plant {letters[i]}"
+    return f"Plant {letters[i // 26 - 1]}{letters[i % 26]}"
 
 def _split_signal_product(signal_product: str) -> tuple[str | None, str]:
     for signal in KNOWN_SIGNALS:
@@ -44,37 +54,38 @@ def get_group_subgroup_map() -> dict[str, dict]:
         }
     return result
 
-def get_factory_map(idx_to_product: dict) -> dict[str, str]:
-    """
-    Deterministic factory assignment based on product ID.
-    Plant A=0, B=1, C=2, D=3 cycling by product index.
-    This assumes products are indexed sequentially (0, 1, 2, ... 40).
-    """
-    factories = ["Plant A", "Plant B", "Plant C", "Plant D"]
-    
-    # Extract unique product IDs and their indices
-    signal_product_map = {}
-    for idx_str, signal_product in idx_to_product.items():
-        # Try to match known signal types
-        signal_type = None
-        product_id = None
-        signal_type, product_id = _split_signal_product(signal_product)
-        
-        if signal_type is None or product_id is None:
-            continue
-            
-        if product_id not in signal_product_map:
-            signal_product_map[product_id] = int(idx_str)
-    
-    # Create factory map based on product index (first signal's idx)
-    result = {}
-    for product_id, idx in signal_product_map.items():
-        # Use the index modulo 4 to assign factories
-        factory_idx = (idx % 4)
-        result[product_id] = factories[factory_idx]
-    
-    return result
+def get_factory_map_multi(idx_to_product: dict) -> dict[str, list[str]]:
+    """Returns {product_name: [Plant A, Plant C, Plant F, ...]}"""
+    import pandas as pd
+    from config.path_config import EDGES_PLANT_FILE
 
+    df = pd.read_csv(EDGES_PLANT_FILE)
+    unique_plants = sorted(df["Plant"].unique())
+    plant_rename = {str(int(p)): get_plant_label(i) for i, p in enumerate(unique_plants)}
+
+    NUM_SIGNALS = 3
+    product_idx_to_name = {}
+    for idx_str, signal_product in idx_to_product.items():
+        product_idx = int(idx_str) // NUM_SIGNALS
+        if product_idx not in product_idx_to_name:
+            for sig in ["production_unit_", "delivery_unit_", "sales_order_unit_"]:
+                if signal_product.startswith(sig):
+                    product_idx_to_name[product_idx] = signal_product[len(sig):]
+                    break
+
+    product_plants: dict[str, set] = {}
+    for _, row in df.iterrows():
+        plant_label = plant_rename.get(str(int(row["Plant"])))
+        if not plant_label:
+            continue
+        for node_col in ["node1", "node2"]:
+            product_name = product_idx_to_name.get(int(row[node_col]))
+            if product_name:
+                if product_name not in product_plants:
+                    product_plants[product_name] = set()
+                product_plants[product_name].add(plant_label)
+
+    return {p: sorted(plants) for p, plants in product_plants.items()}
 def build_forecast_cache(
     idx_to_product: dict[str, str],
     predictions:    np.ndarray,
@@ -88,7 +99,7 @@ def build_forecast_cache(
     values shape:      [num_snapshots, num_products, num_signals]
     """
     gsmap      = get_group_subgroup_map()
-    fmap       = get_factory_map(idx_to_product)
+    fmap = get_factory_map_multi(idx_to_product)
     
     # Parse signal types from idx_to_product keys by matching known signal prefixes
     signal_product_map = {}
@@ -137,7 +148,7 @@ def build_forecast_cache(
     for product_id, signal_indices in signal_product_map.items():
         product_data = {
             "product": product_id,
-            "factory": fmap.get(product_id, "Unknown"),
+            "factories": fmap.get(product_id, []),
         }
         
         gs = gsmap.get(product_id, {"group": "Unknown", "subgroup": "Unknown"})
@@ -178,6 +189,12 @@ def build_forecast_cache(
         trend_values = [product_data.get(f"{signal}_trend_pct", 0) for signal in signal_indices.keys()]
         worst_trend = min(trend_values) if trend_values else 0
         product_data["status"] = "at_risk" if worst_trend < -10.0 else "on_track"
+
+        product_data["forecast_kg"] = round(
+        sum(product_data.get(f"{s}_forecast", 0) for s in KNOWN_SIGNALS), 2)
+        product_data["trend_pct"] = round(
+        min(product_data.get(f"{s}_trend_pct", 0) for s in KNOWN_SIGNALS), 1)
+        
         
         results.append(product_data)
 

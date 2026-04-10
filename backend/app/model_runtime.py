@@ -406,8 +406,7 @@ class MultiStepGCNGRUModelService:
                 targets=self.targets,
                 values=self.values,
             )
-            product_factory_map = {p["product"]: p["factory"] for p in cache}
-
+            product_factory_map = {p["product"]: p.get("factories", []) for p in cache}
             # ── 4. collect indices to zero out ──────────────────────────────
             indices_to_zero = set()
 
@@ -416,7 +415,7 @@ class MultiStepGCNGRUModelService:
                     indices_to_zero.add(self.product_positions[p])
 
             for p in self.product_ids:
-                if product_factory_map.get(p) in zeroed_factories:
+                if any(f in zeroed_factories for f in product_factory_map.get(p, [])):
                     if p in self.product_positions:
                         indices_to_zero.add(self.product_positions[p])
 
