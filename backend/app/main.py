@@ -331,24 +331,30 @@ def predict_whatif(req: WhatIfRequest):
             dropped_relations=req.dropped_relations,
         )
 
+        baseline_signals = baseline["prediction"]
+        scenario_signals = scenario["scenario"]
+
         delta = {
-            signal: round(scenario["prediction"][signal] - baseline["prediction"][signal], 0)
+            signal: round(scenario_signals[signal] - baseline_signals[signal], 0)
             for signal in TARGET_SIGNALS
+            if signal in scenario_signals and signal in baseline_signals
         }
+
         delta_pct = {
             signal: round(
-                ((scenario["prediction"][signal] - baseline["prediction"][signal])
-                 / max(baseline["prediction"][signal], 1)) * 100, 1
+                ((scenario_signals[signal] - baseline_signals[signal])
+                 / max(baseline_signals[signal], 1)) * 100, 1
             )
             for signal in TARGET_SIGNALS
+            if signal in scenario_signals and signal in baseline_signals
         }
 
         return {
             "product_name": req.product_name,
-            "baseline":     baseline["prediction"],
-            "scenario":     scenario["prediction"],
-            "delta":        delta,
-            "delta_pct":    delta_pct,
+            "baseline": baseline_signals,
+            "scenario": scenario_signals,
+            "delta": delta,
+            "delta_pct": delta_pct,
         }
     except ValueError as ve:
         raise HTTPException(status_code=404, detail=str(ve))
