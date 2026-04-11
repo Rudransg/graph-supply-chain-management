@@ -179,13 +179,13 @@ In Colab, mount Drive, update `ROOT` and other paths if needed, and then run all
 
 The asymmetric loss emphasizes the cost of under-forecasting, which is often more critical in supply chain settings.
 
-Formally, with predictions \\(y_{\\hat{}}\\) and ground truth \\(y\\):
+Formally, with predictions \(y_{\hat{}}\) and ground truth \(y\):
 
-\\[
-\\text{loss} = \\text{mean}(\\alpha (y_{\\hat{}} - y)^2 \\mathbf{1}_{y_{\\hat{}} < y} + (y_{\\hat{}} - y)^2 \\mathbf{1}_{y_{\\hat{}} \\ge y})
-\\]
+\[
+\text{loss} = \text{mean}(\alpha (y_{\hat{}} - y)^2 \mathbf{1}_{y_{\hat{}} < y} + (y_{\hat{}} - y)^2 \mathbf{1}_{y_{\hat{}} \ge y})
+\]
 
-where \\(\\alpha > 1\\) scales the penalty when forecasts are below actuals.[page:1]
+where \(\alpha > 1\) scales the penalty when forecasts are below actuals.[page:1]
 
 ## Requirements
 

@@ -1,0 +1,265 @@
+2026-04-11 01:23:54,518-INFO-Using device: cpu
+2026-04-11 01:23:54,730-INFO-Model loaded and set to eval mode
+2026-04-11 01:23:54,750-INFO-Graph loaded | relations: [('product', 'same_plant', 'product'), ('product', 'same_storage', 'product'), ('product', 'same_product_group', 'product'), ('product', 'same_product_subgroup', 'product')]
+2026-04-11 01:23:54,767-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-11 01:23:54,782-INFO-Metrics loaded
+2026-04-11 01:23:54,875-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-11 01:23:55,112-INFO-[Startup] Forecast cache built for 41 products
+2026-04-11 01:52:19,094-INFO-Using device: cpu
+2026-04-11 01:52:19,356-INFO-Model loaded and set to eval mode
+2026-04-11 01:52:19,363-INFO-Graph loaded | relations: [('product', 'same_plant', 'product'), ('product', 'same_storage', 'product'), ('product', 'same_product_group', 'product'), ('product', 'same_product_subgroup', 'product')]
+2026-04-11 01:52:19,363-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-11 01:52:19,363-INFO-Metrics loaded
+2026-04-11 01:52:19,380-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-11 01:52:19,643-INFO-[Startup] Forecast cache built for 41 products
+2026-04-11 01:57:24,168-INFO-Using device: cpu
+2026-04-11 01:57:24,308-INFO-Model loaded and set to eval mode
+2026-04-11 01:57:24,315-INFO-Graph loaded | relations: [('product', 'same_plant', 'product'), ('product', 'same_storage', 'product'), ('product', 'same_product_group', 'product'), ('product', 'same_product_subgroup', 'product')]
+2026-04-11 01:57:24,317-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-11 01:57:24,317-INFO-Metrics loaded
+2026-04-11 01:57:24,327-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-11 01:57:24,487-INFO-[Startup] Forecast cache built for 41 products
+2026-04-11 02:08:45,301-INFO-Using device: cpu
+2026-04-11 02:08:45,518-INFO-Model loaded and set to eval mode
+2026-04-11 02:08:45,522-INFO-Graph loaded | relations: [('product', 'same_plant', 'product'), ('product', 'same_storage', 'product'), ('product', 'same_product_group', 'product'), ('product', 'same_product_subgroup', 'product')]
+2026-04-11 02:08:45,524-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-11 02:08:45,526-INFO-Metrics loaded
+2026-04-11 02:08:45,528-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-11 02:08:45,708-INFO-[Startup] Forecast cache built for 41 products
+2026-04-11 02:10:17,130-INFO-Using device: cpu
+2026-04-11 02:10:17,387-INFO-Model loaded and set to eval mode
+2026-04-11 02:10:17,394-INFO-Graph loaded | relations: [('product', 'same_plant', 'product'), ('product', 'same_storage', 'product'), ('product', 'same_product_group', 'product'), ('product', 'same_product_subgroup', 'product')]
+2026-04-11 02:10:17,400-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-11 02:10:17,403-INFO-Metrics loaded
+2026-04-11 02:10:17,428-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-11 02:10:17,789-INFO-[Startup] Forecast cache built for 41 products
+2026-04-11 02:25:31,516-INFO-Using device: cpu
+2026-04-11 02:25:31,580-INFO-Model loaded and set to eval mode
+2026-04-11 02:25:31,580-INFO-Graph loaded | relations: [('product', 'same_plant', 'product'), ('product', 'same_storage', 'product'), ('product', 'same_product_group', 'product'), ('product', 'same_product_subgroup', 'product')]
+2026-04-11 02:25:31,582-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-11 02:25:31,582-INFO-Metrics loaded
+2026-04-11 02:25:31,582-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-11 02:25:31,636-INFO-[Startup] Forecast cache built for 41 products
+2026-04-11 02:36:42,854-INFO-Using device: cpu
+2026-04-11 02:36:42,914-INFO-Model loaded and set to eval mode
+2026-04-11 02:36:42,914-INFO-Graph loaded | relations: [('product', 'same_plant', 'product'), ('product', 'same_storage', 'product'), ('product', 'same_product_group', 'product'), ('product', 'same_product_subgroup', 'product')]
+2026-04-11 02:36:42,914-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-11 02:36:42,914-INFO-Metrics loaded
+2026-04-11 02:36:42,914-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-11 02:36:42,989-INFO-[Startup] Forecast cache built for 41 products
+2026-04-11 02:57:23,558-INFO-Using device: cpu
+2026-04-11 02:57:23,624-INFO-Model loaded and set to eval mode
+2026-04-11 02:57:23,625-INFO-Graph loaded | relations: [('product', 'same_plant', 'product'), ('product', 'same_storage', 'product'), ('product', 'same_product_group', 'product'), ('product', 'same_product_subgroup', 'product')]
+2026-04-11 02:57:23,627-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-11 02:57:23,627-INFO-Metrics loaded
+2026-04-11 02:57:23,629-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-11 02:57:23,675-INFO-[Startup] Forecast cache built for 41 products
+2026-04-11 02:59:46,559-INFO-Successfully read the YAML file
+2026-04-11 02:59:46,560-INFO-Data ingestion initialized | bucket: supply-graph-stuff | folder: Homogenoeus | train_ratio: 0.8
+2026-04-11 02:59:46,560-INFO-Starting data ingestion pipeline...
+2026-04-11 02:59:46,560-INFO-Downloading node files...
+2026-04-11 02:59:53,411-ERROR-Failed to download Nodes/NodesIndex.csv: 403 GET https://storage.googleapis.com/download/storage/v1/b/supply-graph-stuff/o/Homogenoeus%2FNodes%2FNodesIndex.csv?alt=media: The billing account for the owning project is disabled in state closed: ('Request failed with status code', 403, 'Expected one of', <HTTPStatus.OK: 200>, <HTTPStatus.PARTIAL_CONTENT: 206>)
+2026-04-11 02:59:53,411-ERROR-Error while downloading node files: Error in D:\Supply Graph\src\data_ingestion.py , line 80 : Failed to download Nodes/NodesIndex.csv: 403 GET https://storage.googleapis.com/download/storage/v1/b/supply-graph-stuff/o/Homogenoeus%2FNodes%2FNodesIndex.csv?alt=media: The billing account for the owning project is disabled in state closed: ('Request failed with status code', 403, 'Expected one of', <HTTPStatus.OK: 200>, <HTTPStatus.PARTIAL_CONTENT: 206>)
+2026-04-11 02:59:53,411-ERROR-CustomException in run(): Error in D:\Supply Graph\src\data_ingestion.py , line 163 : Error while downloading node files: Error in D:\Supply Graph\src\data_ingestion.py , line 80 : Failed to download Nodes/NodesIndex.csv: 403 GET https://storage.googleapis.com/download/storage/v1/b/supply-graph-stuff/o/Homogenoeus%2FNodes%2FNodesIndex.csv?alt=media: The billing account for the owning project is disabled in state closed: ('Request failed with status code', 403, 'Expected one of', <HTTPStatus.OK: 200>, <HTTPStatus.PARTIAL_CONTENT: 206>)
+2026-04-11 02:59:53,411-INFO-Data ingestion process finished.
+2026-04-11 03:00:48,980-INFO-Starting model training pipeline
+2026-04-11 03:00:48,980-INFO-Loading processed artifacts
+2026-04-11 03:00:48,988-INFO-Loading values.npy = [[[1353.3334  1413.478   1324.1466 ]
+  [3365.1667  3702.9265  3686.693  ]
+  [ 846.26666  872.7361   913.44165]
+  ...
+  [ 412.86667  447.86667  484.35   ]
+  [ 393.5      330.3667   318.33334]
+  [3799.5     3747.3716  3587.9998 ]]
+
+ [[1326.6666  1389.3447  1294.4933 ]
+  [3331.8333  3647.4932  3631.6975 ]
+  [ 862.93335  880.9694   881.1333 ]
+  ...
+  [ 379.06668  477.66666  514.8    ]
+  [ 393.5      342.6667   327.96667]
+  [3682.8333  3625.0715  3620.7664 ]]
+
+ [[1326.6666  1322.058   1226.2267 ]
+  [3531.8333  3593.5154  3539.7405 ]
+  [ 912.93335  847.1611   874.3    ]
+  ...
+  [ 419.7      473.08334  538.43335]
+  [ 393.5      358.6      333.43332]
+  [3534.3667  3569.455   3724.9666 ]]
+
+ ...
+
+ [[ 693.36664  717.6067   723.62665]
+  [3869.8333  3832.5142  3764.5405 ]
+  [ 673.13336  729.16925  718.6247 ]
+  ...
+  [ 384.33334  286.83334  342.73334]
+  [ 324.56668  237.56664  229.     ]
+  [2207.8     2183.2     2166.1333 ]]
+
+ [[ 693.36664  695.9733   653.5267 ]
+  [3703.1667  3731.6377  3470.56   ]
+  [ 673.13336  727.73596  662.7638 ]
+  ...
+  [ 384.33334  286.66666  333.06668]
+  [ 324.56668  241.4333   211.93333]
+  [2191.7334  2132.3972  2000.4333 ]]
+
+ [[ 660.0333   648.79333  613.8933 ]
+  [3503.1667  3477.0806  3334.3267 ]
+  [ 639.8      672.02765  644.2638 ]
+  ...
+  [ 350.8      279.8      328.8    ]
+  [ 324.56668  241.0333   195.76666]
+  [2031.6     2033.0667  1890.7333 ]]]
+2026-04-11 03:00:48,988-INFO-values shape: (191, 41, 3)
+2026-04-11 03:00:48,988-INFO-Target signals: ['production_unit', 'delivery_unit', 'sales_order_unit']
+2026-04-11 03:00:48,988-INFO-Sequences: X=(173, 12, 41, 3)  Y=(173, 7, 41, 3)
+2026-04-11 03:00:48,990-INFO-Train size: 138  Test size: 35
+2026-04-11 03:00:49,060-INFO-Starting training
+2026-04-11 03:00:51,044-INFO-Epoch 1/50 - train loss: 0.7045
+2026-04-11 03:00:53,149-INFO-Epoch 2/50 - train loss: 0.4155
+2026-04-11 03:00:55,262-INFO-Epoch 3/50 - train loss: 0.3417
+2026-04-11 03:00:57,467-INFO-Epoch 4/50 - train loss: 0.3112
+2026-04-11 03:00:59,329-INFO-Epoch 5/50 - train loss: 0.3205
+2026-04-11 03:01:01,187-INFO-Epoch 6/50 - train loss: 0.2732
+2026-04-11 03:01:03,051-INFO-Epoch 7/50 - train loss: 0.2691
+2026-04-11 03:01:04,943-INFO-Epoch 8/50 - train loss: 0.2806
+2026-04-11 03:01:06,776-INFO-Epoch 9/50 - train loss: 0.2658
+2026-04-11 03:01:08,753-INFO-Epoch 10/50 - train loss: 0.2423
+2026-04-11 03:01:10,602-INFO-Epoch 11/50 - train loss: 0.2335
+2026-04-11 03:01:12,428-INFO-Epoch 12/50 - train loss: 0.2250
+2026-04-11 03:01:14,217-INFO-Epoch 13/50 - train loss: 0.2235
+2026-04-11 03:01:16,060-INFO-Epoch 14/50 - train loss: 0.2286
+2026-04-11 03:01:17,902-INFO-Epoch 15/50 - train loss: 0.2195
+2026-04-11 03:01:19,740-INFO-Epoch 16/50 - train loss: 0.2085
+2026-04-11 03:01:21,578-INFO-Epoch 17/50 - train loss: 0.2172
+2026-04-11 03:01:23,510-INFO-Epoch 18/50 - train loss: 0.2002
+2026-04-11 03:01:25,536-INFO-Epoch 19/50 - train loss: 0.1908
+2026-04-11 03:01:27,486-INFO-Epoch 20/50 - train loss: 0.1823
+2026-04-11 03:01:29,553-INFO-Epoch 21/50 - train loss: 0.1786
+2026-04-11 03:01:32,060-INFO-Epoch 22/50 - train loss: 0.1701
+2026-04-11 03:01:34,379-INFO-Epoch 23/50 - train loss: 0.1703
+2026-04-11 03:01:36,959-INFO-Epoch 24/50 - train loss: 0.1717
+2026-04-11 03:01:39,248-INFO-Epoch 25/50 - train loss: 0.1695
+2026-04-11 03:01:41,523-INFO-Epoch 26/50 - train loss: 0.1667
+2026-04-11 03:01:43,982-INFO-Epoch 27/50 - train loss: 0.1614
+2026-04-11 03:01:46,412-INFO-Epoch 28/50 - train loss: 0.1547
+2026-04-11 03:01:48,919-INFO-Epoch 29/50 - train loss: 0.1516
+2026-04-11 03:01:51,189-INFO-Epoch 30/50 - train loss: 0.1504
+2026-04-11 03:01:53,167-INFO-Epoch 31/50 - train loss: 0.1623
+2026-04-11 03:01:55,122-INFO-Epoch 32/50 - train loss: 0.1477
+2026-04-11 03:01:57,114-INFO-Epoch 33/50 - train loss: 0.1421
+2026-04-11 03:01:59,109-INFO-Epoch 34/50 - train loss: 0.1453
+2026-04-11 03:02:01,484-INFO-Epoch 35/50 - train loss: 0.1465
+2026-04-11 03:02:04,185-INFO-Epoch 36/50 - train loss: 0.1371
+2026-04-11 03:02:07,120-INFO-Epoch 37/50 - train loss: 0.1351
+2026-04-11 03:02:10,077-INFO-Epoch 38/50 - train loss: 0.1329
+2026-04-11 03:02:12,347-INFO-Epoch 39/50 - train loss: 0.1301
+2026-04-11 03:02:14,660-INFO-Epoch 40/50 - train loss: 0.1222
+2026-04-11 03:02:16,897-INFO-Epoch 41/50 - train loss: 0.1279
+2026-04-11 03:02:18,902-INFO-Epoch 42/50 - train loss: 0.1294
+2026-04-11 03:02:20,854-INFO-Epoch 43/50 - train loss: 0.1264
+2026-04-11 03:02:22,970-INFO-Epoch 44/50 - train loss: 0.1168
+2026-04-11 03:02:25,339-INFO-Epoch 45/50 - train loss: 0.1241
+2026-04-11 03:02:27,798-INFO-Epoch 46/50 - train loss: 0.1281
+2026-04-11 03:02:30,107-INFO-Epoch 47/50 - train loss: 0.1205
+2026-04-11 03:02:32,158-INFO-Epoch 48/50 - train loss: 0.1246
+2026-04-11 03:02:34,649-INFO-Epoch 49/50 - train loss: 0.1478
+2026-04-11 03:02:37,382-INFO-Epoch 50/50 - train loss: 0.1438
+2026-04-11 03:02:37,386-INFO-Starting evaluation
+2026-04-11 03:02:47,448-INFO-Saved predictions shape: (35, 7, 41, 3)
+2026-04-11 03:02:47,448-INFO-Final metrics: {'test_asymmetric_loss': 32.57601882219315, 'mse': 53734.9453125, 'mae': 85.17723846435547, 'rmse': 231.80799233956537, 'r2': 0.9687666296958923, 'per_signal': {'production_unit': {'mse': 97776.0859375, 'mae': 117.20721435546875, 'rmse': 312.69167871483245, 'r2': 0.9430571794509888}, 'delivery_unit': {'mse': 34265.48046875, 'mae': 69.60032653808594, 'rmse': 185.10937434055035, 'r2': 0.9798345565795898}, 'sales_order_unit': {'mse': 29163.271484375, 'mae': 68.72415161132812, 'rmse': 170.7725724007664, 'r2': 0.983285129070282}}}
+2026-04-11 03:03:45,295-INFO-Using device: cpu
+2026-04-11 03:03:45,393-INFO-Model loaded and set to eval mode
+2026-04-11 03:03:45,395-INFO-Graph loaded | relations: [('product', 'same_plant', 'product'), ('product', 'same_storage', 'product'), ('product', 'same_product_group', 'product'), ('product', 'same_product_subgroup', 'product')]
+2026-04-11 03:03:45,397-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-11 03:03:45,408-INFO-Metrics loaded
+2026-04-11 03:03:45,466-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-11 03:03:45,553-INFO-[Startup] Forecast cache built for 41 products
+2026-04-11 03:04:23,511-ERROR-/predict/whatif failed: 'prediction'
+2026-04-11 03:04:25,714-ERROR-/predict/whatif failed: 'prediction'
+2026-04-11 03:07:07,262-INFO-Using device: cpu
+2026-04-11 03:07:07,329-INFO-Model loaded and set to eval mode
+2026-04-11 03:07:07,330-INFO-Graph loaded | relations: [('product', 'same_plant', 'product'), ('product', 'same_storage', 'product'), ('product', 'same_product_group', 'product'), ('product', 'same_product_subgroup', 'product')]
+2026-04-11 03:07:07,331-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-11 03:07:07,331-INFO-Metrics loaded
+2026-04-11 03:07:07,333-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-11 03:07:07,385-INFO-[Startup] Forecast cache built for 41 products
+2026-04-11 03:07:21,215-ERROR-/predict/whatif failed: 'prediction'
+2026-04-11 03:10:12,573-INFO-Using device: cpu
+2026-04-11 03:10:12,691-INFO-Model loaded and set to eval mode
+2026-04-11 03:10:12,702-INFO-Graph loaded | relations: [('product', 'same_plant', 'product'), ('product', 'same_storage', 'product'), ('product', 'same_product_group', 'product'), ('product', 'same_product_subgroup', 'product')]
+2026-04-11 03:10:12,702-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-11 03:10:12,702-INFO-Metrics loaded
+2026-04-11 03:10:12,708-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-11 03:10:12,864-INFO-[Startup] Forecast cache built for 41 products
+2026-04-11 03:10:29,689-ERROR-/predict/whatif failed: 'prediction'
+2026-04-11 03:12:31,335-ERROR-/predict/whatif failed: 'prediction'
+2026-04-11 03:14:37,338-ERROR-/predict/whatif failed: 'prediction'
+2026-04-11 03:17:05,368-ERROR-/predict/whatif failed: 'prediction'
+2026-04-11 03:17:18,384-ERROR-/predict/whatif failed: 'prediction'
+2026-04-11 03:21:59,966-INFO-Using device: cpu
+2026-04-11 03:22:00,053-INFO-Model loaded and set to eval mode
+2026-04-11 03:22:00,058-INFO-Graph loaded | relations: [('product', 'same_plant', 'product'), ('product', 'same_storage', 'product'), ('product', 'same_product_group', 'product'), ('product', 'same_product_subgroup', 'product')]
+2026-04-11 03:22:00,059-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-11 03:22:00,059-INFO-Metrics loaded
+2026-04-11 03:22:00,059-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-11 03:22:00,143-INFO-[Startup] Forecast cache built for 41 products
+2026-04-11 03:22:12,128-ERROR-/predict/whatif failed: 'prediction'
+2026-04-11 03:22:40,242-ERROR-/predict/whatif failed: 'prediction'
+2026-04-11 03:23:44,708-ERROR-/predict/whatif failed: 'prediction'
+2026-04-11 03:27:47,221-ERROR-/predict/whatif failed: 'prediction'
+2026-04-11 03:29:06,271-ERROR-/predict/whatif failed: 'prediction'
+2026-04-11 03:35:02,539-INFO-Using device: cpu
+2026-04-11 03:35:02,654-INFO-Model loaded and set to eval mode
+2026-04-11 03:35:02,656-INFO-Graph loaded | relations: [('product', 'same_plant', 'product'), ('product', 'same_storage', 'product'), ('product', 'same_product_group', 'product'), ('product', 'same_product_subgroup', 'product')]
+2026-04-11 03:35:02,656-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-11 03:35:02,658-INFO-Metrics loaded
+2026-04-11 03:35:02,660-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-11 03:35:02,776-INFO-[Startup] Forecast cache built for 41 products
+2026-04-11 03:35:39,348-ERROR-Prediction failed: Product 'string' not found in mapping
+2026-04-11 03:35:39,348-ERROR-/predict/whatif failed: Error in D:\Supply Graph\backend\app\model_runtime.py , line 323 : Prediction failed - Product 'string' not found in mapping
+2026-04-11 03:35:43,370-ERROR-Prediction failed: Product 'string' not found in mapping
+2026-04-11 03:35:43,372-ERROR-/predict/whatif failed: Error in D:\Supply Graph\backend\app\model_runtime.py , line 323 : Prediction failed - Product 'string' not found in mapping
+2026-04-11 03:36:06,115-ERROR-Prediction failed: Product 'string' not found in mapping
+2026-04-11 03:36:06,115-ERROR-/predict/whatif failed: Error in D:\Supply Graph\backend\app\model_runtime.py , line 323 : Prediction failed - Product 'string' not found in mapping
+2026-04-11 03:39:41,570-ERROR-/predict/whatif failed: 'prediction'
+2026-04-11 13:47:00,435-INFO-Using device: cpu
+2026-04-11 13:47:01,712-INFO-Model loaded and set to eval mode
+2026-04-11 13:47:01,772-INFO-Graph loaded | relations: [('product', 'same_plant', 'product'), ('product', 'same_storage', 'product'), ('product', 'same_product_group', 'product'), ('product', 'same_product_subgroup', 'product')]
+2026-04-11 13:47:01,868-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-11 13:47:01,910-INFO-Metrics loaded
+2026-04-11 13:47:02,202-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-11 13:47:02,895-INFO-[Startup] Forecast cache built for 41 products
+2026-04-11 13:48:14,210-ERROR-/predict/whatif failed: 'prediction'
+2026-04-11 13:52:04,232-INFO-Using device: cpu
+2026-04-11 13:52:04,331-INFO-Model loaded and set to eval mode
+2026-04-11 13:52:04,331-INFO-Graph loaded | relations: [('product', 'same_plant', 'product'), ('product', 'same_storage', 'product'), ('product', 'same_product_group', 'product'), ('product', 'same_product_subgroup', 'product')]
+2026-04-11 13:52:04,331-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-11 13:52:04,331-INFO-Metrics loaded
+2026-04-11 13:52:04,331-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-11 13:52:04,452-INFO-[Startup] Forecast cache built for 41 products
+2026-04-11 13:52:16,204-ERROR-/predict/whatif failed: 'prediction'
+2026-04-11 13:55:04,244-INFO-Using device: cpu
+2026-04-11 13:55:04,403-INFO-Model loaded and set to eval mode
+2026-04-11 13:55:04,403-INFO-Graph loaded | relations: [('product', 'same_plant', 'product'), ('product', 'same_storage', 'product'), ('product', 'same_product_group', 'product'), ('product', 'same_product_subgroup', 'product')]
+2026-04-11 13:55:04,403-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-11 13:55:04,419-INFO-Metrics loaded
+2026-04-11 13:55:04,424-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-11 13:55:04,660-INFO-[Startup] Forecast cache built for 41 products
+2026-04-11 13:56:40,691-INFO-Using device: cpu
+2026-04-11 13:56:40,787-INFO-Model loaded and set to eval mode
+2026-04-11 13:56:40,787-INFO-Graph loaded | relations: [('product', 'same_plant', 'product'), ('product', 'same_storage', 'product'), ('product', 'same_product_group', 'product'), ('product', 'same_product_subgroup', 'product')]
+2026-04-11 13:56:40,787-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-11 13:56:40,787-INFO-Metrics loaded
+2026-04-11 13:56:40,787-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-11 13:56:40,903-INFO-[Startup] Forecast cache built for 41 products
+2026-04-11 14:13:10,569-INFO-Using device: cpu
+2026-04-11 14:13:10,799-INFO-Model loaded and set to eval mode
+2026-04-11 14:13:10,821-INFO-Graph loaded | relations: [('product', 'same_plant', 'product'), ('product', 'same_storage', 'product'), ('product', 'same_product_group', 'product'), ('product', 'same_product_subgroup', 'product')]
+2026-04-11 14:13:10,838-INFO-Loaded mappings | signal-product entries: 123 | products: 41
+2026-04-11 14:13:10,854-INFO-Metrics loaded
+2026-04-11 14:13:10,957-INFO-Precomputed data loaded | values shape: (191, 41, 3) | preds shape: (35, 123)
+2026-04-11 14:13:11,040-INFO-[Startup] Forecast cache built for 41 products
