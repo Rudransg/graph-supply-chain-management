@@ -301,6 +301,7 @@ const toggleAllFilteredPlants = () => {
         capacity_overrides: {},
         dropped_relations: [],
       });
+      console.log("whatif response:", res.data);
       setResult(res.data);
     } catch (e) {
       setError(e.response?.data?.detail ?? e.message);
